@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample reads an input PDF document and inserts text for a header and for a footer on each page. The program adjusts
 // the contents of each page if necessary to make sure that the header and footer will fit. It also provides default text
@@ -15,9 +12,6 @@
 //
 // The program is also designed to encrypt the output file so that the header and footer cannot be removed or edited without a password.
 //
-// For more detail see the description of the InsertHeadFoot sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#insertheadfoot
-
 #ifdef WIN32
 // Avoid compiler warning. This is a sample program.
 #pragma warning(disable : 4267)

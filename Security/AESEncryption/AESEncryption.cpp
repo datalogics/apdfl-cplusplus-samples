@@ -1,8 +1,5 @@
 //
-// Copyright(c) 2010 - 2023, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information see:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright(c) 2010-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample demonstrates how to add an encryption key and a password to a
 // PDF document.

@@ -1,6 +1,5 @@
-// Copyright (c) 2015-2016, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
 //
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
 //
 //========================================================================
 // Sample - Initialize: This class defines an object used for the

@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2018, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2018-2023, Datalogics, Inc. All rights reserved.
 //
 // The TextSelectEnum sample demonstrates how the Library is able to select all of the
 // text present in an area of the page.
 //
 // Command-line:  <output-file>     (Optional)
 //
-// For more detail see the description of the UnicodeText sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#TextSelectEnum
 
 // NOTE:
 //  This sample displays the extracted text in an output page, using a Unicode Font. As supplied, it uses

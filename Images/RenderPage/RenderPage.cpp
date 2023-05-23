@@ -1,13 +1,8 @@
 //
-// Copyright (c) 2007-2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // The RenderPage sample program shows how to render a PDF document page to memory.
 //
-// For more detail see the description of the RenderPage sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#renderpage
 
 #include "RenderPage.h"
 #include <math.h>

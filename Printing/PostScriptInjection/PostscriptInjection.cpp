@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample illustrates adding PostScript comments and commands into a printable
 // output document, generated using the Adobe PDF Library print API, PDFLPrintDoc.
@@ -12,8 +9,6 @@
 // is defined and available, the program will send the output to the printer, to create
 // a paper copy.
 //
-// For more detail see the description of the PostScriptInjection sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#postscriptinjection
 
 #include <cstdio>
 

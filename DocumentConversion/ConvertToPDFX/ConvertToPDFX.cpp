@@ -1,9 +1,6 @@
 //
 // Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
-//
 // ConvertToPDFX converts the input PDF to a PDF/X compliant PDF.
 //
 // Command-line:  <input-pdf> <convert-option>       (all parameters are optional moving from left to right)
@@ -16,8 +13,6 @@
 //
 //        This statement provides the name of an input file and specifies the PDF/X-4 format (default).
 //
-// For more detail see the description of the ConvertToPDFX sample program on our Developer's site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#converttopdfx
 
 #include <string>
 #include <iostream>

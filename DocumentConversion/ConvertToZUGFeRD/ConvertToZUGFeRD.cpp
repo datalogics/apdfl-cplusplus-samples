@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2019-2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2019-2023, Datalogics, Inc. All rights reserved.
 //
 // ConvertToZUGFeRD converts the input PDF with the input Invoice ZUGFeRD XML to a ZUGFeRD compliant PDF.
 //
@@ -17,8 +14,6 @@
 // NOTE: The input Invoice ZUGFeRD XML file needs to be ZUGFeRD-compliant, PDFL does not create this for you and
 // does not ensure the XML is compliant either.
 //
-// For more detail see the description of the ConvertToZUGFeRD sample program on our Developer’s site, 
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#converttozugferd
 
 #include <sstream>
 

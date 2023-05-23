@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2004-2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
 //
 // The sample demonstrates how to create true color separations and composite images of spot and process colors.
 //
 // Output Preview is an operation performed in many document creation/maintenance tools. It allows the user to "see" a
 // display of a page with selected colorants "turned off".
 //
-// For more detail see the description of the OutputPreview sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#outputpreview
 
 // This sample reads each page from a document and creates a set of bitmap images for each page.
 // The first image shows the entire page in CMYK. The sample then creates separations for the page

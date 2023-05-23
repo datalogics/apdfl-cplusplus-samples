@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2010-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2010-2023, Datalogics, Inc. All rights reserved.
 //
 // The PDFUncompress sample is a utility that demonstrates how to completely un-compress the elements within a PDF
 // document into a readable form.
@@ -16,8 +13,6 @@
 // For example, this sample also uncompresses font streams that are embedded in the document. The fonts are normally compressed
 // using the Flate compression algorithm, but PDFUncompress can render this font content as ASCII or Hexadecimal characters.
 //
-// For more detail see the description of the PDFUncompress sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#pdfuncompress
 
 #include "CosCalls.h"
 

@@ -1,9 +1,6 @@
 /*--------------------------------------------------------------------------------
-** Copyright (c) 2014, Datalogics, Inc. All rights reserved.
+** Copyright (c) 2014-2023, Datalogics, Inc. All rights reserved.
 */
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
 //
 // PDFViewer is an application to use to open and view PDF documents in Windows environments,
 // intended to serve as a model that you can use to build your own viewing tool. As such
@@ -15,9 +12,6 @@
 // the document using arrows or the Home key to return to the first page or the End key
 // to go to the last page, and you can use the mouse to position pages or change the page
 // scaling or rotation.
-//
-// For more detail see the description of the PDFViewer sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#pdfviewer
 //
 
 #include "PDFViewer.h" /* Definitions for this application. 

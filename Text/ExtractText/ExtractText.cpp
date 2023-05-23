@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample extracts Unicode and ASCII text from two PDF input documents and saves the
 // content to a text file and to a PDF output document.
 //
 // Command-line:    <input-pdf>  <output-name>       (Both optional)
 //
-// For more detail see the description of the ExtractText sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#extracttext
 
 #include <iostream>
 #include <fstream>

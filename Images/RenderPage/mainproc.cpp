@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // Sample: RenderPage - Demonstrates the process of rasterizing the cropped area of a PDF page
 //   and placing the resulting raster as an image into a different PDF document.

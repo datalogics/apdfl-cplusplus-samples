@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2004-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
 //
 // The sample demonstrates how to create color separations for spot color images.
 //
@@ -13,8 +10,6 @@
 // color in the final images. A spot color is a separate color added on top of the image after the
 // four color plates are used to create the initial print run.
 //
-// For more detail see the description of the CreateSeparations sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#createseparations
 
 // This sample will read each page from a document, and create a set of bitmap images for each page.
 // the first image will show the entire page, in CMYK. It will then create separations for the page

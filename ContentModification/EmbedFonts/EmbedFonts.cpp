@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2010-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2010-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample program demonstrates how to scan a PDF document to determine whether the fonts
 // used in that document are embedded. For each font the program finds that is not embedded in
@@ -17,8 +14,6 @@
 // subsets the characters of that font that are used in the document into that document, and
 // renames this newly subset font to show that it was embedded and subset.
 //
-// For more detail see the description of the EmbedFonts sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#embedfonts
 
 #include "PSFCalls.h"
 #include "PERCalls.h"
@@ -157,8 +152,7 @@ ACCB1 ASBool ACCB2 GetFontInfoProc(PDFont pdFont, PDFontFlags *pdFontFlagsPtr, v
         fontSubtypeP = ASAtomGetString(attrs.type);
 
         fontEmbedded = PDFontIsEmbedded(pdFont);
-        // Subset test: a font was subset if the 7th character is '+' (a plus-sign), according
-        // to Acrobat/Reader and industry norms.
+        // Subset test: a font was subset if the 7th character is '+' (a plus-sign).
         if (fontEmbedded) {
             if ((strlen(fontNameBuf)) > 7 && (fontNameBuf[6] == '+'))
                 fontSubset = true;

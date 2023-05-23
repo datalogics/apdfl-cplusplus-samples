@@ -1,13 +1,8 @@
 //
 // Copyright (c) 2023, Datalogics, Inc. All rights reserved.
 //
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
-//
 // ConvertToOffice converts sample PDF documents to Office Documents.
 //
-// For more detail see the description of the ConvertToOffice sample program on our Developer's site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#converttooffice
 
 #include <sstream>
 
