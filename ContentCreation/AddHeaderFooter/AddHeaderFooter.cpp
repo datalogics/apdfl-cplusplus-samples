@@ -1,14 +1,10 @@
 //
 // Copyright (c) 2023, Datalogics, Inc. All rights reserved.
 //
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
 //
 // This sample demonstrates creating a new PDF document with a Header and Footer.
 //
 //
-// For more detail see the description of the AddHeaderFooter sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#addheaderfooter
 
 #include "PSFCalls.h"
 #include "PERCalls.h"

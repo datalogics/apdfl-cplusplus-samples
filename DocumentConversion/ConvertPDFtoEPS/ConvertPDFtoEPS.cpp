@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // ConvertPDFtoEPS converts the contents of each page of an input PDF into a series of new
 // Encapsulated Postscript files.
 //
 // Command-line:  <input-pdf> <output-name-root>      (Both are optional)
 //
-// For more detail see the description of the ConvertPDFtoEPS sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#convertpdftoeps
 
 #include <sstream>
 

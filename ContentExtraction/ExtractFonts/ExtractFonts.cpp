@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample is similar to EmbedFonts. The sample looks for fonts embedded in a PDF document and then
 // extracts those fonts and saves them as font files, storing them in the same directory on the local
@@ -10,8 +7,6 @@
 //
 // The ExtractFonts sample does not define a default output file.
 //
-// For more information about working with fonts in the Adobe PDF Library, see the description of the EmbedFonts sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#embedfonts
 
 #include "CosCalls.h"
 

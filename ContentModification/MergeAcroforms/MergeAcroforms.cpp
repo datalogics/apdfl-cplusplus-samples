@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample program demonstrates how to use the Adobe PDF Library to move all of the AcroForm
 // objects, namely forms fields and digital signatures, from one PDF document to another. AcroForm,
@@ -16,6 +13,7 @@
 // individual objects of the Acroforms dictionary array (such as “NeedAppearances” and “SigFlags”)
 // from the input PDF document to the Acroforms dictionary in the output document.
 //
+
 #include <cstdlib>
 #include "PEWCalls.h"
 #include "PERCalls.h"
@@ -100,9 +98,8 @@ int main(int argc, char *argv[]) {
     HANDLER
         char ErrorBuffer[512];
         ASGetErrorString(ERRORCODE, ErrorBuffer, sizeof(ErrorBuffer));
-        ;
         std::cout << "Error copying Acroforms. Error " << ERRORCODE << ": " << ErrorBuffer << std::endl
-                  << "Acrobat Forms will be missing from the output.\n";
+                  << "AcroForms will be missing from the output.\n";
     END_HANDLER
 
     DURING

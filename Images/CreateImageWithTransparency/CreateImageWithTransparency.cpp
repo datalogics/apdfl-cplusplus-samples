@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2010-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2010-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample shows how to create a transparency within a PDF document, in the form of a graphic
 // image with an art graphic layered on top. PDF files can have objects that are partially or fully
@@ -10,7 +7,7 @@
 // or images can be stacked in a PDF file, with each one blending to contribute to the final result
 // that appears on the page. In this sample the text behind the image is partially visible.
 //
-// The PDFEdit Layer (PDE) of the Adobe Acrobat API contains classes that provide a means for editing
+// The PDFEdit Layer (PDE) contains classes that provide a means for editing
 // objects in PDF documents, including images. The program creates a PDEImage object, using a JPG image
 // with an adjustable compression level. The program also provides for creating a soft mask with the
 // transparent object. A SoftMask object in the PDF format allows you to place an image on a PDF
@@ -20,8 +17,6 @@
 //
 // CreateImageWithTransparency does not define an input file or an input directory.
 //
-// For more detail see the description of the CreateImageWithTransparency sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#createimagewithtransparency
 
 #include "PSFCalls.h"
 #include "PERCalls.h"

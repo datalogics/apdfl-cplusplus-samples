@@ -1,6 +1,5 @@
-// Copyright (c) 2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
 //
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
 //
 //===============================================================================
 // Sample: TextExtract -This class is intended to assist with operations common to
@@ -208,8 +207,7 @@ std::vector<PDTextAndDetailsExtractRec> TextExtract::GetTextAndDetails(ASInt32 p
                 ASBool fontEmbedded = PDFontIsEmbedded(pdFont);
                 ASBool fontSubset = false;
                 char *fontNameStart = 0;
-                // Subset test: a font was subset if the 7th character is '+' (a plus-sign),
-                // according to Acrobat/Reader and industry norms.
+                // Subset test: a font was subset if the 7th character is '+' (a plus-sign).
                 if (fontEmbedded) {
                     if ((strlen(fontNameBuf)) > 7 && (fontNameBuf[6] == '+'))
                         fontSubset = true;

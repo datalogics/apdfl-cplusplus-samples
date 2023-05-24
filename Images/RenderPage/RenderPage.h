@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2017-2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // Sample: RenderPage
 //

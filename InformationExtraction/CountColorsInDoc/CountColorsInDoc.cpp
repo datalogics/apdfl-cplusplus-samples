@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample reviews a PDF document to determine the distinct colors found,
 // and then generates an output text file listing those colors. The program
@@ -14,8 +11,6 @@
 // This sample demonstrates how to find information in a PDF document,
 // and how to access an object within a PDF.
 //
-// For more detail see the description of the CountColorsInDoc sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#countcolorsindoc
 
 #include <iostream>
 #include <fstream>

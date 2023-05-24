@@ -1,14 +1,9 @@
 //
-// Copyright (c) 2023, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample extracts text that matches a given pattern using regular expressions (regex)
 // in a PDF document and saves the text to a file.
 //
-// For more detail see the description of the ExtractCJKTextByPatternMatch sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples
 
 #include <fstream>
 #include <string>

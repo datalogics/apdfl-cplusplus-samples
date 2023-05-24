@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2021-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample demonstrates using the DocTextFinder to find examples of a specific phrase in a PDF
 // document that matches a user-supplied regular expression. When the sample finds the text it
@@ -10,8 +7,6 @@
 //
 // Command-line:   <input-file> <output-file> <search-regular-expression>    (All optional)
 //
-// For more detail see the description of the RegexTextSearch sample program on our Developer's site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#regextextsearch
 
 #include <iostream>
 #include "InitializeLibrary.h"

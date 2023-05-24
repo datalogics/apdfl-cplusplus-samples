@@ -1,7 +1,6 @@
 //
-// Copyright 2015, Datalogics, Inc. All rights reserved.
+// Copyright 2015-2023, Datalogics, Inc. All rights reserved.
 //
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
 //
 // This is a Windows specific sample class...
 //

@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample program demonstrates how to calculate the resolution for the images found in a PDF
 // document. The sample scans the PDF input file and processes the images on each page one by one,
 // rotating them as needed before calculating the Dots per Inch (DPI) for each image. Then, it
 // lists the results in an output text file.
 //
-// For more detail see the description of the CalcImageDPI sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#calcimagedpi
 
 #include <iostream>
 #include <iomanip>

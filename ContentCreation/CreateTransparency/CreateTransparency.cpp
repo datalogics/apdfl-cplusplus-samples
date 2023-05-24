@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample demonstrates transparency and blend modes in Adobe PDF Library for CMYK and RGB color spaces.
 // It creates 13 sets of RGB and CMYK color blending circles, one for each of the 12 blend modes, and an
@@ -10,11 +7,6 @@
 //
 // Command-line:    <output-file>      (Optional)
 //
-// See ISO 32000, table 136, for more information, available here:
-// http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/pdfs/PDF32000_2008.pdf#page=332
-//
-// For more detail see the description of the CreateTransparency sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#createtransparency
 
 #include <iostream>
 #include <sstream>

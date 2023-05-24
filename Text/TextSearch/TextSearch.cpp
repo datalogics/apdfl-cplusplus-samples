@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample demonstrates using the PDWordFinder to find examples of a specific word in a PDF
 // document.  When the sample finds the text it highlights each example and saves the file as an
@@ -10,8 +7,6 @@
 //
 // Command-line:   <input-file> <output-file> <search-word>    (All optional)
 //
-// For more detail see the description of the TextSearch sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#textsearch
 
 #include <iostream>
 #include <algorithm>

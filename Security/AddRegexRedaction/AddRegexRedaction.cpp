@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2021, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2021-2023, Datalogics, Inc. All rights reserved.
 //
 // The AddRegexRedaction sample program uses DocTextFinder to locate matches to be
 // redacted in a PDF document when given a user-supplied regular expression. The text is
@@ -10,8 +7,6 @@
 //
 // Command-line:  <input-file> <output-file> <unredacted-output-file> <search-regular-expression> (Optional)
 //
-// For more detail see the description of the AddRegexRedaction sample program on our Developer's site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#addregexredaction
 
 #include <map>
 #include "APDFLDoc.h"

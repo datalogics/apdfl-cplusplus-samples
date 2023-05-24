@@ -1,16 +1,11 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // CopyContent copies content from an input PDF document into a new PDF document
 // and then saves the output file. You can specify the type of content you want to copy.
 //
 // Command-line:   <input-file>  <output-file>     (Both optional)
 //
-// For more detail see the description of the CopyContent sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#copycontent
 
 #include <iostream>
 #include <map>

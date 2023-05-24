@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2015-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
 //
 // This file contains the functions for producing a sample input file with images from
 // a number of input graphics.

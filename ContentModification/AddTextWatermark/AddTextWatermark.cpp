@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2020, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, refer to:
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2020-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample adds a text watermark to a documents contents, rather than using the Watermark Annotation.
 // The resulting document is saved encrypted, with only view and Print permissions. The font used to render the watermark
@@ -18,9 +15,6 @@
 //
 // Command-line:   <input-file-name> <output-file-name> <Watermark text string> <font name> <Text Color> <Text Opacity> <Stroke Color> <Stroke Opacity> (All optional)
 //
-// For more detail see the description of the AddTextWatermark sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#AddTextWatermark
-
 
 
 /* Presumptions

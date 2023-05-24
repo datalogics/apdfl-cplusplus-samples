@@ -1,8 +1,5 @@
 //
-// Copyright (c) 2004-2017, Datalogics, Inc. All rights reserved.
-//
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
+// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
 //
 // This is an executable driver to demonstrate the use of the
 // ASFileSys (defined in AlternateFileSystem.cpp) with APDFL.

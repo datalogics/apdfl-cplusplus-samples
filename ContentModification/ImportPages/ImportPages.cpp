@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2017, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
 //
 // For complete copyright information, see:
 // http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
@@ -9,7 +9,7 @@
 // the page so that the imported content occupies one quarter of the PDF page where it will be placed. The program
 // creates the PDEForm by calling the PDF Library API known as PDEContentAddPage.
 //
-// The PDFEdit Layer (PDE) of the Adobe Acrobat API contains classes that provide for editing a variety of objects
+// The PDFEdit Layer (PDE) contains classes that provide for editing a variety of objects
 // in PDF documents, including form XObjects with this sample.
 //
 // For more detail see the description of the ImportPages sample program on our Developer’s site,
