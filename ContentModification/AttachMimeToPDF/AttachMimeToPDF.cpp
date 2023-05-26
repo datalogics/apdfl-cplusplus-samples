@@ -3,8 +3,7 @@
 //
 // This sample program demonstrates how to add a file attachment to a PDF document, and
 // then save the updated file. If you run this program and then open the PDF output document
-// in Adobe Acrobat, the newly attached file appears in the Attachments pane on the left side
-// of the window.
+// in a PDF Viewer, the newly attached file appears in the Attachments pane.
 //
 // MIME refers to the Multipurpose Internet Mail Extensions (MIME) standard.  It was developed
 // to define the types of files that can be attached to an electronic mail message using the SMTP

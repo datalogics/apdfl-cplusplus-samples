@@ -1,11 +1,7 @@
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
-//
-// http://dev.datalogics.com/adobe-pdf-library/license-for-downloaded-pdf-samples/
+// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
 //
 // This sample allows a user to send a PDF document to a printer, using a Windows print interface.
 //
-// For more detail see the description of the PDFPrintDefault sample program on our Developer’s site,
-// http://dev.datalogics.com/adobe-pdf-library/sample-program-descriptions/c1samples#pdfprintdefault
 
 /* Printing Support */
 #include "InitializeLibrary.h"

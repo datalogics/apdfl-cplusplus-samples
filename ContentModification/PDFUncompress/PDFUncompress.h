@@ -1,9 +1,6 @@
 //
 // Copyright (c) 2010-2023, Datalogics, Inc. All rights reserved.
 //
-// For complete copyright information, see:
-// http://dev.datalogics.com/adobe-pdf-library/adobe-pdf-library-c-language-interface/license-for-downloaded-pdf-samples/
-//
 
 CosObj Uncompress(CosObj Stream);
 CosObj UncompressAnnot(CosObj Annot);
