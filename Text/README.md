@@ -41,7 +41,7 @@ Searches for phrases or text patterns in a PDF input document. It demonstrates u
 Illustrates how to find and highlight every example of a specific word in an input PDF document.
 
 ## TextSelectEnum
-This sample program uses the PDTextSelect feature in the Adobe PDF Library to show how the Library can select the text within a defined area of a PDF page.
+This sample program uses the PDTextSelect feature to show how to select the text within a defined area of a PDF page.
 
 ## UnicodeText
 Illustrates working with Unicode text, adding text in several languages to a PDF page.

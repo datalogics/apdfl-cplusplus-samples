@@ -116,8 +116,6 @@ int main(int argc, char *argv[]) {
 }
 
 // Add quads to an annotation's CosObj.
-// NOTE: There is Adobe documentation that specifies quads be added in the order - BL, BR, TR, TL.
-// However, currently the order needs to be BL, BR, TL, TR to get correct output.
 void ApplyQuadsToAnnot(PDAnnot annot, ASFixedQuad *quads, ASArraySize numQuads) {
     CosObj coAnnot = PDAnnotGetCosObj(annot);
     CosDoc coDoc = CosObjGetDoc(coAnnot);

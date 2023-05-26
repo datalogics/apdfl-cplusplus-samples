@@ -58,8 +58,6 @@ ASBool ExtractEmbeddedFonts(CosObj obj, CosObj value, void *clientData) {
         // to support a character set with a large number of glyphs, particularly Asian
         // languages like Korean, Japanese, and Mandarin.
         //
-        // Adobe Systems developed the Character Identifier Font (CID) to improve the
-        // performance the OCF format.
 
         CosObj descendants = CosDictGet(obj, ASAtomFromString("DescendantFonts"));
         for (int index = 0; index < CosArrayLength(descendants); index++) {
