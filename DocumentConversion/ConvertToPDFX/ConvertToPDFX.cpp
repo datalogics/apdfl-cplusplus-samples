@@ -4,7 +4,7 @@
 // ConvertToPDFX converts the input PDF to a PDF/X compliant PDF.
 //
 // Command-line:  <input-pdf> <convert-option>       (all parameters are optional moving from left to right)
-//        where convert-option is 'PDFX4', 'PDFX1a2001', 'PDFX32003'
+//        where convert-option is 'PDFX4', 'PDFX6', 'PDFX1a2001',or  'PDFX32003'
 //        if no parameters are specified, a pre-selected PDF is input and converted using PDF/X-4
 //
 //        For example:
@@ -34,6 +34,9 @@ int main(int argc, char **argv) {
     // Step 1) Select Conversion option
     if (argc > 2 && (!strcmp(argv[2], "PDFX4") || !strcmp(argv[2], "PDF/X-4"))) {
         convertOption = kPDFProcessorConvertToPDFX1a2001;
+    }
+    else if (argc > 2 && (!strcmp(argv[2], "PDFX6") || !strcmp(argv[2], "PDF/X-6"))) {
+        convertOption = kPDFProcessorConvertToPDFX62020;
     }
     else if (argc > 2 && (!strcmp(argv[2], "PDFX1a2001") || !strcmp(argv[2], "PDF/X-1A:2001"))) {
         convertOption = kPDFProcessorConvertToPDFX1a2001;
@@ -109,7 +112,6 @@ ASBool PDFProcessorProgressMonitorCB(ASInt32 pageNum, ASInt32 totalPages, float 
         ASBool *IsMonitorCalled = (ASBool *)clientData;
         if (*IsMonitorCalled == false) {
             std::cout << "PDFProcessor Progress Monitor CallBack" << std::endl;
-            // Set to true to Display this Message Only Once
             *IsMonitorCalled = true;
         }
     }
@@ -117,7 +119,7 @@ ASBool PDFProcessorProgressMonitorCB(ASInt32 pageNum, ASInt32 totalPages, float 
     // Page numbers are 0-indexeed.
     std::cout << "PDFProcessor Page " << pageNum + 1 << " of " << totalPages << ". Overall Progress = " << current << "%." << std::endl;
 
-    // Return true to Cancel conversion
+    // False indicates this callback should continue.
     return false;
 }
 
