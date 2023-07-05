@@ -4,7 +4,7 @@
 // ConvertToPDFX converts the input PDF to a PDF/X compliant PDF.
 //
 // Command-line:  <input-pdf> <convert-option>       (all parameters are optional moving from left to right)
-//        where convert-option is 'PDFX4', 'PDFX6', 'PDFX1a2001',or  'PDFX32003'
+//        where convert-option is 'PDFX4', 'PDFX6', 'PDFX1a2001', or  'PDFX32003'
 //        if no parameters are specified, a pre-selected PDF is input and converted using PDF/X-4
 //
 //        For example:
