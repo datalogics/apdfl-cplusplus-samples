@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
                 convertOption = kPDFProcessorConvertToPDFA1bCMYK;
             }
         } else {
-            convertOption = kPDFProcessorConvertToPDFA3bRGB;
+            convertOption = kPDFProcessorConvertToPDFA1bRGB;
         }
     } else if (argc > 2 && (!strcmp(argv[2], "PDFA1a") || !strcmp(argv[2], "PDFA1A"))) {
         if (argc > 3) {
