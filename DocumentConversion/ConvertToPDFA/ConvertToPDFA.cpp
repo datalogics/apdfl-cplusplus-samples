@@ -11,7 +11,7 @@
 //
 //        ConvertToPDFA input-file.pdf PDF2b
 //
-//        This statement provides the name of an input file and specifies the PDF/A-2b format.
+//        This statement provides the name of an input file and specifies the format.
 //
 
 #include <sstream>
@@ -36,6 +36,46 @@ int main(int argc, char **argv) {
         std::cout << "PDF Conversion Standard not specified or unknown, defaulting to PDFA3bRGB." << std::endl;
 
         convertOption = kPDFProcessorConvertToPDFA3bRGB;
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3a") || !strcmp(argv[2], "PDFA3A"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA3aRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA3aCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA3aRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3b") || !strcmp(argv[2], "PDFA3B"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA3bRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA3bCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA3bRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2a") || !strcmp(argv[2], "PDFA2A"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA2aRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA2aCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA2aRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2b") || !strcmp(argv[2], "PDFA2B"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA2bRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA2bCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA2bRGB;
+        }
     } else if (argc > 2 && (!strcmp(argv[2], "PDFA1b") || !strcmp(argv[2], "PDFA1B"))) {
         if (argc > 3) {
             if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
@@ -44,7 +84,7 @@ int main(int argc, char **argv) {
                 convertOption = kPDFProcessorConvertToPDFA1bCMYK;
             }
         } else {
-            convertOption = kPDFProcessorConvertToPDFA3bRGB;
+            convertOption = kPDFProcessorConvertToPDFA1bRGB;
         }
     } else if (argc > 2 && (!strcmp(argv[2], "PDFA1a") || !strcmp(argv[2], "PDFA1A"))) {
         if (argc > 3) {
@@ -141,7 +181,7 @@ ASBool PDFProcessorProgressMonitorCB(ASInt32 pageNum, ASInt32 totalPages, float 
               << totalPages << ". Overall Progress = " << current << "%." /* Current Overall Progress */
               << std::endl;
 
-    // Return 1 to Cancel conversion
+    // False indicates this callback should continue
     return 0;
 }
 
