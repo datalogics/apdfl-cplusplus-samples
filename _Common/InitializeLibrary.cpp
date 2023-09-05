@@ -234,9 +234,6 @@ void APDFLib::fillDirectories() {
     CFRelease(baseURL);
     CFRelease(resourceURL);
 
-    char **tmpP = NULL;
-    tmpP = (char **)malloc(sizeof(char *) * NO_OF_RESOURCE_DIR);
-
     char fontPath[NO_OF_RESOURCE_DIR][MAX_PATH];
     for (int i = 0; i < NO_OF_RESOURCE_DIR; i++) {
         strncpy_safe(fontPath[i], sizeof(fontPath[i]), resourceDirectory, sizeof(resourceDirectory));
