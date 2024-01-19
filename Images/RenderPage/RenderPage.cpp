@@ -198,7 +198,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     // annotations in the page to be displayed, and kPDPageDsiplayOverprintPreview will display the
     // page showing overprinting. The precise meaning of these flags, as well as others that may be
     // used here, can be seen in the defintion of PDPageDrawFlags
-    drawParams.flags = kPDPageDoLazyErase | kPDPageUseAnnotFaces | kPDPageDisplayOverPrintPreview;
+    drawParams.flags = kPDPageDoLazyErase | kPDPageUseAnnotFaces | kPDPageDisplayOverPrintPreview | kPDPageEmitPageGroup;
 
     // This is a bit clumsy, because features were added over time. The matrices and rectangles in
     // this interface use ASReal as thier base, rather than ASDouble. But there is not a complete
