@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
         convertOption = kPDFProcessorConvertToPDFX32003;
     } else {
         std::cout << "PDF Conversion Standard not specified or unknown, defaulting to PDF/X-4." << std::endl;
-        convertOption = kPDFProcessorConvertToPDFX42008;
+        convertOption = kPDFProcessorConvertToPDFX42010;
     }
 
     APDFLib lib;
