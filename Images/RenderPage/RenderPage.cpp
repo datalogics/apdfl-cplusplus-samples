@@ -66,7 +66,7 @@ void ASDoubleToFixedRect(ASFixedRect &out, ASDoubleRect &in) {
 //  The rendered page can be accessed as a bitmap via the methods GetImageBuffer() and GetImageBufferSize(), or as a PDEImage,
 //  via the method GetPDEImage(). The PDEImage creation will be deferred until it is requested.
 RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName,
-                       ASInt32 inBPC, double inResolution) {
+                       ASInt32 inBPC, double inResolution, float userUnit) {
     // Set up the static colorspace atoms
     sDeviceRGB_K = ASAtomFromString("DeviceRGB");
     sDeviceRGBA_K = ASAtomFromString("DeviceRGBA");
@@ -83,7 +83,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
 
     // Set resolution.
     //  A PDF "unit" is, by default, 1/72nd of an inch. So a resolution of 72 is one PDF "unit" per
-    //  pixel. if no resolution is set, we will use 72 DPI as our image reslution. This sample does
+    //  pixel. if no resolution is set, we will use 72 DPI as our image resolution. This sample does
     //  not attempt to support different horiziontal and vertical resolutions. APDFL, can easily
     //  support them by using a different scale factor in the scale matrix "a" (horiziontal) and "d"
     //  (vertical) members. The scale factors are simply (72.0 / resolution).
@@ -159,8 +159,8 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     // width and depth here, we can use the results to form a Destination Rectangle
     // NOTE: This is where we apply the resolution to convert from Points to Pixels.
     //  We round up to include space for partial pixels at the edges.
-    attrs.width = (ASInt32)floor(((cropRect.right * resolution) / 72.0) + 0.5);
-    attrs.height = (ASInt32)floor(((cropRect.top * resolution) / 72.0) + 0.5);
+    attrs.width = (ASInt32)floor(((cropRect.right * resolution) * (userUnit / 72.0)) + 0.5);
+    attrs.height = (ASInt32)floor(((cropRect.top * resolution) * (userUnit / 72.0)) + 0.5);
 
     // Set up the destinantion rectangle.
     // This is a description of the image in pixels, so it will always
@@ -172,7 +172,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
 
     // Create the scale matrix that will be concatenated to the user space matrix
     ASDoubleMatrix scaleMatrix;
-    scaleMatrix.a = scaleMatrix.d = resolution / 72.0;
+    scaleMatrix.a = scaleMatrix.d = resolution * (userUnit / 72.0);
     scaleMatrix.b = scaleMatrix.c = scaleMatrix.h = scaleMatrix.v = 0;
 
     // Apply the scale to the default matrix
