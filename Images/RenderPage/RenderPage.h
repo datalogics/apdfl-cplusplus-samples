@@ -48,7 +48,7 @@ class RenderPage {
     static ASAtom sDeviceGray_K;
 
   public:
-    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution);
+    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution, float userUnit);
     ~RenderPage();
 
     char *GetImageBuffer();

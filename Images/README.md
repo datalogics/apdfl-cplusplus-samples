@@ -13,6 +13,12 @@ Collects Inks present on the PDF page and then rasterizes the page using those I
 ## FindImageResolutions
 Demonstrates finding the resolution for each image in a PDF document. Creates text file listing the page number, sequence, and horizontal and vertical DPI for each image.
 
+## ImageImport
+Demonstrates importing BMP, PNG, JPG, GIF and TIF graphics files into a PDF document allowing the image to be Translated, Scaled, and Rotated on the page. 
+
+## ImageExport
+Demonstrates exporting PDEImage objects inside a PDF document as BMP, PNG, JPG, GIF and TIF graphics files. 
+
 ## OutputPreview
 Like the CreateSeparations sample, collects Inks present on the PDF page and then rasterizes the page using those Ink channels separately and saves them as new pages. This sample demonstrates working with DeviceN colors.
 

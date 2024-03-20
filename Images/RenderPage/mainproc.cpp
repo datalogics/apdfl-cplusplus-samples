@@ -56,8 +56,11 @@ int main(int argc, char **argv) {
         APDFLDoc inDoc(csInputFileName.c_str(), true);
         PDPage pdPage = inDoc.getPage(0);
 
+        // Get the UserUnit of the Page
+        float userUnit = PDPageGetUserUnitSize(pdPage);
+
         // Construction of the drawPage object does all the work to rasterize the page
-        RenderPage drawPage(pdPage, COLORSPACE, FILTER, BPC, RESOLUTION);
+        RenderPage drawPage(pdPage, COLORSPACE, FILTER, BPC, RESOLUTION, userUnit);
 
         // Release the first page.
         PDPageRelease(pdPage);
@@ -70,6 +73,9 @@ int main(int argc, char **argv) {
 
         // Construct a page to contain the image, exactly the size of the image.
         PDPage outputPDPage = PDDocCreatePage(outDoc.getPDDoc(), PDBeforeFirstPage, imageSize);
+
+        // Set the UserUnit of the rendered page
+        PDPageSetUserUnitSize(outputPDPage, userUnit);
 
         // Acquire the PDE Content of the newly created page
         PDEContent content = PDPageAcquirePDEContent(outputPDPage, 0);
