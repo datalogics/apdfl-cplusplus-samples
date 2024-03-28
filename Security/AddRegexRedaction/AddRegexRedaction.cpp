@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2021-2024, Datalogics, Inc. All rights reserved.
 //
 // The AddRegexRedaction sample program uses DocTextFinder to locate matches to be
 // redacted in a PDF document when given a user-supplied regular expression. The text is
@@ -126,6 +126,7 @@ int main(int argc, char **argv) {
             redactParams->fillOpacity = FloatToASFixed(0.25);        // is set to 1, any underlaying text that is applied cannot be seen.
             redactParams->borderColor = &borderCVRec;                // Set the color to draw the border around each quad,
             redactParams->borderColor->space = PDDeviceGray;         // in the unredacted appearance.
+            redactParams->borderColor->value[0] = FloatToASFixed(0.0);
 
             std::map<ASInt32, std::vector<ASFixedQuad> >::iterator iter;
 
