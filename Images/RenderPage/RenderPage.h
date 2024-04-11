@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2024, Datalogics, Inc. All rights reserved.
 //
 // Sample: RenderPage
 //
@@ -36,6 +36,7 @@ class RenderPage {
 
     ASFixedRect imageSize; // This will carry the image size in PDF units.
 
+    PDEFilterArray SetFlateFilterParams(CosDoc cosDoc);
     PDEFilterArray SetDCTFilterParams(CosDoc cosDoc);
     PDEFilterArray SetCCITTFaxFilterParams(CosDoc cosDoc);
     ASAtom SetColorSpace(const char *colorSpace);
@@ -48,7 +49,7 @@ class RenderPage {
     static ASAtom sDeviceGray_K;
 
   public:
-    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution);
+    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution, float userUnit);
     ~RenderPage();
 
     char *GetImageBuffer();

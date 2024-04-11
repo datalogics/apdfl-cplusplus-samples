@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2024, Datalogics, Inc. All rights reserved.
 //
 
 #include "RenderPage.h"
@@ -66,7 +66,7 @@ void ASDoubleToFixedRect(ASFixedRect &out, ASDoubleRect &in) {
 //  The rendered page can be accessed as a bitmap via the methods GetImageBuffer() and GetImageBufferSize(), or as a PDEImage,
 //  via the method GetPDEImage(). The PDEImage creation will be deferred until it is requested.
 RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName,
-                       ASInt32 inBPC, double inResolution) {
+                       ASInt32 inBPC, double inResolution, float userUnit) {
     // Set up the static colorspace atoms
     sDeviceRGB_K = ASAtomFromString("DeviceRGB");
     sDeviceRGBA_K = ASAtomFromString("DeviceRGBA");
@@ -83,7 +83,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
 
     // Set resolution.
     //  A PDF "unit" is, by default, 1/72nd of an inch. So a resolution of 72 is one PDF "unit" per
-    //  pixel. if no resolution is set, we will use 72 DPI as our image reslution. This sample does
+    //  pixel. if no resolution is set, we will use 72 DPI as our image resolution. This sample does
     //  not attempt to support different horiziontal and vertical resolutions. APDFL, can easily
     //  support them by using a different scale factor in the scale matrix "a" (horiziontal) and "d"
     //  (vertical) members. The scale factors are simply (72.0 / resolution).
@@ -159,8 +159,8 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     // width and depth here, we can use the results to form a Destination Rectangle
     // NOTE: This is where we apply the resolution to convert from Points to Pixels.
     //  We round up to include space for partial pixels at the edges.
-    attrs.width = (ASInt32)floor(((cropRect.right * resolution) / 72.0) + 0.5);
-    attrs.height = (ASInt32)floor(((cropRect.top * resolution) / 72.0) + 0.5);
+    attrs.width = (ASInt32)floor(((cropRect.right * resolution) * (userUnit / 72.0)) + 0.5);
+    attrs.height = (ASInt32)floor(((cropRect.top * resolution) * (userUnit / 72.0)) + 0.5);
 
     // Set up the destinantion rectangle.
     // This is a description of the image in pixels, so it will always
@@ -172,7 +172,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
 
     // Create the scale matrix that will be concatenated to the user space matrix
     ASDoubleMatrix scaleMatrix;
-    scaleMatrix.a = scaleMatrix.d = resolution / 72.0;
+    scaleMatrix.a = scaleMatrix.d = resolution * (userUnit / 72.0);
     scaleMatrix.b = scaleMatrix.c = scaleMatrix.h = scaleMatrix.v = 0;
 
     // Apply the scale to the default matrix
@@ -290,11 +290,10 @@ ASSize_t RenderPage::GetImageBufferSize() { return bufferSize; }
 ASFixedRect RenderPage::GetImageSize() { return imageSize; }
 
 PDEImage RenderPage::GetPDEImage(PDDoc outDoc) {
-    // When we are encoding in DCT, we need to know the height and
-    // width of the image in pixels, and the document we will be
-    // writing the PDE Image into. This is not known before now,
-    // so we will do it just before creating the image.
-    if (filterArray.spec[0].name == ASAtomFromString("DCTDecode")) {
+    if (filterArray.spec[0].name == ASAtomFromString("FlateDecode")) {
+        SetFlateFilterParams(PDDocGetCosDoc(outDoc));
+    }
+    else if (filterArray.spec[0].name == ASAtomFromString("DCTDecode")) {
         SetDCTFilterParams(PDDocGetCosDoc(outDoc));
     }
     else if (filterArray.spec[0].name == ASAtomFromString("CCITTFaxDecode")) {
@@ -399,12 +398,26 @@ PDEImage RenderPage::GetPDEImage(PDDoc outDoc) {
     return image;
 }
 
+PDEFilterArray RenderPage::SetFlateFilterParams(CosDoc cosDoc) {
+    // Create a new Cos dictionary
+    CosObj dictParams = CosNewDict(cosDoc, false, 1);
+
+    //Set Effort to 6 for best performance/compression balance
+    CosDictPut(dictParams, ASAtomFromString("Effort"), CosNewInteger(cosDoc, false, 6));
+
+    filterArray.numFilters = 1;
+    filterArray.spec[0].encodeParms = dictParams;
+    filterArray.spec[0].decodeParms = CosNewNull();
+
+    return filterArray;
+}
+
 PDEFilterArray RenderPage::SetDCTFilterParams(CosDoc cosDoc) {
     // Create a new Cos dictionary
     CosObj dictParams = CosNewDict(cosDoc, false, 4);
 
     // Populate the dictionary with required entries to do JPEG compression
-    // (only Columns, Rows, and the number of color dimensions needed for sraight JPEG)
+    // (only Columns, Rows, and the number of color dimensions needed for JPEG)
     CosDictPut(dictParams, ASAtomFromString("Columns"), CosNewInteger(cosDoc, false, attrs.width));
     CosDictPut(dictParams, ASAtomFromString("Rows"), CosNewInteger(cosDoc, false, attrs.height));
     CosDictPut(dictParams, ASAtomFromString("Colors"), CosNewInteger(cosDoc, false, nComps));
