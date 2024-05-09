@@ -10,6 +10,9 @@ Demonstrates how to add different types of hyperlinks to a PDF Document, includi
 ## AddPageNumbers
 Demonstrates how to add labels to PDF pages that aid navigation in the thumbnail view.
 
+## AddQRCode
+Demonstrates how to add a QR barcode to a PDF page.
+
 ## AddTextWatermark
 Demonstrates adding a text watermark to a PDF document. Text watermarks are more difficult to remove than annotation based watermarks.
 
