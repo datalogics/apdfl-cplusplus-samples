@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
         PDEFontAttrs fontAttrs;
         memset(&fontAttrs, 0, sizeof(PDEFontAttrs));
 
-        fontAttrs.name = ASAtomFromString("Times-Roman");
+        fontAttrs.name = ASAtomFromString("CourierStd");
 
         PDSysFont sysFont = PDFindSysFont(&fontAttrs, sizeof(fontAttrs), 0);
 
