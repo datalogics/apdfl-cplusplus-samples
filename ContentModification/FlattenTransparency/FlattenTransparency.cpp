@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 
             // Appearance options
 
-            // A profiled color space to use for transparent objects. For CMYK, use "U.S. Web Coated (SWOP)v2".
+            // A profiled color space to use for transparent objects. For CMYK, use "U.S. Web Coated (SWOP) v2".
             flattenParams.profileDesc = ASTextFromUnicode((ASUTF16Val *)"sRGB IEC61966-2.1", kUTF8);
             // The ZIP compression scheme (Flate encoding) for images.
             flattenParams.colorCompression = kPDFlattenerZipCompression;
