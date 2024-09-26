@@ -29,84 +29,81 @@ void EmbedSysFontForFontEntry(UnembeddedFont fontEntry, PDDoc pdDoc) {
     DURING
         PDEFont pdeFontUnembedded = PDEFontCreateFromCosObj(&fontEntry.cosObj);
 
-    PDEFontAttrs attrs;
-    memset(&attrs, 0, sizeof(PDEFontAttrs));
-    PDEFontGetAttrs(pdeFontUnembedded, &attrs, sizeof(PDEFontAttrs));
+        PDEFontAttrs attrs;
+        memset(&attrs, 0, sizeof(PDEFontAttrs));
+        PDEFontGetAttrs(pdeFontUnembedded, &attrs, sizeof(PDEFontAttrs));
 
-    PDSysEncoding sysEnc = NULL;
-    if (attrs.type == ASAtomFromString("Type0")) {
-        sysEnc = PDSysEncodingCreateFromCMapName(attrs.encoding);
-    }
-    else {
-        sysEnc = PDSysEncodingCreateFromBaseName(attrs.encoding, NULL);
-    }
-
-    PDSysFont sysFont = PDFindSysFontForPDEFont(pdeFontUnembedded, kPDSysFontMatchNameAndCharSet);
-
-    // If the font is not found on the system, sysFont will be 0.
-    if (NULL == sysFont) {
-        std::cout << "Could not find a pdSysFont " << std::endl;
-        return;
-    }
-
-    PDEFontSetSysFont(pdeFontUnembedded, sysFont);
-
-    if (sysEnc)
-    {
-        PDEFontSetSysEncoding(pdeFontUnembedded, sysEnc);
-    }
-
-    if (attrs.cantEmbed != 0) {
-        std::cout << "Font " << ASAtomGetString(attrs.name) << " cannot be embedded" << std::endl;
-    }
-    else {
-        if (PDEFontIsMultiByte(pdeFontUnembedded)) {
-            PDEFontAttrs foundSysFontAttrs;
-            memset(&foundSysFontAttrs, 0, sizeof(PDEFontAttrs));
-
-            PDSysFontGetAttrs(sysFont, &foundSysFontAttrs, sizeof(PDEFontAttrs));
-
-            PDFont currentFont = PDFontFromCosObj(fontEntry.cosObj);
-            PDFont currentDescendantFont = PDFontGetDescendant(currentFont);
-            ASAtom currentDescendantFontSubtype = PDFontGetSubtype(currentDescendantFont);
-
-            //If the OS Font discovered is TrueType-based, but the existing CIDFont isn't, don't attempt to embed it.
-            if (foundSysFontAttrs.type == ASAtomFromString("TrueType") && ASAtomFromString("CIDFontType2") != currentDescendantFontSubtype) {
-                return;
-            }
-            //If the OS Font discovered is Type1-based, but the existing CIDFont isn't, don't attempt to embed it.
-            if (foundSysFontAttrs.type == ASAtomFromString("Type1") && ASAtomFromString("CIDFontType0") != currentDescendantFontSubtype) {
-                return;
-            }
-
-            // Subset embed font
-            PDEFont pdeFont = NULL;
-            if (sysEnc)
-            {
-                pdeFont = PDEFontCreateFromSysFontAndEncoding(sysFont, sysEnc, attrs.name, kPDEFontCreateEmbedded);
-            }
-            else
-            {
-                pdeFont = PDEFontCreateFromSysFont(sysFont, kPDEFontCreateEmbedded | kPDEFontCreateSubset);
-            }
-
-            PDEFontSubsetNow(pdeFontUnembedded, PDDocGetCosDoc(pdDoc));
-
-            PDERelease((PDEObject)pdeFont);
+        PDSysEncoding sysEnc = NULL;
+        if (attrs.type == ASAtomFromString("Type0")) {
+            sysEnc = PDSysEncodingCreateFromCMapName(attrs.encoding);
         }
         else {
-            // Fully embed font
-            PDEFont pdeFont = PDEFontCreateFromSysFont(sysFont, kPDEFontCreateEmbedded);
-            PDEFontEmbedNow(pdeFontUnembedded, PDDocGetCosDoc(pdDoc));
-
-            PDERelease((PDEObject)pdeFont);
+            sysEnc = PDSysEncodingCreateFromBaseName(attrs.encoding, NULL);
         }
-    }
 
-    if (sysEnc)
-    {
-        PDERelease((PDEObject)sysEnc);
-    }
+        PDSysFont sysFont = PDFindSysFontForPDEFont(pdeFontUnembedded, kPDSysFontMatchNameAndCharSet);
+
+        // If the font is not found on the system, sysFont will be 0.
+        if (NULL == sysFont) {
+            std::cout << "Could not find a pdSysFont " << std::endl;
+            return;
+        }
+
+        PDEFontSetSysFont(pdeFontUnembedded, sysFont);
+
+        if (sysEnc) {
+            PDEFontSetSysEncoding(pdeFontUnembedded, sysEnc);
+        }
+
+        if (attrs.cantEmbed != 0) {
+            std::cout << "Font " << ASAtomGetString(attrs.name) << " cannot be embedded" << std::endl;
+        }
+        else {
+            if (PDEFontIsMultiByte(pdeFontUnembedded)) {
+                PDEFontAttrs foundSysFontAttrs;
+                memset(&foundSysFontAttrs, 0, sizeof(PDEFontAttrs));
+
+                PDSysFontGetAttrs(sysFont, &foundSysFontAttrs, sizeof(PDEFontAttrs));
+
+                PDFont currentFont = PDFontFromCosObj(fontEntry.cosObj);
+                PDFont currentDescendantFont = PDFontGetDescendant(currentFont);
+                ASAtom currentDescendantFontSubtype = PDFontGetSubtype(currentDescendantFont);
+
+                //If the OS Font discovered is TrueType-based, but the existing CIDFont isn't, don't attempt to embed it.
+                if (foundSysFontAttrs.type == ASAtomFromString("TrueType") && ASAtomFromString("CIDFontType2") != currentDescendantFontSubtype) {
+                    return;
+                }
+                //If the OS Font discovered is Type1-based, but the existing CIDFont isn't, don't attempt to embed it.
+                if (foundSysFontAttrs.type == ASAtomFromString("Type1") && ASAtomFromString("CIDFontType0") != currentDescendantFontSubtype) {
+                    return;
+                }
+
+                // Subset embed font
+                PDEFont pdeFont = NULL;
+                if (sysEnc) {
+                    pdeFont = PDEFontCreateFromSysFontAndEncoding(sysFont, sysEnc, attrs.name, kPDEFontCreateEmbedded);
+                }
+                else
+                {
+                    pdeFont = PDEFontCreateFromSysFont(sysFont, kPDEFontCreateEmbedded | kPDEFontCreateSubset);
+                }
+
+                PDEFontSubsetNow(pdeFontUnembedded, PDDocGetCosDoc(pdDoc));
+
+                PDERelease((PDEObject)pdeFont);
+            }
+            else {
+                // Fully embed font
+                PDEFont pdeFont = PDEFontCreateFromSysFont(sysFont, kPDEFontCreateEmbedded);
+                PDEFontEmbedNow(pdeFontUnembedded, PDDocGetCosDoc(pdDoc));
+
+                PDERelease((PDEObject)pdeFont);
+            }
+        }
+
+        if (sysEnc) {
+            PDERelease((PDEObject)sysEnc);
+        }
     HANDLER
         APDFLib::displayError(ERRORCODE);
     END_HANDLER
@@ -123,54 +120,54 @@ ACCB1 ASBool ACCB2 GetFontInfoProc(PDFont pdFont, PDFontFlags* fontFlags, std::v
     DURING
         memset(&attrs, 0, sizeof(PDEFontAttrs));
 
-    PDFontGetName(pdFont, fontNameBuf, PSNAMESIZE);
-    attrs.name = ASAtomFromString(fontNameBuf);
-    attrs.type = PDFontGetSubtype(pdFont);
-    fontSubtypeP = ASAtomGetString(attrs.type);
+        PDFontGetName(pdFont, fontNameBuf, PSNAMESIZE);
+        attrs.name = ASAtomFromString(fontNameBuf);
+        attrs.type = PDFontGetSubtype(pdFont);
+        fontSubtypeP = ASAtomGetString(attrs.type);
 
-    fontEmbedded = PDFontIsEmbedded(pdFont);
+        fontEmbedded = PDFontIsEmbedded(pdFont);
 
-    if (fontEmbedded) {
-        if ((strlen(fontNameBuf)) > 7 && (fontNameBuf[6] == '+'))
-            fontSubset = true;
-    }
-    if (fontSubset)
-    {
-        fontNameStart = fontNameBuf + 7;
-    }
-    else {
-        fontNameStart = fontNameBuf;
-    }
+        if (fontEmbedded) {
+            if ((strlen(fontNameBuf)) > 7 && (fontNameBuf[6] == '+')) {
+                    fontSubset = true;
+            }
+        }
+        if (fontSubset) {
+            fontNameStart = fontNameBuf + 7;
+        }
+        else
+        {
+            fontNameStart = fontNameBuf;
+        }
 
-    sysFont = PDFindSysFont(&attrs, sizeof(PDEFontAttrs), 0);
-    if (sysFont)
-    {
-        fontIsSysFont = true;
-    }
+        sysFont = PDFindSysFont(&attrs, sizeof(PDEFontAttrs), 0);
+        if (sysFont) {
+            fontIsSysFont = true;
+        }
 
-    // Print font information
-    std::cout << "Font " << fontNameStart << ", Subtype " << fontSubtypeP << " ("
-        << (fontIsSysFont ? "" : "Not a ") << "System Font, ";
-    if (fontEmbedded) {
-        std::cout << "embedded" << (fontSubset ? " subset" : "");
-    }
-    else {
-        std::cout << "unembedded";
-    }
-    std::cout << ")" << std::endl;
+        // Print font information
+        std::cout << "Font " << fontNameStart << ", Subtype " << fontSubtypeP << " ("
+            << (fontIsSysFont ? "" : "Not a ") << "System Font, ";
+        if (fontEmbedded) {
+            std::cout << "embedded" << (fontSubset ? " subset" : "");
+        }
+        else {
+            std::cout << "unembedded";
+        }
+        std::cout << ")" << std::endl;
 
-    // Add font to the list of fonts to be subset. This example only subsets System
-    // fonts that are not embedded in this PDF document. The sample will not subset fonts
-    // that are fully embedded in the PDF file.
-    if (fontIsSysFont && !fontEmbedded) {
-        UnembeddedFont fontToBeEmbedded;
-        fontToBeEmbedded.cosObj = PDFontGetCosObj(pdFont);
+        // Add font to the list of fonts to be subset. This example only subsets System
+        // fonts that are not embedded in this PDF document. The sample will not subset fonts
+        // that are fully embedded in the PDF file.
+        if (fontIsSysFont && !fontEmbedded) {
+            UnembeddedFont fontToBeEmbedded;
+            fontToBeEmbedded.cosObj = PDFontGetCosObj(pdFont);
 
-        clientData.push_back(fontToBeEmbedded);
-    }
+            clientData.push_back(fontToBeEmbedded);
+        }
     HANDLER
         std::cout << "Exception raised in GetFontInfoProc(): ";
-    APDFLib::displayError(ERRORCODE);
+        APDFLib::displayError(ERRORCODE);
     END_HANDLER
 
     return true;
