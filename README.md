@@ -15,7 +15,9 @@ We assume a basic level of technical understanding of the PDF file format, invid
 
 Many of these sample programs automatically generate an output file or set of files.  These output files, generally PDF or graphics files (JPG or BMP), are stored in the directory where the application has been run. If you run a sample program a second or third time, it will overwrite any output files that were created and stored earlier.  However, if you run a sample program, generate a PDF output file, and then open that PDF file and try to run that sample program again, you will see an error message.  The program will not be able to overwrite an existing output file if that file is currently open in another program.
 
-*(Note: that the Forms Extension product and samples are available by talking to Datalogics Sales.)*
+*(Note: that the Forms Extension product is available by talking to Datalogics Sales.)*
 
 ## ***Building and Running Samples***
-***On Windows,** samples can be built and run easily in an IDE such as Visual Studio 2017, 2019, or 2022.*
+**On Windows,** samples can be built and run easily in an IDE such as Visual Studio 2017, 2019, or 2022.
+
+**On macOS and Linux,** samples can be built using makefiles (provided by Installer) and then run from the terminal.
