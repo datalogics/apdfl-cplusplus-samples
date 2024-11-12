@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
         ASfree((void *)oName);
 
         // Convert the input file into a PDEImage.
-        PDEImage newImage = DLCreatePDEImageFromFile(doc, sInput, NULL);
+        PDEImage newImage = DLCreatePDEImageFromFile(sInput, NULL);
 
         /*
          * Create a PDF page which is one inch larger all around this image.
