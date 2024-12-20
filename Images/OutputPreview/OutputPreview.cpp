@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2004-2024, Datalogics, Inc. All rights reserved.
 //
 // The sample demonstrates how to create true color separations and composite images of spot and process colors.
 //
@@ -34,7 +34,7 @@
 #include "CosCalls.h"
 
 // Resolution of image desired for plates.
-#define RESOLUTION (300.0)
+constexpr auto RESOLUTION = 300.0f;
 
 // Font used to label plates
 #define FONT_NAME "MyriadPro-Regular"
@@ -58,7 +58,7 @@ typedef struct PageInfo {
     // Width and Depth in pixels
     ASInt32 rows;
     ASInt32 cols;
-    ASInt32 rowWidth;
+    ASSize_t rowWidth;
 
     // Referenced from drawParams;
     ASRealRect drawWindow;
@@ -264,20 +264,18 @@ void FillPageInfo(PageInfo *pageInfo, PDPage page) {
     PDPageGetCropBox(page, &pageRect);
 
     // Convert the size and matrix from
-    // ASFixed values to double values
-    double left, right, top, bottom;
-    left = ASFixedToFloat(pageRect.left);
-    right = ASFixedToFloat(pageRect.right);
-    top = ASFixedToFloat(pageRect.top);
-    bottom = ASFixedToFloat(pageRect.bottom);
+    // ASFixed values to ASReal values
+    ASReal pageWidth = ASFixedToFloat(pageRect.right - pageRect.left);
+    ASReal pageHeight = ASFixedToFloat(pageRect.top - pageRect.bottom);
 
     /* Draw Window is the SIZE of the resultant image. we want it
     ** always to be based at (0,0), and extend right by width, and up by height
     */
+    const ASReal scaleFactor = RESOLUTION / 72.0f;
     pageInfo->drawWindow.left = 0;
     pageInfo->drawWindow.bottom = 0;
-    pageInfo->drawWindow.top = (ASReal)floor((ASReal)((top - bottom) * RESOLUTION / 72.0) + 0.5);
-    pageInfo->drawWindow.right = (ASReal)floor((ASReal)((right - left) * RESOLUTION / 72.0) + 0.5);
+    pageInfo->drawWindow.top = floor((pageHeight * scaleFactor) + 0.5f);
+    pageInfo->drawWindow.right = floor((pageWidth * scaleFactor) + 0.5f);
 
     // If the page has a 90 or 270 degree rotation,
     // we need to swap the width and depth
@@ -302,12 +300,12 @@ void FillPageInfo(PageInfo *pageInfo, PDPage page) {
     ** image. We draw here from bottom to top, and note in creating the image to be put into
     ** the page that we are drawing from bottom to top
     */
-    pageInfo->drawMatrix.a = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.a));
-    pageInfo->drawMatrix.b = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.b));
-    pageInfo->drawMatrix.c = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.c));
-    pageInfo->drawMatrix.d = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.d));
-    pageInfo->drawMatrix.tx = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.h));
-    pageInfo->drawMatrix.ty = (ASReal)(RESOLUTION / 72.0 * ASFixedToFloat(pageMatrix.v));
+    pageInfo->drawMatrix.a = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.a));
+    pageInfo->drawMatrix.b = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.b));
+    pageInfo->drawMatrix.c = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.c));
+    pageInfo->drawMatrix.d = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.d));
+    pageInfo->drawMatrix.tx = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.h));
+    pageInfo->drawMatrix.ty = (ASReal)(scaleFactor * ASFixedToFloat(pageMatrix.v));
 
     pageInfo->drawParams.size = sizeof(PDPageDrawMParamsRec);
     pageInfo->drawParams.asRealMatrix = &pageInfo->drawMatrix;
@@ -336,7 +334,7 @@ void FillPageInfo(PageInfo *pageInfo, PDPage page) {
 
     // Collect the information needed about the inks
     PDPageEnumInks(pageInfo->page, CollectInkInfo, pageInfo, false);
-    pageInfo->numberOfColorants = pageInfo->pageInks.size();
+    pageInfo->numberOfColorants = (ASUns8)pageInfo->pageInks.size();
 
     // Discard the old DeviceN Color space, if there is one
     if (pageInfo->deviceNspace)
@@ -355,7 +353,8 @@ void WriteCMYKImage(PageInfo *pageInfo, PDDoc outputDoc) {
     // First, draw the image to a buffer using PDDrawContentsToMemoryWithParams
     // All of the params relevant to positioning and scaling the page are already set.
     // Here, we need to set color space to CMYK
-    pageInfo->drawParams.csAtom = ASAtomFromString("DeviceCMYK");
+    static const ASAtom atmDeviceCMYK = ASAtomFromString("DeviceCMYK");
+    pageInfo->drawParams.csAtom = atmDeviceCMYK;
 
     // If a buffer already exists, free it, and null the pointer
     if (pageInfo->drawParams.buffer != NULL)
@@ -376,10 +375,10 @@ void WriteCMYKImage(PageInfo *pageInfo, PDDoc outputDoc) {
 
     // APDFL will pad each row to an even 32 bit boundary. For this reason, row width may not be equal to
     // pixels wide * channels. However, for CMYK, each pixel is 32 bits, so they are always the same
-    pageInfo->rowWidth = pageInfo->cols * 4;
+    pageInfo->rowWidth = static_cast<ASSize_t>(pageInfo->cols) * 4;
 
     // This color space is easy, it is just CMYK
-    PDEColorSpace cmyk = PDEColorSpaceCreateFromName(ASAtomFromString("DeviceCMYK"));
+    PDEColorSpace cmyk = PDEColorSpaceCreateFromName(atmDeviceCMYK);
 
     // Add the image to the output document
     AddImageToDoc(pageInfo, outputDoc, cmyk, pageInfo->drawParams.buffer,
@@ -396,7 +395,8 @@ void WriteDeviceNImage(PageInfo *pageInfo, PDDoc outputDoc) {
     // First, draw the image to a buffer using PDDrawContentsToMemoryWithParams
     // All of the params relevant to positioning and scaling the page are already set.
     // Here, we need to set color space to DeviceN
-    pageInfo->drawParams.csAtom = ASAtomFromString("DeviceN");
+    static const ASAtom atmDeviceN = ASAtomFromString("DeviceN");
+    pageInfo->drawParams.csAtom = atmDeviceN;
 
     // If a buffer already exists, free it, and null the pointer
     if (pageInfo->drawParams.buffer != NULL)
@@ -404,7 +404,7 @@ void WriteDeviceNImage(PageInfo *pageInfo, PDDoc outputDoc) {
     pageInfo->drawParams.buffer = NULL;
 
     // reset numberOfColorants to force generation of color list
-    pageInfo->numberOfColorants = pageInfo->pageInkNames.size();
+    pageInfo->numberOfColorants = (ASUns8)pageInfo->pageInkNames.size();
 
     // Set up for color list
     // The easiest way to do this is to NOT provide a colorant list,
@@ -439,7 +439,7 @@ void WriteDeviceNImage(PageInfo *pageInfo, PDDoc outputDoc) {
 
     // APDFL will pad each row to an even 32 bit boundary. For this reason, row width may not be
     // equal to pixels wide * channels. Calculate the actual width of a row here
-    pageInfo->rowWidth = (((pageInfo->cols * pageInfo->numberOfColorants * 8) + 31) / 32) * 4;
+    pageInfo->rowWidth = (static_cast<ASSize_t>(((pageInfo->cols * pageInfo->numberOfColorants * 8) + 31) / 32)) * 4;
 
     // Add the image to the output document using a full DeviceN ColorSpace
     AddImageToDoc(pageInfo, outputDoc, pageInfo->deviceNspace, pageInfo->drawParams.buffer,
@@ -466,22 +466,22 @@ void WriteDeviceNImage(PageInfo *pageInfo, PDDoc outputDoc) {
 // Separate out one colorant from a DeviceN bitmap into a single plate.
 void WriteSeparationImage(PageInfo *pageInfo, PDDoc outputDoc, int separationNumber) {
     /* Allocate a buffer to hold the separation image only */
-    char *buffer = (char *)ASmalloc(pageInfo->cols * pageInfo->rows);
+    char* buffer = (char*)ASmalloc(static_cast<ASSize_t>(pageInfo->cols) * pageInfo->rows);
 
     // Keep track of the number of non-zero pixels
     ASSize_t pixelsUsed = 0;
 
     // Separate out just one colorant
-    for (int row = 0; row < pageInfo->rows; row++)
-        for (int col = 0; col < pageInfo->cols; col++) {
+    for (auto row = 0; row < pageInfo->rows; row++)
+        for (auto col = 0; col < pageInfo->cols; col++) {
             buffer[(row * pageInfo->cols) + col] =
-                pageInfo->drawParams.buffer[(row * pageInfo->rowWidth) + (col * pageInfo->numberOfColorants) + separationNumber];
+                pageInfo->drawParams.buffer[(row * pageInfo->rowWidth) + static_cast<ASSize_t>(col * pageInfo->numberOfColorants) + separationNumber];
             if (buffer[(row * pageInfo->cols) + col] != 0)
                 pixelsUsed++;
         }
 
     // Display the colorant name in the page
-    char *colorantName = (char *)ASAtomGetString(pageInfo->pageInkNames[separationNumber]);
+    char *colorantName = const_cast<char *>(ASAtomGetString(pageInfo->pageInkNames[separationNumber]));
 
     // Display the percentage of coverage of this colorant in the page
     char coverage[100];
@@ -490,7 +490,7 @@ void WriteSeparationImage(PageInfo *pageInfo, PDDoc outputDoc, int separationNum
     // Normally, we would create plates for printing by using DeviceGray to render the plate.
     // But for display, we will use the appropriate Separation color space to display the separation.
     PDEColorSpace cs = pageInfo->spotColors[separationNumber];
-    AddImageToDoc(pageInfo, outputDoc, cs, buffer, (pageInfo->cols * pageInfo->rows), 1, colorantName, coverage);
+    AddImageToDoc(pageInfo, outputDoc, cs, buffer, static_cast<size_t>(pageInfo->cols * pageInfo->rows), 1, colorantName, coverage);
 
     // Free the separation bitmap
     ASfree(buffer);
@@ -504,11 +504,11 @@ void AddImageToDoc(PageInfo *pageInfo, PDDoc outputDoc, PDEColorSpace space, cha
     // If the image row size is greater than the packed row size,
     // pack the image here.
     // Since it will always be smaller than the original image, we can pack it in place
-    size_t packedRow = pageInfo->cols * channels;
+    size_t packedRow = static_cast<size_t>(pageInfo->cols * channels);
 
     if ((channels > 1) && (packedRow != pageInfo->rowWidth)) {
-        for (int row = 1; row < pageInfo->rows; row++)
-            memmove((char *)&buffer[row * packedRow], (char *)&buffer[row * pageInfo->rowWidth], packedRow);
+        for (auto row = 1; row < pageInfo->rows; row++)
+            memmove(&buffer[row * packedRow], &buffer[row * pageInfo->rowWidth], packedRow);
 
         // Update image and row width to reflect packing
         bufferSize = packedRow * pageInfo->cols;
@@ -529,29 +529,26 @@ void AddImageToDoc(PageInfo *pageInfo, PDDoc outputDoc, PDEColorSpace space, cha
     // If it is for use in a document, then we probably should compress.
     // If we do not compress, we can omit this block, and use "NULL" for the
     // pointer to a filter, below
+    static const ASAtom atmFlateDecode = ASAtomFromString("FlateDecode");
     PDEFilterArray filterArray;
     memset(&filterArray, 0, sizeof(filterArray));
     filterArray.numFilters = 1;
-    filterArray.spec[0].name = ASAtomFromString("FlateDecode");
+    filterArray.spec[0].name = atmFlateDecode;
 
     // This matrix is internal to the image. Not necessarily
     // to it's placement. As written here, it places the images
     // lower left corner at (0, 0), draws the image erect, and
     // scales it at 1 pixel per point.
-    ASFixedMatrix imageMatrix;
-    imageMatrix.a = ASInt16ToFixed(attrs.width);
-    imageMatrix.d = ASInt16ToFixed(attrs.height);
-    imageMatrix.b = imageMatrix.c = 0;
-    imageMatrix.h = 0;
-    imageMatrix.v = 0;
+    ASDoubleMatrix imageMatrix = { (ASDouble)attrs.width,0,0,(ASDouble)attrs.height,0,0 };
 
     // Create the image
-    PDEImage image = PDEImageCreate(&attrs, sizeof(attrs), &imageMatrix, 0, space, NULL,
+    PDEImage image = PDEImageCreateEx(&attrs, sizeof(attrs), &imageMatrix, 0, space, NULL,
                                     &filterArray, 0, (ASUns8 *)buffer, bufferSize);
+    
 
     // Create a page to hold the image
     // The page will be precisely the size of the image.
-    ASFixedRect pageWindow;
+    ASFixedRect pageWindow = { 0,0,0,0 };
     pageWindow.left = FloatToASFixed(pageInfo->drawWindow.left);
     pageWindow.right = FloatToASFixed(pageInfo->drawWindow.right);
     pageWindow.top = FloatToASFixed(pageInfo->drawWindow.top);
@@ -562,25 +559,25 @@ void AddImageToDoc(PageInfo *pageInfo, PDDoc outputDoc, PDEColorSpace space, cha
     PDEContent content = PDPageAcquirePDEContent(outputPage, 0);
 
     // Add the image to it
-    PDEContentAddElem(content, 0, (PDEElement)image);
+    PDEContentAddElem(content, 0, reinterpret_cast<PDEElement>(image));
 
     // Release the image
     PDERelease((PDEObject)image);
 
     /* Create the line of text to ID the page */
     PDEText text = PDETextCreate();
-    PDETextAddEx(text, kPDETextRun, 0, (ASUns8 *)Name, strlen(Name), pageInfo->textFont,
+    PDETextAddEx(text, kPDETextRun, 0, (ASUns8 *)Name, static_cast<ASInt32>(strlen(Name)), pageInfo->textFont,
                  &pageInfo->textGState, sizeof(PDEGraphicState), &pageInfo->textTState,
                  sizeof(PDETextState), &pageInfo->textMatrix, NULL);
 
     // If there is a second information line, add it as well
     if (Info != NULL)
-        PDETextAddEx(text, kPDETextRun, 1, (ASUns8 *)Info, strlen(Info), pageInfo->textFont,
+        PDETextAddEx(text, kPDETextRun, 1, (ASUns8 *)Info, static_cast<ASInt32>(strlen(Info)), pageInfo->textFont,
                      &pageInfo->textGState, sizeof(PDEGraphicState), &pageInfo->textTState,
                      sizeof(PDETextState), &pageInfo->secondaryTextMatrix, NULL);
 
     // Add it to the page, over the image
-    PDEContentAddElem(content, 1, (PDEElement)text);
+    PDEContentAddElem(content, 1, reinterpret_cast<PDEElement>(text));
 
     // Release the text
     PDERelease((PDEObject)text);
@@ -598,14 +595,14 @@ void AddImageToDoc(PageInfo *pageInfo, PDDoc outputDoc, PDEColorSpace space, cha
 }
 
 ASBool CollectInkInfo(PDPageInk ink, void *clientData) {
-    PageInfo *pageInfo = (PageInfo *)clientData;
+    PageInfo *pageInfo = reinterpret_cast<PageInfo *>(clientData);
 
     // It is possible to have multiple definitions for the same
     // named colorant. When that happens here, we will discard
     // all but the first such ink. All inks of a given name will
     // be rendered to the same plate, regardless of which definition
     // for the name is used
-    for (ASUns8 count = 0; count < pageInfo->pageInkNames.size(); count++)
+    for (auto count = 0; count < pageInfo->pageInkNames.size(); count++)
         if (pageInfo->pageInkNames[count] == ink->colorantName)
             return (true);
 
@@ -622,19 +619,23 @@ ASBool CollectInkInfo(PDPageInk ink, void *clientData) {
 
 // Create the separation color spaces to use for Cyan, Magenta, Yellow, and Black
 PDEColorSpace CreateProcessColorSpace(PageInfo *pageInfo, PDPageInk ink) {
+    static const ASAtom atmDeviceCMYK = ASAtomFromString("DeviceCMYK");
+    static const int sepColorStructSize = sizeof(PDESeparationColorData);
     PDEColorSpace result;
 
     // Set up to create a new separation color space
     PDEColorSpaceStruct colorSpace;
     PDESeparationColorData color;
+    memset(&colorSpace, 0x0, sizeof(colorSpace));
+    memset(&color, 0x0, sepColorStructSize);
     colorSpace.sep = &color;
 
     // Size is a constant, name is the name of the colorant,
     // and the alternate is always DeviceCMYK
     // (Make sure to release this after the color is constructed).
-    color.size = sizeof(PDESeparationColorData);
+    color.size = sepColorStructSize;
     color.name = ink->colorantName;
-    color.alt = PDEColorSpaceCreateFromName(ASAtomFromString("DeviceCMYK"));
+    color.alt = PDEColorSpaceCreateFromName(atmDeviceCMYK);
 
     // The tint transform is where things get ugly. There are no high level interfaces
     // to help with this, it must be done completely using the COS level commands
@@ -652,14 +653,12 @@ PDEColorSpace CreateProcessColorSpace(PageInfo *pageInfo, PDPageInk ink) {
     // 0 to 1, reflecting the saturation of the alternate space to reflect
     // this colorant.
     CosObj cosRange = CosNewArray(cosDoc, false, 8);
-    CosArrayPut(cosRange, 0, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 1, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 2, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 3, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 4, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 5, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 6, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 7, CosNewFloat(cosDoc, false, 1.0));
+    for (int curComp = 0; curComp < 4; curComp++)
+    {
+        auto n = 2 * curComp;
+        CosArrayPut(cosRange, n, CosNewFloat(cosDoc, false, 0));
+        CosArrayPut(cosRange, n+1, CosNewFloat(cosDoc, false, 1.0));
+    }
 
     // The tint transform is how we convert this colorant into CMYK
     // I am using Postscript Functions here, because they are a simple to
@@ -673,27 +672,33 @@ PDEColorSpace CreateProcessColorSpace(PageInfo *pageInfo, PDPageInk ink) {
     // resultant CMYK color. If the colorant is Cyan, we just need to add three zeros
     // after it. If it is Magenta, we need to add a zero before it, and two after, and
     // so on.
-    char transformText[200];
-    if (ink->colorantName == ASAtomFromString("Cyan"))
+    static const ASAtom atmCyan = ASAtomFromString("Cyan");
+    static const ASAtom atmMagenta = ASAtomFromString("Magenta");
+    static const ASAtom atmYellow = ASAtomFromString("Yellow");
+    static const ASAtom atmBlack = ASAtomFromString("Black");
+
+    char transformText[200]="";
+    if (ink->colorantName == atmCyan)
         strcpy(transformText, "{0 0 0}");
-    if (ink->colorantName == ASAtomFromString("Magenta"))
+    if (ink->colorantName == atmMagenta)
         strcpy(transformText, "{0 exch 0 0}");
-    if (ink->colorantName == ASAtomFromString("Yellow"))
+    if (ink->colorantName == atmYellow)
         strcpy(transformText, "{0 exch 0 exch 0}");
-    if (ink->colorantName == ASAtomFromString("Black"))
+    if (ink->colorantName == atmBlack)
         strcpy(transformText, "{0 exch 0 exch 0 exch}");
 
     // Build the transform function.
-    ASInt32 length = (ASInt32)strlen(transformText);
-    ASStm transformStm = ASMemStmRdOpen(transformText, length);
-    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), length);
+    auto length = strlen(transformText);
+    ASStm transformStm = ASMemStmRdOpen(transformText, static_cast<ASArraySize>(length));
+    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), static_cast<CosByteMax>(length));
     ASStmClose(transformStm);
 
     // Reference the newly built transform function
     color.tintTransform = transform;
 
+    static const ASAtom atmSeparation = ASAtomFromString("Separation");
     // Create a separation color space for this colorant
-    result = PDEColorSpaceCreate(ASAtomFromString("Separation"), &colorSpace);
+    result = PDEColorSpaceCreate(atmSeparation, &colorSpace);
 
     PDERelease((PDEObject)color.alt);
     return (result);
@@ -702,18 +707,22 @@ PDEColorSpace CreateProcessColorSpace(PageInfo *pageInfo, PDPageInk ink) {
 // Create spot colors differs from create process colors only in the action of the tint transform
 PDEColorSpace CreateSpotColorSpace(PageInfo *pageInfo, PDPageInk ink) {
     PDEColorSpace result;
-
+    static const ASAtom atmDeviceCMYK = ASAtomFromString("DeviceCMYK");
+    static const ASAtom atmSeparation = ASAtomFromString("Separation");
+    static const int sepColorStructSize = sizeof(PDESeparationColorData);
     // Set up to create a new separation color space
     PDEColorSpaceStruct colorSpace;
     PDESeparationColorData color;
+    memset(&colorSpace, 0x0, sizeof(colorSpace));
+    memset(&color, 0x0, sepColorStructSize);
     colorSpace.sep = &color;
 
     // Size is a constant, name is the name of the colorant,
     // and the alternate is always DeviceCMYK
     // (Make sure to release this after the color is constructed).
-    color.size = sizeof(PDESeparationColorData);
+    color.size = sepColorStructSize;
     color.name = ink->colorantName;
-    color.alt = PDEColorSpaceCreateFromName(ASAtomFromString("DeviceCMYK"));
+    color.alt = PDEColorSpaceCreateFromName(atmDeviceCMYK);
 
     // The tint transform is where things get ugly. There are no high level interfaces
     // to help with this, it must be done completely using the COS level commands
@@ -731,15 +740,13 @@ PDEColorSpace CreateSpotColorSpace(PageInfo *pageInfo, PDPageInk ink) {
     // 0 to 1, reflecting the saturation of the alternate space to reflect
     // this colorant.
     CosObj cosRange = CosNewArray(cosDoc, false, 8);
-    CosArrayPut(cosRange, 0, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 1, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 2, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 3, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 4, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 5, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 6, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 7, CosNewFloat(cosDoc, false, 1.0));
-
+    for (int curComp = 0; curComp < 4; curComp++)
+    {
+        int n = 2 * curComp;
+        CosArrayPut(cosRange, n, CosNewFloat(cosDoc, false, 0));
+        CosArrayPut(cosRange, n + 1, CosNewFloat(cosDoc, false, 1.0));
+    }
+    
     // The tint transform is how we convert this colorant into CMYK
     // I am using Postscript Functions here, because they are a simple to
     // understand means of converting the colors
@@ -757,16 +764,16 @@ PDEColorSpace CreateSpotColorSpace(PageInfo *pageInfo, PDPageInk ink) {
     sprintf(transformText, baseTransformText, ink->cyan, ink->magenta, ink->yellow, ink->black);
 
     // Build the transform function.
-    ASInt32 length = (ASInt32)strlen(transformText);
-    ASStm transformStm = ASMemStmRdOpen(transformText, length);
-    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), length);
+    auto length =strlen(transformText);
+    ASStm transformStm = ASMemStmRdOpen(transformText,static_cast<ASArraySize>(length));
+    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), static_cast<CosByteMax>(length));
     ASStmClose(transformStm);
 
     // Reference the newly built transform function
     color.tintTransform = transform;
 
     // create a separation color space for this colorant
-    result = PDEColorSpaceCreate(ASAtomFromString("Separation"), &colorSpace);
+    result = PDEColorSpaceCreate(atmSeparation, &colorSpace);
 
     // Release the alternate space
     PDERelease((PDEObject)color.alt);
@@ -778,6 +785,8 @@ PDEColorSpace CreateSpotColorSpace(PageInfo *pageInfo, PDPageInk ink) {
 void ConstructDeviceNColorSpace(PageInfo *pageInfo) {
     // Set up to create a new DeviceN NChannel color space
     // There is no high level help for this either, so it must be done using COS level commands
+    static const ASAtom atmDeviceCMYK = ASAtomFromString("DeviceCMYK");
+    static const ASAtom atmDeviceN = ASAtomFromString("DeviceN");
 
     // Obtain the COS doc to allow for COS creation.
     CosDoc cosDoc = pageInfo->cosDoc;
@@ -786,16 +795,16 @@ void ConstructDeviceNColorSpace(PageInfo *pageInfo) {
     CosObj colorSpace = CosNewArray(cosDoc, true, 5);
 
     // Identify it as a DeviceN color space
-    CosArrayPut(colorSpace, 0, CosNewName(cosDoc, false, ASAtomFromString("DeviceN")));
+    CosArrayPut(colorSpace, 0, CosNewName(cosDoc, false, atmDeviceN));
 
     // Create the array of names, and add them to the color space
-    CosObj names = CosNewArray(cosDoc, false, pageInfo->pageInkNames.size());
+    CosObj names = CosNewArray(cosDoc, false, static_cast<ASTArraySize>(pageInfo->pageInkNames.size()));
     for (ASUns8 count = 0; count < pageInfo->pageInkNames.size(); count++)
         CosArrayPut(names, count, CosNewName(cosDoc, false, pageInfo->pageInkNames[count]));
     CosArrayPut(colorSpace, 1, names);
 
     // The alternate color space shall be CMYK
-    PDEColorSpace cmykSpace = PDEColorSpaceCreateFromName(ASAtomFromString("DeviceCMYK"));
+    PDEColorSpace cmykSpace = PDEColorSpaceCreateFromName(atmDeviceCMYK);
     CosObj cosAltColor;
     PDEColorSpaceGetCosObj(cmykSpace, &cosAltColor);
     CosArrayPut(colorSpace, 2, cosAltColor);
@@ -808,23 +817,21 @@ void ConstructDeviceNColorSpace(PageInfo *pageInfo) {
 
     // The domain is a set of ranges, each 0 to 1, one for each colorant in the page
     CosObj cosDomain = CosNewArray(cosDoc, false, 2 * pageInfo->numberOfColorants);
-    for (int count = 0; count < pageInfo->numberOfColorants; count++) {
-        CosArrayPut(cosDomain, count * 2, CosNewFloat(cosDoc, false, 0));
-        CosArrayPut(cosDomain, (count * 2) + 1, CosNewFloat(cosDoc, false, 1.0));
+    for (auto curComp = 0; curComp < pageInfo->numberOfColorants; curComp++) {
+        auto n = curComp * 2;
+        CosArrayPut(cosDomain, n, CosNewFloat(cosDoc, false, 0));
+        CosArrayPut(cosDomain, n + 1, CosNewFloat(cosDoc, false, 1.0));
     }
 
     // The range is always for 4 process colorants (CMYK), and also from
     // 0 to 1, reflecting the saturation of the alternate space to reflect
     // this colorant.
     CosObj cosRange = CosNewArray(cosDoc, false, 8);
-    CosArrayPut(cosRange, 0, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 1, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 2, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 3, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 4, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 5, CosNewFloat(cosDoc, false, 1.0));
-    CosArrayPut(cosRange, 6, CosNewFloat(cosDoc, false, 0));
-    CosArrayPut(cosRange, 7, CosNewFloat(cosDoc, false, 1.0));
+    for (int curComp = 0; curComp < 4; curComp++) {
+        auto n = curComp * 2;
+        CosArrayPut(cosRange, n, CosNewFloat(cosDoc, false, 0));
+        CosArrayPut(cosRange, n + 1, CosNewFloat(cosDoc, false, 1.0));
+    }
 
     // The tint transform is how we convert this colorant into CMYK
     // I am using Postscript Functions here, because they are a simple to
@@ -860,7 +867,7 @@ void ConstructDeviceNColorSpace(PageInfo *pageInfo) {
         strcat(transformText, "{");
 
         //   For each colorant, starting with the last spot colorant
-        for (int color = pageInfo->numberOfColorants - 1; color > 3; color--) {
+        for (auto color = pageInfo->numberOfColorants - 1; color > 3; color--) {
             // Multiply this colors density by it's CMYK conversion
             sprintf(workText, "dup %1.5g mul exch dup %1.5g mul exch dup %1.5g mul exch %1.5g mul ",
                     pageInfo->pageInks[color].cyan, pageInfo->pageInks[color].magenta,
@@ -911,9 +918,9 @@ void ConstructDeviceNColorSpace(PageInfo *pageInfo) {
     }
 
     // Build the transform function.
-    ASInt32 length = (ASInt32)strlen(transformText);
-    ASStm transformStm = ASMemStmRdOpen(transformText, length);
-    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), length);
+    auto length = strlen(transformText);
+    ASStm transformStm = ASMemStmRdOpen(transformText,static_cast<ASArraySize>(length));
+    CosObj transform = CosNewStream(cosDoc, true, transformStm, 0, 0, transformDict, CosNewNull(), static_cast<CosByteMax>(length));
     ASStmClose(transformStm);
 
     // Put the transform into the color space
@@ -943,12 +950,13 @@ PDEColorSpace ModifyColorSpace(PageInfo *pageInfo, int index) {
     CosObj newSpace = CosObjCopy(oldSpace, cosDoc, false);
 
     CosObj inkList = CosArrayGet(newSpace, 1);
+    static const ASAtom atmNone = ASAtomFromString("None");
 
     size_t mask = 1;
-    for (int count = 0; count < pageInfo->numberOfColorants; count++) {
+    for (auto count = 0; count < pageInfo->numberOfColorants; count++) {
         if (!(index & mask)) {
             // Remove this colorant
-            CosArrayPut(inkList, count, CosNewName(cosDoc, false, ASAtomFromString("None")));
+            CosArrayPut(inkList, count, CosNewName(cosDoc, false, atmNone));
         }
         mask = mask << 1;
     }
