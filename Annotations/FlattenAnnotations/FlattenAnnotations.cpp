@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
 //
 //
 // This sample demonstrates flattening annotations within a PDF document.
@@ -65,8 +65,31 @@ int main(int argc, char **argv) {
                 ASDoubleMatrix unity;
                 unity.a = unity.d = 1.0;
                 unity.b = unity.c = 0.0;
-                unity.h = (ASDouble)ASFixedToFloat(nextLoc.left);
-                unity.v = (ASDouble)ASFixedToFloat(nextLoc.bottom);
+
+                // We normally account for a positional offset using the Concantenate Matrix, but if the Form BBox is offset from its 'origin'
+                // then we translate it too far, just force it to zero in this case.
+                double leftValue = 0;
+                double bottomValue = 0;
+                CosObj bbox = CosNewNull();
+                if (CosDictKnown(appearanceStrm, ASAtomFromString("BBox"))) {
+                    bbox = CosDictGet(appearanceStrm, ASAtomFromString("BBox"));
+                    if (CosObjGetType(bbox) == CosArray) {
+                        CosObj left = CosArrayGet(bbox, 0);
+                        leftValue = CosDoubleValue(left);
+                        CosObj bottom = CosArrayGet(bbox, 1);
+                        bottomValue = CosDoubleValue(bottom);
+                    }
+                }
+
+                if (CosObjGetType(bbox) == CosArray && (leftValue != 0 || bottomValue != 0)) {
+                    CosArrayPut(bbox, 0, CosNewFixed(CosObjGetDoc(bbox), false, fixedZero));
+                    CosArrayPut(bbox, 1, CosNewFixed(CosObjGetDoc(bbox), false, fixedZero));
+                    unity.h = unity.v = 0.0;
+                }
+                else {
+                    unity.h = (ASDouble)ASFixedToFloat(nextLoc.left);
+                    unity.v = (ASDouble)ASFixedToFloat(nextLoc.bottom);
+                }
 
                 // Create and add the form xobject.
                 PDEForm formXObject = PDEFormCreateFromCosObjEx(&appearanceStrm, &resource, &unity);
