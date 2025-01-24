@@ -60,16 +60,16 @@ int main(int argc, char **argv) {
 
             if (CosObjGetType(resource) != CosNull) {
                 // Place the annotation's resources in the page's content
-                ASFixedRect nextLoc;
-                PDAnnotGetRect(next, &nextLoc);
+                ASFixedRect rect;
+                PDAnnotGetRect(next, &rect);
                 ASDoubleMatrix unity;
                 unity.a = unity.d = 1.0;
                 unity.b = unity.c = 0.0;
 
-                // We normally account for a positional offset using the Concantenate Matrix, but if the Form BBox is offset from its 'origin'
-                // then we translate it too far, just force it to zero in this case.
                 double leftValue = 0;
                 double bottomValue = 0;
+                double rightValue = 0;
+                double topValue = 0;
                 CosObj bbox = CosNewNull();
                 if (CosDictKnown(appearanceStrm, ASAtomFromString("BBox"))) {
                     bbox = CosDictGet(appearanceStrm, ASAtomFromString("BBox"));
@@ -78,18 +78,18 @@ int main(int argc, char **argv) {
                         leftValue = CosDoubleValue(left);
                         CosObj bottom = CosArrayGet(bbox, 1);
                         bottomValue = CosDoubleValue(bottom);
+                        CosObj right = CosArrayGet(bbox, 2);
+                        rightValue = CosDoubleValue(right);
+                        CosObj top = CosArrayGet(bbox, 3);
+                        topValue = CosDoubleValue(top);
                     }
                 }
 
-                if (CosObjGetType(bbox) == CosArray && (leftValue != 0 || bottomValue != 0)) {
-                    CosArrayPut(bbox, 0, CosNewFixed(CosObjGetDoc(bbox), false, fixedZero));
-                    CosArrayPut(bbox, 1, CosNewFixed(CosObjGetDoc(bbox), false, fixedZero));
-                    unity.h = unity.v = 0.0;
-                }
-                else {
-                    unity.h = (ASDouble)ASFixedToFloat(nextLoc.left);
-                    unity.v = (ASDouble)ASFixedToFloat(nextLoc.bottom);
-                }
+                unity.a = ASFixedToFloat(rect.right - rect.left) / (rightValue - leftValue);
+                unity.d = ASFixedToFloat(rect.top - rect.bottom) / (topValue - bottomValue);
+
+                unity.h = ASFixedToFloat(rect.left) - leftValue * unity.a;
+                unity.v = ASFixedToFloat(rect.bottom) - bottomValue * unity.d;
 
                 // Create and add the form xobject.
                 PDEForm formXObject = PDEFormCreateFromCosObjEx(&appearanceStrm, &resource, &unity);
