@@ -1,6 +1,6 @@
 ![Datalogics Adobe PDF Library](https://raw.github.com/datalogics/dl-icons/develop/DLBanner_Nuget.png)
 
-[Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Documentation](https://docs.datalogics.com/apdfl18/CPlusPlus/index.html) &nbsp; | &nbsp; [Release Notes](https://docs.datalogics.com/apdfl18/Release_Notes.html) &nbsp; | &nbsp;[Homepage](https://www.datalogics.com)
+[Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Documentation](https://dev.datalogics.com/adobe-pdf-library/c-plus-plus/getting-started) &nbsp; | &nbsp; [API Reference](https://docs.datalogics.com/apdfl18/CPlusPlus/index.html) &nbsp; | &nbsp; [Release Notes](https://docs.datalogics.com/apdfl18/Release_Notes.html) &nbsp; | &nbsp;[Homepage](https://www.datalogics.com)
 
 [![Download a Free Trial via Installer (C++)](https://img.shields.io/badge/APDFL%20Free%20Trial%20(C++)-via%20Datalogics%20Installer-blue?color=blue&style=plastic)](https://www.datalogics.com/adobe-pdf-library/)
 
