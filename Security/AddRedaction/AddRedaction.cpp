@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // The AddRedaction sample program uses PDWordFinder to locate text to be redacted in
 // a PDF document. The text is permanently removed from the document.
@@ -70,9 +71,9 @@ int main(int argc, char **argv) {
 
             PDWordGetASText(pdWord, 0, asTextWord);
 
+            ASUTF16Val* textStr = (ASUTF16Val*)ASTextGetUnicodeCopy(asTextWord, APDFLDoc::GetHostUnicodeFormat());
             // Convert ASText object to a wstring.
-            std::wstring testString = reinterpret_cast<wchar_t *>(
-                ASTextGetUnicodeCopy(asTextWord, APDFLDoc::GetHostUnicodeFormat()));
+            std::wstring testString = reinterpret_cast<wchar_t *>(textStr);
 
             std::transform(testString.begin(), testString.end(), testString.begin(), ::tolower);
 
@@ -85,9 +86,11 @@ int main(int argc, char **argv) {
             }
 
             ASTextDestroy(asTextWord);
+            ASfree(textStr);
         }
 
         PDWordFinderReleaseWordList(wordFinder, 0);
+        PDWordFinderDestroy(wordFinder);
 
         // Step 2) Create and apply the redactions.
 
@@ -150,6 +153,8 @@ int main(int argc, char **argv) {
             PDDocApplyRedactions(document.getPDDoc(), NULL);
 
             std::cout << quadVector.size() << " words have been permanently removed...  ";
+
+            ASTextDestroy(redactParams->overlayText);
         } else
             std::cout << "No words were matched, no redactions needed." << std::endl;
 
@@ -172,9 +177,9 @@ int main(int argc, char **argv) {
 
                 PDWordGetASText(pdWord, 0, asTextWord);
 
+                ASUTF16Val* textStr = (ASUTF16Val*)ASTextGetUnicodeCopy(asTextWord, APDFLDoc::GetHostUnicodeFormat());
                 // Convert ASText object to a wstring.
-                std::wstring testString = reinterpret_cast<wchar_t *>(
-                    ASTextGetUnicodeCopy(asTextWord, APDFLDoc::GetHostUnicodeFormat()));
+                std::wstring testString = reinterpret_cast<wchar_t *>(textStr);
 
                 std::transform(testString.begin(), testString.end(), testString.begin(), ::tolower);
 
@@ -184,9 +189,11 @@ int main(int argc, char **argv) {
                     ++cnt;
                 }
                 ASTextDestroy(asTextWord);
+                ASfree(textStr);
             }
 
             PDWordFinderReleaseWordList(wordFinder, 0);
+            PDWordFinderDestroy(wordFinder);
 
             if (0 == cnt) {
                 std::cout << "Verified." << std::endl;
