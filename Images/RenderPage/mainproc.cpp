@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // Sample: RenderPage - Demonstrates the process of rasterizing the cropped area of a PDF page
 //   and placing the resulting raster as an image into a different PDF document.
@@ -24,10 +24,18 @@
 #define FILTER "FlateDecode"
 #define BPC 8 // This must be 8 for DeviceRGB and DeviceCMYK, 1, 8, or 24 for DeviceGray
 #define COLORSPACE "DeviceRGB" // Typically this, DeviceGray, or DeviceCMYK
-// DeviceRGBA is a special colorspace known to PDFL Rendering that can be used to produce a RGBA Bitmap (RGB + Alpha or 32-bit),
-// which is output in this sample as a RGB Image with a Soft Mask set on the page of a PDF
-// DeviceCMYKA is a special colorspace known to PDFL Rendering that can be used to produce a CMYKA Bitmap (CMYK + Alpha or 40-bit)
-// which is output in this sample as a CMYK Image with a Soft Mask set on the page of a PDF
+/* DeviceRGBA is a special colorspace known to PDFL Rendering that can be used to produce a RGBA Bitmap(RGB + Alpha or 32 - bit),
+which is output in this sample as a RGB Image with a Soft Mask set on the page of a PDF
+DeviceCMYKA is a special colorspace known to PDFL Rendering that can be used to produce a CMYKA Bitmap (CMYK + Alpha or 40-bit)
+which is output in this sample as a CMYK Image with a Soft Mask set on the page of a PDF*/
+
+// When enabled, the BACKGROUND_COLOR and ALPHA_VALUE are utilized for the Background of the Rendered Page
+#define SET_BACK_COLOR false
+// Background color, number of elements should correspond to COLORSPACE, defaults to Blue in terms of DeviceRGB
+ASUns8 BACKGROUND_COLOR[] = { 0x00, 0x00, 0xFF};
+
+// Only applicable if COLORSPACE is DeviceRGBA or DeviceCMYKA, defaults to 50% translucent
+#define ALPHA_VALUE 0x80
 
 int main(int argc, char **argv) {
     ASErrorCode errCode = 0;
@@ -51,7 +59,6 @@ int main(int argc, char **argv) {
               << FILTER << ", and BPC " << BPC << std::endl;
 
     DURING
-
         // Open the input document and acquire the first page
         APDFLDoc inDoc(csInputFileName.c_str(), true);
         PDPage pdPage = inDoc.getPage(0);
@@ -59,8 +66,16 @@ int main(int argc, char **argv) {
         // Get the UserUnit of the Page
         float userUnit = PDPageGetUserUnitSize(pdPage);
 
+        Color backgroundColor;
+        backgroundColor.value = &BACKGROUND_COLOR[0];
+        backgroundColor.numChannels = sizeof(BACKGROUND_COLOR);
+
+        BackgroundColor pageColor;
+        pageColor.alphaValue = ALPHA_VALUE;
+        pageColor.color = backgroundColor;
+
         // Construction of the drawPage object does all the work to rasterize the page
-        RenderPage drawPage(pdPage, COLORSPACE, FILTER, BPC, RESOLUTION, userUnit);
+        RenderPage drawPage(pdPage, COLORSPACE, FILTER, BPC, RESOLUTION, userUnit, SET_BACK_COLOR, pageColor);
 
         // Release the first page.
         PDPageRelease(pdPage);
