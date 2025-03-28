@@ -1,5 +1,7 @@
 //
-// Copyright (c) 2007-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
+//
+// The RenderPage sample program shows how to render a PDF document page to memory.
 //
 
 #include "RenderPage.h"
@@ -62,11 +64,43 @@ void ASDoubleToFixedRect(ASFixedRect &out, ASDoubleRect &in) {
     out.bottom = FloatToASFixed(in.bottom);
 }
 
+// If a Page Background color is desired, set it here
+void RenderPage::SetBackgroundColor() {
+    bool hasAlpha = (csAtom == sDeviceRGBA_K || csAtom == sDeviceCMYKA_K);
+
+    int stride = attrs.width * nComps;
+    while (stride % 4 != 0)
+    {
+        stride++;
+    }
+
+    // Determine zero padding length
+    int padding = stride - (attrs.width * nComps);
+
+    char* bufferPtr = buffer;
+    // Walk the buffer and fill in the chosen background color and possibly the alpha value
+    for (int heightIndex = 0; heightIndex < attrs.height; heightIndex++) {
+        for (int rowIndex = 0; (rowIndex + pageBackgroundColor.color.numChannels) < stride; rowIndex += pageBackgroundColor.color.numChannels) {
+            memcpy(bufferPtr, &pageBackgroundColor.color.value[0], pageBackgroundColor.color.numChannels);
+            bufferPtr += pageBackgroundColor.color.numChannels;
+            if (hasAlpha) {
+                memcpy(bufferPtr++, &pageBackgroundColor.alphaValue, 1);
+                rowIndex++;
+            }
+        }
+        // If zero padding is needed fill it here
+        if (padding > 0) {
+            memset(bufferPtr, 0x00, padding);
+            bufferPtr += padding;
+        }
+    }
+}
+
 // This both constructs the RenderPage object, and creates the page rendering.
 //  The rendered page can be accessed as a bitmap via the methods GetImageBuffer() and GetImageBufferSize(), or as a PDEImage,
 //  via the method GetPDEImage(). The PDEImage creation will be deferred until it is requested.
 RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName,
-                       ASInt32 inBPC, double inResolution, float userUnit) {
+                       ASInt32 inBPC, double inResolution, float userUnit, bool setBackgroundColor, BackgroundColor pageColor) {
     // Set up the static colorspace atoms
     sDeviceRGB_K = ASAtomFromString("DeviceRGB");
     sDeviceRGBA_K = ASAtomFromString("DeviceRGBA");
@@ -162,7 +196,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     attrs.width = (ASInt32)floor(((cropRect.right * resolution) * (userUnit / 72.0)) + 0.5);
     attrs.height = (ASInt32)floor(((cropRect.top * resolution) * (userUnit / 72.0)) + 0.5);
 
-    // Set up the destinantion rectangle.
+    // Set up the destination rectangle.
     // This is a description of the image in pixels, so it will always
     // have it's origin at 0,0.
     ASRealRect destRect;
@@ -184,24 +218,25 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     PDPageDrawMParamsRec drawParams;
 
     // Many of the values in the params record will not be used for this simple rendering.
-    // so we set them all to zeros initally
+    // so we set them all to zeros initially
     memset(&drawParams, 0, sizeof(PDPageDrawMParamsRec));
     drawParams.size = sizeof(PDPageDrawMParamsRec);
     drawParams.csAtom = csAtom;
     drawParams.bpc = bpc;
 
     // For this example we will smooth (anti-alias) all of the marks. For a given application,
-    // this may or may not be desireable. See the enumeration PDPageDrawSmoothFlags for the full set of options.
+    // this may or may not be desirable. See the enumeration PDPageDrawSmoothFlags for the full set of options.
     drawParams.smoothFlags = kPDPageDrawSmoothText | kPDPageDrawSmoothLineArt | kPDPageDrawSmoothImage;
 
-    // The DoLazyErase flag is usually, if not always turned on, UseAnnotFaces will cause
-    // annotations in the page to be displayed, and kPDPageDsiplayOverprintPreview will display the
-    // page showing overprinting. The precise meaning of these flags, as well as others that may be
-    // used here, can be seen in the defintion of PDPageDrawFlags
-    drawParams.flags = kPDPageDoLazyErase | kPDPageUseAnnotFaces | kPDPageDisplayOverPrintPreview | kPDPageEmitPageGroup;
+    // Only set the LazyErase flag if user hasn't specified a Background Color
+    if (!setBackgroundColor){
+        drawParams.flags = kPDPageDoLazyErase;
+    }
+
+    drawParams.flags |= kPDPageUseAnnotFaces | kPDPageDisplayOverPrintPreview | kPDPageEmitPageGroup;
 
     // This is a bit clumsy, because features were added over time. The matrices and rectangles in
-    // this interface use ASReal as thier base, rather than ASDouble. But there is not a complete
+    // this interface use ASReal as their base, rather than ASDouble. But there is not a complete
     // set of concatenation and transformation methods for ASReal. So we generally generate the
     // matrix and rectangle values using ASDouble, and convert to ASReal.
     ASDoubleRect doubleUpdateRect;
@@ -221,7 +256,7 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
                          // to be rendered.
 
     // Additional values in this record control such features as drawing separations,
-    // specifiying a desired output profile, selecting optional content, and providing for
+    // specifying a desired output profile, selecting optional content, and providing for
     // a progress reporting callback.
 
     // Allocate the buffer for storing the rendered page content
@@ -236,12 +271,19 @@ RenderPage::RenderPage(PDPage &pdPage, const char *colorSpace, const char *filte
     //  One frequent failure point in rendering images is being unable to allocate sufficient contigious space
     //  for the bitmap buffer. Here, that will be indicated by a zero value for drawParams.buffer after the
     //  call to malloc. If the buffer size is larger than the internal limit of malloc, it may also raise an
-    //  interupt! Catch these conditions here, and raise an out of memory error to the caller.
+    //  interrupt! Catch these conditions here, and raise an out of memory error to the caller.
     try {
-        buffer = (char *)ASmalloc(bufferSize);
+        buffer = (char*)ASmalloc(bufferSize);
+
+        if (setBackgroundColor) {
+            pageBackgroundColor = pageColor;
+            SetBackgroundColor();
+        }
+
         if (!buffer)
             ASRaise(genErrNoMemory);
-    } catch (...) {
+    }
+    catch (...) {
         ASRaise(genErrNoMemory);
     }
 
@@ -417,7 +459,7 @@ PDEFilterArray RenderPage::SetDCTFilterParams(CosDoc cosDoc) {
     CosObj dictParams = CosNewDict(cosDoc, false, 4);
 
     // Populate the dictionary with required entries to do JPEG compression
-    // (only Columns, Rows, and the number of color dimensions needed for JPEG)
+    // (only Columns, Rows, and the number of color dimensions needed for straight JPEG)
     CosDictPut(dictParams, ASAtomFromString("Columns"), CosNewInteger(cosDoc, false, attrs.width));
     CosDictPut(dictParams, ASAtomFromString("Rows"), CosNewInteger(cosDoc, false, attrs.height));
     CosDictPut(dictParams, ASAtomFromString("Colors"), CosNewInteger(cosDoc, false, nComps));
