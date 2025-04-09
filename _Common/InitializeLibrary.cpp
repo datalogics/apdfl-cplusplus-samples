@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
 //
 //
 //========================================================================
@@ -193,9 +193,6 @@ void APDFLib::fillDirectories() {
     // Set the Unicode directory.
     pdflData.cMapDirectory = fontDirList[1];
     pdflData.unicodeDirectory = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Unicode";
-
-    // Set the OfficeMetrics directory.
-    pdflData.officeMetricsDirectory = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\OfficeMetrics";
 
     // Set the plugin directory and its length.
     static TCHAR pluginPathBuffer[1024];
