@@ -1,3 +1,6 @@
+## AddDigitalSignature
+Demonstrates adding a digital signature with a logo to a PDF document.
+
 ## AddPassword
 Demonstrates protecting a PDF with a password. To open or edit the saved PDF, you must supply the password.
 
