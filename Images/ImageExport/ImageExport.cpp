@@ -7,7 +7,7 @@
  * PDF syntax to identify all PDEImage objects on the given page while recursively checking
  * any PDEContainers, PDEGroups, and PDEForms.
  *
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
  *
  */
 
@@ -47,6 +47,11 @@ void ExportImage(PDEImage image, DLImageExportType exportType, DLPDEImageExportP
         break;
     default:
         std::cout << "Export Failed: Invalid DLImageExportType." << std::endl;
+        return;
+    }
+
+    // Export to these formats is skipped as they don't support the concept of an Alpha Channel in a standard way
+    if (PDEImageHasSMask(image) && (exportType == ExportType_BMP || exportType == ExportType_JPEG || exportType == ExportType_GIF)) {
         return;
     }
 
