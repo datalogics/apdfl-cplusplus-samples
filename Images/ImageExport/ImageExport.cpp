@@ -57,7 +57,7 @@ void ExportImage(PDEImage image, DLImageExportType exportType, DLPDEImageExportP
 
     // Create and format the output file name.
     char buf[1024];
-    sprintf(buf, "ImageExport_page%d_i%d%s", page + 1, nextImg, imgExt);
+    snprintf(buf, sizeof(buf), "ImageExport_page%d_i%d%s", page + 1, nextImg, imgExt);
     ASPathName sOutput = APDFLDoc::makePath(buf);
 
     DLExportPDEImage(image, sOutput, exportType, exportParams);
@@ -78,7 +78,7 @@ void PrintImageInfo(PDEImage image) {
 
     const char *renderIntent = DLPDEImageGetIntent(image);
     char message[1024];
-    sprintf(message,
+    sprintf(message, sizeof(message),
             "PDEImage data:\n\tWidth:\t%f\n\tHeight:\t%f\n\tNumber of components:\t%i\n"
             "\tBits per component\t%i\n\tRender Intent:\t%s\n",
             width, height, numComps, bpc, renderIntent);
