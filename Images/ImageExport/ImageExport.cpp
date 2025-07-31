@@ -78,7 +78,7 @@ void PrintImageInfo(PDEImage image) {
 
     const char *renderIntent = DLPDEImageGetIntent(image);
     char message[1024];
-    sprintf(message, sizeof(message),
+    snprintf(message, sizeof(message),
             "PDEImage data:\n\tWidth:\t%f\n\tHeight:\t%f\n\tNumber of components:\t%i\n"
             "\tBits per component\t%i\n\tRender Intent:\t%s\n",
             width, height, numComps, bpc, renderIntent);
