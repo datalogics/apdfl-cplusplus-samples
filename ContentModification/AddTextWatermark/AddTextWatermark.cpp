@@ -262,7 +262,7 @@ void  AddWatermarkToPage(CosObj cosPage, ASDoubleMatrix matrix, char *text, CosO
 
     /* Write the text string 
     */
-    sprintf(work, "(%s) Tj\n", text);
+    snprintf(work, sizeof(work), "(%s) Tj\n", text);
     strcat(watermark, work);
 
     /* end the text, and pop the stack*/

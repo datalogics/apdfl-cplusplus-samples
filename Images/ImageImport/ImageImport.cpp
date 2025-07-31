@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
         char message[1024];
         char *iName = ASFileSysDisplayStringFromPath(NULL, sInput);
         char *oName = ASFileSysDisplayStringFromPath(NULL, sOutput);
-        sprintf(message, "Reading image file %s and writing to %s", iName, oName);
+        snprintf(message, sizeof(message), "Reading image file %s and writing to %s", iName, oName);
         std::cout << message << std::endl;
         ASfree((void *)iName);
         ASfree((void *)oName);
