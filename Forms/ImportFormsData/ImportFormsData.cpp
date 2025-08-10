@@ -1,7 +1,7 @@
 //
-// Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2025, Datalogics, Inc. All rights reserved.
 //
-// For complete copyright information, refer to:
+
 // https://www.datalogics.com/
 //
 // The ImportFormsData sample demonstrates how to Import forms data into XFA and AcroForms documents:

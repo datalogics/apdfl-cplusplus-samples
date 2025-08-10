@@ -1,0 +1,32 @@
+[requires]
+adobe_pdf_library/[>=18.0.5+]@datalogics/nightly
+apdfl-resources/[>=0.7]@datalogics/stable
+
+[generators]
+visual_studio
+make
+xcode
+
+[imports]
+src, *.c -> CPlusPlus/Include/Source
+include, *.h -> CPlusPlus/Include/Headers
+lib, *.dylib* -> CPlusPlus/Binaries
+Frameworks, *.Framework* -> CPlusPlus/Binaries
+Frameworks, *.ppi* -> CPlusPlus/Binaries
+bin, *.dll* -> CPlusPlus/Binaries
+bin, *.ppi* -> CPlusPlus/Binaries
+lib, *.lib* -> CPlusPlus/Binaries
+lib, *.a* -> CPlusPlus/Binaries
+lib, *.so* -> CPlusPlus/Binaries
+lib, *.ppi* -> CPlusPlus/Binaries
+formsextbin, *.dll* -> CPlusPlus/Binaries
+formsextbin, *.ppi* -> CPlusPlus/Binaries
+formsextlib, *.lib* -> CPlusPlus/Binaries
+formsextlib, *.a* -> CPlusPlus/Binaries
+formsextlib, *.so* -> CPlusPlus/Binaries
+formsextlib, *.ppi* -> CPlusPlus/Binaries
+formsextbin/JavaScripts, * -> CPlusPlus/Binaries/JavaScripts
+formsextbin/pdfplug_ins, * -> CPlusPlus/Binaries/pdfplug_ins
+formsextlib/JavaScripts, * -> CPlusPlus/Binaries/JavaScripts
+formsextlib/pdfplug_ins, * -> CPlusPlus/Binaries/pdfplug_ins
+Resources, * -> Resources

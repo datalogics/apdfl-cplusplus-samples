@@ -1,9 +1,9 @@
-// Copyright (c) 2016-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2016-2025, Datalogics, Inc. All rights reserved.
 //
-// This sample allows a user to send a PDF document to a printer, using a Windows print interface.
+//
+// This sample allows a user to send a PDF document to a printer, using the OS print interface.
 //
 
-/* Printing Support */
 #include "InitializeLibrary.h"
 #include "APDFLDoc.h"
 #include "PDFLPrint.h"

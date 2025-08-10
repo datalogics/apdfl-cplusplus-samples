@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // The AddTriangularRedaction sample redacts each page of a document with
 // two full-page triangles, leaving only a narrow diagonal strip across each page.

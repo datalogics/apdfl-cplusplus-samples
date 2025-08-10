@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2008-2025, Datalogics, Inc. All rights reserved.
 //
 
 #include <sstream>
@@ -29,7 +29,7 @@ typedef struct dict {
 } DICT;
 
 static ASBool CountCosDictEnumProc(CosObj obj, CosObj value, void *clientData) {
-    ASInt32 *Count = (ASInt32 *)clientData;
+    ASInt32* Count = reinterpret_cast<ASInt32*>(clientData);
 
     (*Count)++;
     return (true);

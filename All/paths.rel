@@ -1,0 +1,7 @@
+PDFL_PATH = ../../../Binaries
+
+ifeq ($(PDF_FDIR_DEF), )
+PDF_FDIR_DEF=-DPDF_FDIR\=\"../../../Sample_Input/\"
+endif
+ 
+SRC=./

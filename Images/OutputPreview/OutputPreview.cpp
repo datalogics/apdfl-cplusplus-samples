@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2004-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2004-2025, Datalogics, Inc. All rights reserved.
 //
 // The sample demonstrates how to create true color separations and composite images of spot and process colors.
 //

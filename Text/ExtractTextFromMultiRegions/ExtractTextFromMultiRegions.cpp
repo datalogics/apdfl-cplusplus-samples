@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2023-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample processes PDF files in a folder and extracts text from specific regions
 // of its pages and saves the text to a file.
@@ -7,13 +8,14 @@
 
 #include <fstream>
 #include <string>
-#include <filesystem>
 
 #include "InitializeLibrary.h"
 #include "APDFLDoc.h"
 #include "TextExtract.h"
 
-const char *DEF_INPUT = "../../../../Resources/Sample_Input/ExtractTextFromMultiRegions";
+std::string DEF_INPUT_DIR = "../../../../Resources/Sample_Input/ExtractTextFromMultiRegions/";
+std::vector<std::string> DEF_INPUTS = { "Bing1312.pdf", "Fakeserv139203.pdf", "Fakeserv139599.pdf", "Huge112.pdf", "Huge1122.pdf" };
+
 const char *DEF_OUTPUT = "ExtractTextFromMultiRegions-out.csv";
 
 // Rectangular regions to extract text in points (origin of the page is bottom left)
@@ -42,15 +44,15 @@ int main(int argc, char **argv) {
     }
 
     DURING
-        std::string path(DEF_INPUT);
         std::ofstream outputFile(DEF_OUTPUT);
 
         // Print out a heading for CSV file
         outputFile << "Filename,Invoice Number,Date,Order Number,Customer ID,Total" << std::endl;
-        for (const auto &pdfFile : std::filesystem::directory_iterator(path)) {
-            outputFile << pdfFile.path().filename().string();
+        for (int stringIndex = 0; stringIndex < DEF_INPUTS.size(); stringIndex++) {
+            std::string inputFile = DEF_INPUT_DIR + DEF_INPUTS[stringIndex];
+            outputFile << DEF_INPUTS[stringIndex];
             {
-                APDFLDoc inAPDoc(pdfFile.path().string().c_str(), true);
+                APDFLDoc inAPDoc(inputFile.c_str(), true);
 
                 TextExtract textExtract(inAPDoc.getPDDoc());
 
@@ -81,7 +83,6 @@ int main(int argc, char **argv) {
             outputFile << std::endl;
         }
         outputFile.close();
-
     HANDLER
         errCode = ERRORCODE;
         libInit.displayError(errCode);

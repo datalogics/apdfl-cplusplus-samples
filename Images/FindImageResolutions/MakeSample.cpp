@@ -1,5 +1,8 @@
 //
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
+
+
 //
 // This file contains the functions for producing a sample input file with images from
 // a number of input graphics.

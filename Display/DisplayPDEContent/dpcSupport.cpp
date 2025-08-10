@@ -1,8 +1,10 @@
 //
-// Copyright (c) 2008-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2008-2025, Datalogics, Inc. All rights reserved.
 //
 
 #include <sstream>
+#include <iostream>
+#include <iomanip>
 
 #include "ASCalls.h"
 #include "PEWCalls.h"
@@ -27,7 +29,7 @@ std::string DisplayQuad(ASFixedQuad *Quad) {
     return oss.str();
 }
 
-std::string DisplayMatrix(ASFixedMatrix *Matrix) {
+std::string DisplayFixedMatrix(ASFixedMatrix *Matrix) {
     char a[20], b[20], c[20], d[20], h[20], v[20];
 
     ASFixedToCString(Matrix->a, a, 20, 5);
@@ -37,9 +39,18 @@ std::string DisplayMatrix(ASFixedMatrix *Matrix) {
     ASFixedToCString(Matrix->h, h, 20, 5);
     ASFixedToCString(Matrix->v, v, 20, 5);
     std::ostringstream oss;
-    oss << "[" << a << ", " << b << ", " << c << ", " << d << ", " << h << ", " << v << "]";
+   
+    oss <<  "[" << a << ", " << b << ", " << c << ", " << d << ", " << h << ", " << v << "]";
     return oss.str();
 }
+
+std::string DisplayMatrix(ASDoubleMatrix* Matrix) {
+    std::ostringstream oss;
+    oss.precision(4);
+    oss << "[" << Matrix->a << ", " << Matrix->b << ", " << Matrix->c << ", " << Matrix->d << ", " << Matrix->h << ", " << Matrix->v << "]";
+    return oss.str();
+}
+
 
 std::string DisplayFixed(ASFixed *Fixed) {
     char LocalText[120];
@@ -47,19 +58,17 @@ std::string DisplayFixed(ASFixed *Fixed) {
     return std::string(LocalText);
 }
 
-std::string AppendPoint(ASFixedPoint *Point, ASFixedMatrix *Matrix, ASBool MoreToCome) {
-    ASFixedPoint Local;
+std::string AppendPoint(ASDoublePoint *Point, ASDoubleMatrix *Matrix, ASBool MoreToCome) {
+    ASDoublePoint Local;
     if (Matrix)
-        ASFixedMatrixTransform(&Local, Matrix, Point);
+        ASDoubleMatrixTransform(&Local, Matrix, Point);
     else {
         Local.h = Point->h;
         Local.v = Point->v;
     }
 
-    char h[20], v[20];
-    ASFixedToCString(Local.h, h, 20, 5);
-    ASFixedToCString(Local.v, v, 20, 5);
     std::ostringstream oss;
-    oss << "(" << h << ", " << v << ")" << (MoreToCome ? ", " : "");
+    oss.precision(4);
+    oss << "(" << Local.h << ", " << Local.v << ")" << (MoreToCome ? ", " : "");
     return oss.str();
 }

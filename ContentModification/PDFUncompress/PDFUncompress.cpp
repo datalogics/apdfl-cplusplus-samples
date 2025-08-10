@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2010-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2010-2025, Datalogics, Inc. All rights reserved.
 //
 // The PDFUncompress sample is a utility that demonstrates how to completely un-compress the elements within a PDF
 // document into a readable form.

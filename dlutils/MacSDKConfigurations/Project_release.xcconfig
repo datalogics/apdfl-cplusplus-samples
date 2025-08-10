@@ -1,0 +1,39 @@
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
+
+//
+
+#include "../../dlutils/MacSDKConfigurations/Common.xcconfig"
+
+
+//
+// GNU C/C++ - Code Generation
+//
+
+GCC_OPTIMIZATION_LEVEL = s
+
+//
+// GNU C/C++ - Preprocessing
+//
+
+GCC_PREPROCESSOR_DEFINITIONS = AS_DEBUG=0 DISABLECPLUSPLUSDURING=0 EXCEPTIONS_ALWAYS_CPLUSPLUS=1 NDEBUG
+
+//
+// Deployment
+//
+
+// Turn on this so we can use the later stripping options
+DEPLOYMENT_POSTPROCESSING = YES
+
+// Strip us
+STRIP_INSTALLED_PRODUCT = YES
+
+// Use the strip tool instead of the linker
+SEPARATE_STRIP = YES
+
+// These two are equivement, but set them both just to make sure
+STRIP_STYLE = debugging
+STRIPFLAGS = -S
+
+// Make sure we can still write over things for scripting
+INSTALL_MODE_FLAG = a+rwX

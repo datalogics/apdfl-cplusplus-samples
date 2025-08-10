@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xfdf xmlns="http://ns.adobe.com/xfdf/" xml:space="preserve"
+><f href="AcroForm.pdf"
+/><fields
+><field name="Business Email Address"
+><value
+>sample@datalogics.com</value
+></field
+><field name="Business Phone Number"
+><value
+>312-853-8200</value
+></field
+><field name="Business Street Address no PO Box due to USA PATRIOT Act Verification"
+><value
+>101 N. Wacker Drive</value
+></field
+><field name="City"
+><value
+>Chicago</value
+></field
+><field name="City_2"
+><value
+>Metropolis</value
+></field
+><field name="Corporation"
+><value
+>On</value
+></field
+><field name="Date of Birth MMDDYYYY"
+><value
+>01/01/2001</value
+></field
+><field name="FirstMiddleLast Name max 29 characters"
+><value
+>John Q Public</value
+></field
+><field name="Government"
+><value
+>Off</value
+></field
+><field name="Home Phone Number"
+><value
+>555-5555</value
+></field
+><field name="LLC"
+><value
+>Off</value
+></field
+><field name="Legal Name of Business"
+><value
+>Sample Company</value
+></field
+><field name="Member"
+><value
+>Off</value
+></field
+><field name="Nonprofit"
+><value
+>Off</value
+></field
+><field name="Owner"
+><value
+>On</value
+></field
+><field name="Partner"
+><value
+>Off</value
+></field
+><field name="Partnership"
+><value
+>Off</value
+></field
+><field name="President"
+><value
+>Off</value
+></field
+><field name="Residential Street Address no PO Box due to USA PATRIOT Act Verification"
+><value
+>222 Test Drive</value
+></field
+><field name="SSN"
+><value
+>444-55-6666</value
+></field
+><field name="Sole Prop"
+><value
+>Off</value
+></field
+><field name="State"
+><value
+>IL</value
+></field
+><field name="State_2"
+><value
+>IL</value
+></field
+><field name="Tax Identification Number Sole proprietor use SSN"
+><value
+>111-22-3333</value
+></field
+><field name="Treasurer"
+><value
+>Off</value
+></field
+><field name="Vice President"
+><value
+>Off</value
+></field
+><field name="Zip Code"
+><value
+>60606</value
+></field
+><field name="Zip Code_2"
+><value
+>55555</value
+></field
+></fields
+><ids original="32F82BBE1F5304479FCC8782FAD9159C" modified="D23D87967DD6174F85F0476E2F945DCF"
+/></xfdf
+>

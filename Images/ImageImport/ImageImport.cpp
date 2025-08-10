@@ -5,7 +5,7 @@
  * DLPDEImageSetSoftMask() and DLCreateResampledPDEImage().
  * This program also utilizes DLPDEImageGetWidth() and DLPDEImageGetHeight() to assist in translating the PDEImage within the page.
  *
- * Copyright (c) 2024, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2025, Datalogics, Inc. All rights reserved.
  *
  */
 

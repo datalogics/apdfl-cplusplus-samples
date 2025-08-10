@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2021-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2021-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample demonstrates using the DocTextFinder to find examples of a specific phrase in a PDF
 // document that matches a user-supplied regular expression. When the sample finds the text it
@@ -116,6 +117,8 @@ int main(int argc, char *argv[]) {
 }
 
 // Add quads to an annotation's CosObj.
+// NOTE: There is Adobe documentation that specifies quads be added in the order - BL, BR, TR, TL.
+// However, currently the order needs to be BL, BR, TL, TR to get correct output.
 void ApplyQuadsToAnnot(PDAnnot annot, ASFixedQuad *quads, ASArraySize numQuads) {
     CosObj coAnnot = PDAnnotGetCosObj(annot);
     CosDoc coDoc = CosObjGetDoc(coAnnot);

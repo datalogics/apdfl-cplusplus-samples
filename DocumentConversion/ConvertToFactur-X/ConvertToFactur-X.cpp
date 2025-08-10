@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2023-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // ConvertToFactur-X converts the input PDF with the input Invoice XML to a Factur-X (also known as ZUGFeRD v2.2) compliant PDF.
 //

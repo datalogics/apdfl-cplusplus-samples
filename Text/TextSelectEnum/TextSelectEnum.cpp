@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2018-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2018-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // The TextSelectEnum sample demonstrates how the Library is able to select all of the
 // text present in an area of the page.
