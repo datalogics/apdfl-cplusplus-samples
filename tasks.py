@@ -3,8 +3,8 @@ import shutil
 import platform
 import re
 import fnmatch
-from dl_conan_build_tools.tasks import conan
-from dl_conan_build_tools.config import get_config
+from dl_val_toolkit.bootstrap import bootstrap as dl_val_toolkit_bootstrap
+from dl_val_toolkit.login import login
 from invoke import Collection, task, runners
 from invoke.tasks import Task
 from utils import env
@@ -25,30 +25,48 @@ def noerr_mkdir(dirname):
         pass
 
 
-@task(help={'options': 'Options to pass to "conan install" (can be specified more than once)',
-            'build-type': 'Type of the build, usually Debug or Release',
-            'bits': '64 or 32 (defaults to 64)',
-            'update': 'Check upstream remotes to see if updates exist',
-            'offline': 'Work offline, won\'t install config or login',
-        },
-      iterable=['options'])
-def bootstrap(ctx, options=None, build_type='Release', bits='64', update=False, offline=False):
-    """Ready the project for building.
-    Unless '--offline', log into Conan, get the config, and set up remotes.
+def get_config_info(config=None):
+    """Returns a tuple of build type and bits for the given configuration name."""
+    if config[0] is None:
+        raise RuntimeError('No config specified')
+    if 'debug' in config[0].lower():
+        bt = 'Debug'
+    elif 'release' in config[0].lower():
+        bt = 'Release'
+    else:
+        raise RuntimeError(f'Configuration name "{config[0]}" is not valid')
 
-    Then, create the build directory tree, copy files, and install dependencies.
-    If the dependencies can't be satisfied by the Conan client cache, a network
-    connection is required to search Artifactory.
-    """
+    bits = '32' if '32' in config else '64'
+    return (bt, bits)
+
+
+@task(help={'dlproject': 'Path to dlproject.yaml file (default="dlproject.yaml")',
+            'config': 'Configuration name to use for building (default=Debug)',
+            'update': 'Check upstream remotes to see if updates exist',
+            'options': 'Conan options to pass during installation',
+            'conf': 'Conan configuration options to pass during installation',
+            'settings': 'Conan settings to pass during installation'},
+      iterable=['config', 'options', 'conf', 'settings'],
+      pre=[login])
+def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf=None, settings=None):
+    """Bootstrap the project by installing dependencies and preparing the environment to build
+    the C++ samples."""
     profset = env.Env()
-    if not offline:
-        conan.install_config(ctx)
-        conan.login(ctx)
-    install_folder = profset.install_folder(build_type, build_64_bit=(bits == '64'))
+
+    config_info = get_config_info(config)
+    build_64_bit = '64' in config_info[1]
+
+    dl_val_toolkit_bootstrap(ctx,
+                             dlproject=dlproject,
+                             config=config,
+                             update=update,
+                             options=options,
+                             conf=conf,
+                             settings=settings)
     
     igforms = 'Forms'
     igwinARM = '*_ARM64.sln'
-    if bits == '64':  # Only copy the 64-bit solution to the  64-bit staging area
+    if build_64_bit:  # Only copy the 64-bit solution to the  64-bit staging area
         if profset.os == 'winARM':
             igwinARM = '*_64Bit.sln'
         igpat = '*_32Bit.sln'
@@ -57,20 +75,14 @@ def bootstrap(ctx, options=None, build_type='Release', bits='64', update=False, 
     else:   # Only copy the 32-bit solution to the  32-bit staging area
         igpat = '*_64Bit.sln'
     spat = shutil.ignore_patterns(
-        install_folder, '.*', 'conan*', 'tasks', 'utils', 'python-env-*', igpat, igwinARM, igforms)
-    sdir = os.path.join(install_folder, 'CPlusPlus', 'Sample_Source')
+        'build', '.*', 'conan*', 'tasks', 'utils', 'python-env-*', igpat, igwinARM, igforms)
+    sdir = os.path.join('build', 'CPlusPlus', 'Sample_Source')
     noerr_mkdir(sdir)
     shutil.copytree('.', sdir, ignore=spat, dirs_exist_ok=True)
-    rcdir = os.path.join(install_folder, 'Resources')
+    rcdir = os.path.join('build', 'Resources')
     noerr_mkdir(rcdir)
     shutil.copytree('_Input', os.path.join(
         rcdir, 'Sample_Input'), dirs_exist_ok=True)
-    settings = ['-s build_type=' + build_type]
-    cdict = get_config()
-    profile = os.path.join('profiles', install_folder)
-    settings += [f'--profile={profile}']
-    ctx.run(
-        f'conan install {" ".join(settings)} -if {install_folder} .', echo=True)
 
 
 @task(help={'build-type': 'Type of the build, usually Debug or Release',
@@ -109,8 +121,8 @@ tasks = []
 tasks.extend([v for v in locals().values() if isinstance(v, Task)])
 
 conan_tasks = Collection()
-conan_tasks.add_task(conan.install_config)
-conan_tasks.add_task(conan.login)
+conan_tasks.add_task(bootstrap)
+conan_tasks.add_task(login)
 
 ns = Collection(*tasks)
 ns.add_collection(conan_tasks, 'conan')
