@@ -1,5 +1,14 @@
 @Library('jenkins-shared-libraries') _
 def ENV_LOC=[:]
+def EXTRA_ARGS = [
+    'linux-apdfl-rocky-x64-samples': ' ',
+    'linux-armv8-apdfl-samples': ' ',
+    'mac-apdfl-samples': ' ',
+    'mac-arm-apdfl-samples': ' ',
+    'sparcsolaris-apdfl-samples': ' ',
+    'windows-apdfl-samples': ' ',
+    'windows-ARM-apdfl-samples': ' ',
+]
 pipeline {
     parameters {
         choice(name: 'PLATFORM_FILTER', choices: ['all', 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'linux-armv8-apdfl-samples', 'linux-apdfl-rocky-x64-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples'], description: 'Run on specific platform')
@@ -116,16 +125,10 @@ pipeline {
                         steps {
                             echo "Bootstrap ${NODE} ${BITS}"
                             script {
-                                if (isUnix()) {
-                                    sh """. ${ENV_LOC["${NODE}_${BITS}"]}/bin/activate
-                                       unset LIBPATH
-                                          invoke bootstrap --bits=${BITS} --update
-                                    """
-                                } else {
-                                    bat """CALL ${ENV_LOC["${NODE}_${BITS}"]}\\Scripts\\activate
-                                          invoke bootstrap --bits=${BITS} --update
-                                    """
-                                }
+                                    bootstrapConfigs([licenseManaged: "False",
+                                                    pythonEnv: "${ENV_LOC[NODE]}",
+                                                    buildType: "Release",
+                                                    extraArguments: "${EXTRA_ARGS[NODE]}"])
                             }
                         }
                     }
@@ -139,11 +142,11 @@ pipeline {
                                 if (isUnix()) {
                                     sh """. ${ENV_LOC["${NODE}_${BITS}"]}/bin/activate
                                        unset LIBPATH
-                                          invoke build --bits=${BITS}
+                                          invoke build --config Release${EXTRA_ARGS[NODE]}
                                     """
                                 } else {
                                     bat """CALL ${ENV_LOC["${NODE}_${BITS}"]}\\Scripts\\activate
-                                          invoke build --bits=${BITS}
+                                          invoke build --config Release${EXTRA_ARGS[NODE]}
                                     """
                                 }
                             }

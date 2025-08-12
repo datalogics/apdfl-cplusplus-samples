@@ -85,18 +85,15 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
         rcdir, 'Sample_Input'), dirs_exist_ok=True)
 
 
-@task(help={'build-type': 'Type of the build, usually Debug or Release',
-            'bits': '64 or 32 (defaults to 64)',
-        })
-def build(ctx, build_type='Release', bits='64'):
-    """Build the project. By default, builds 64-bit Release.
-
-    For more information on flags that can be repeated, see
-    http://docs.pyinvoke.org/en/stable/concepts/invoking-tasks.html#iterable-flag-values"""
+@task(help={'config': 'Configuration name to use for building (default=Release)'})
+def build(ctx, config='Release'):
+    """Build the project. By default, builds 64-bit Release."""
     profset = env.Env()
-    is_64_bit = bits == '64'
-    install_folder = profset.install_folder(build_type, is_64_bit)
-    with ctx.cd(os.path.join(install_folder, 'CPlusPlus', 'Sample_Source', 'All')):
+    config_info = get_config_info([config])
+    is_64_bit = '64' in config_info[1]
+    build_type = config_info[0]
+
+    with ctx.cd(os.path.join('build', 'CPlusPlus', 'Sample_Source', 'All')):
         shell_env = {'PATH': '/opt/freeware/bin:%s' % os.getenv('PATH')}
         if not is_64_bit:
             # set these explicitly for 32-bit platforms
