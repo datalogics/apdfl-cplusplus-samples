@@ -18,7 +18,7 @@ pipeline {
     }
     agent none
     triggers {
-        parameterizedCron(env.BRANCH_NAME == "develop-18" ? "0 8 * * *" : "")
+        parameterizedCron(env.BRANCH_NAME == "develop" ? "0 8 * * *" : "")
     }
     stages {
         stage('Matrix stage') {
@@ -126,13 +126,13 @@ pipeline {
                             echo "Bootstrap ${NODE} ${BITS}"
                             script {
                                     bootstrapConfigs([licenseManaged: "False",
-                                                    pythonEnv: "${ENV_LOC[NODE]}",
+                                                    pythonEnv: "${ENV_LOC["${NODE}_${BITS}"]}",
                                                     buildType: "Release",
                                                     extraArguments: "${EXTRA_ARGS[NODE]}"])
                             }
                         }
                     }
-                    stage('Build') {
+                    stage('Build & Run') {
                         when {
                             expression { "${SKIPPLATFORM}" == 'false' }
                         }

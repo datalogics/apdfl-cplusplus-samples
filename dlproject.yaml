@@ -33,16 +33,16 @@ config:
     config:
       Release:
         profile_host:
-          - apple-clang-15.0-intel-cppstd-14
+          - apple-clang-15.0-intel-cppstd-17
         profile_build:
-          - apple-clang-15.0-intel-cppstd-14
+          - apple-clang-15.0-intel-cppstd-17
         build: missing
 
   macos-arm64:
     config:
       Release:
         profile_host:
-          - apple-clang-15.0-arm-cppstd-14
+          - apple-clang-15.0-arm-cppstd-17
         profile_build:
           - apple-clang-15.0-arm-cppstd-17
         build: missing
@@ -168,6 +168,4 @@ config:
           - adobe_pdf_library/*:compiler.runtime=static
           - adobe_pdf_library/*:compiler.runtime_type=Release
           - adobe_pdf_library/*:compiler.update=8
-        options_host:
-          - include_dli=False
         build: missing
