@@ -1,8 +1,8 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
-// This program makes the Optional Content Groups within a PDF document visible within a viewing application
-// The program finds any of these Optional Content Groups within the input
+// This program makes the Optional Content Groups within a PDF document visible within a viewing application,
+// like Adobe Reader or Adobe Acrobat. The program finds any of these Optional Content Groups within the input
 // PDF document and writes them to an output file.
 //
 // Optional Content Groups, also known as layers, can be used to separate and manage content or graphics on a

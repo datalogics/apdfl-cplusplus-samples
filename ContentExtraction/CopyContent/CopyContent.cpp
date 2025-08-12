@@ -1,12 +1,12 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // CopyContent copies content from an input PDF document into a new PDF document
 // and then saves the output file. You can specify the type of content you want to copy.
 //
 // Command-line:   <input-file>  <output-file>     (Both optional)
 //
-
 #include <iostream>
 #include <map>
 #include <set>

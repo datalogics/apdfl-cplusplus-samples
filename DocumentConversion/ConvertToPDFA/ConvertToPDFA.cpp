@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // ConvertToPDFA converts the input PDF to a PDF/A compliant PDF.
 //
@@ -11,7 +12,7 @@
 //
 //        ConvertToPDFA input-file.pdf PDF2b
 //
-//        This statement provides the name of an input file and specifies the format.
+//        This statement provides the name of an input file and specifies the PDF/A-2b format.
 //
 
 #include <sstream>
@@ -36,95 +37,15 @@ int main(int argc, char **argv) {
         std::cout << "PDF Conversion Standard not specified or unknown, defaulting to PDFA3bRGB." << std::endl;
 
         convertOption = kPDFProcessorConvertToPDFA3bRGB;
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA1a") || !strcmp(argv[2], "PDFA1A"))) {
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA4f") || !strcmp(argv[2], "PDFA4F"))) {
         if (argc > 3) {
             if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA1aRGB;
+                convertOption = kPDFProcessorConvertToPDFA4fRGB;
             } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA1aCMYK;
+                convertOption = kPDFProcessorConvertToPDFA4fCMYK;
             }
         } else {
-            convertOption = kPDFProcessorConvertToPDFA1aRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA1b") || !strcmp(argv[2], "PDFA1B"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA1bRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA1bCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA1bRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2a") || !strcmp(argv[2], "PDFA2A"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA2aRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA2aCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA2aRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2b") || !strcmp(argv[2], "PDFA2B"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA2bRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA2bCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA2bRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2u") || !strcmp(argv[2], "PDFA2U"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA2uRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA2uCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA2uRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3a") || !strcmp(argv[2], "PDFA3A"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA3aRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA3aCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA3aRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3b") || !strcmp(argv[2], "PDFA3B"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA3bRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA3bCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA3bRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3u") || !strcmp(argv[2], "PDFA3U"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA3uRGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA3uCMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA3uRGB;
-        }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA4") || !strcmp(argv[2], "PDFA4"))) {
-        if (argc > 3) {
-            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA4RGB;
-            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA4CMYK;
-            }
-        } else {
-            convertOption = kPDFProcessorConvertToPDFA4RGB;
+            convertOption = kPDFProcessorConvertToPDFA4fRGB;
         }
     } else if (argc > 2 && (!strcmp(argv[2], "PDFA4e") || !strcmp(argv[2], "PDFA4E"))) {
         if (argc > 3) {
@@ -136,15 +57,85 @@ int main(int argc, char **argv) {
         } else {
             convertOption = kPDFProcessorConvertToPDFA4eRGB;
         }
-    } else if (argc > 2 && (!strcmp(argv[2], "PDFA4f") || !strcmp(argv[2], "PDFA4F"))) {
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA4") || !strcmp(argv[2], "PDFA4"))) {
         if (argc > 3) {
             if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
-                convertOption = kPDFProcessorConvertToPDFA4fRGB;
+                convertOption = kPDFProcessorConvertToPDFA4RGB;
             } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
-                convertOption = kPDFProcessorConvertToPDFA4fCMYK;
+                convertOption = kPDFProcessorConvertToPDFA4CMYK;
             }
         } else {
-            convertOption = kPDFProcessorConvertToPDFA4fRGB;
+            convertOption = kPDFProcessorConvertToPDFA4RGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3u") || !strcmp(argv[2], "PDFA3U"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA3uRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA3uCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA3uRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3b") || !strcmp(argv[2], "PDFA3B"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA3bRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA3bCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA3bRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA3a") || !strcmp(argv[2], "PDFA3A"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA3aRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA3aCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA3aRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2u") || !strcmp(argv[2], "PDFA2U"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA2uRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA2uCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA2uRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA2b") || !strcmp(argv[2], "PDFA2B"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA2bRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA2bCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA2bRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA1b") || !strcmp(argv[2], "PDFA1B"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA1bRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA1bCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA1bRGB;
+        }
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFA1a") || !strcmp(argv[2], "PDFA1A"))) {
+        if (argc > 3) {
+            if (!strcmp(argv[3], "rgb") || !strcmp(argv[3], "RGB")) {
+                convertOption = kPDFProcessorConvertToPDFA1aRGB;
+            } else if (!strcmp(argv[3], "cmyk") || !strcmp(argv[3], "CMYK")) {
+                convertOption = kPDFProcessorConvertToPDFA1aCMYK;
+            }
+        } else {
+            convertOption = kPDFProcessorConvertToPDFA1aRGB;
         }
     } else {
         std::cout << "PDF Conversion Standard not specified or unknown, defaulting to PDFA3bRGB." << std::endl;
@@ -231,7 +222,7 @@ ASBool PDFProcessorProgressMonitorCB(ASInt32 pageNum, ASInt32 totalPages, float 
               << totalPages << ". Overall Progress = " << current << "%." /* Current Overall Progress */
               << std::endl;
 
-    // False indicates this callback should continue
+    // Return 1 to Cancel conversion
     return 0;
 }
 

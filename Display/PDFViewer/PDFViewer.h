@@ -1,4 +1,4 @@
-// PDFViewer.h : main header file for the DFVIEWER application
+// DLViewer.h : main header file for the DLVIEWER application
 //
 
 #if !defined(AFX_DLVIEWER_H_INCLUDED_)

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
 //
 
 
@@ -127,7 +127,6 @@ int main(int argc, char **argv) {
         PDERelease(reinterpret_cast<PDEObject>(displayText3));
         PDERelease(reinterpret_cast<PDEObject>(displayText4));
         PDERelease(reinterpret_cast<PDEObject>(textContainer));
-        PDERelease(reinterpret_cast<PDEObject>(texts));
 
         // Step 4) Add annotations to the page and set the layer they belong to.
 

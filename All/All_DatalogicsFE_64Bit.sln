@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E606CC40-638C-466D-B7B0-851F3B1910A4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertXFAToAcroForms", "..\Forms\ConvertXFAToAcroForms\ConvertXFAToAcroForms.vcxproj", "{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExportFormsData", "..\Forms\ExportFormsData\ExportFormsData.vcxproj", "{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlattenForms", "..\Forms\FlattenForms\FlattenForms.vcxproj", "{50887C2C-5033-4DB4-81F5-969ED71D2FAE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImportFormsData", "..\Forms\ImportFormsData\ImportFormsData.vcxproj", "{97E29BC9-8182-4967-AB54-A4078AAD44E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E}.Debug|x64.ActiveCfg = Debug|x64
+		{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E}.Debug|x64.Build.0 = Debug|x64
+		{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E}.Release|x64.ActiveCfg = Release|x64
+		{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E}.Release|x64.Build.0 = Release|x64
+		{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD}.Debug|x64.ActiveCfg = Debug|x64
+		{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD}.Debug|x64.Build.0 = Debug|x64
+		{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD}.Release|x64.ActiveCfg = Release|x64
+		{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD}.Release|x64.Build.0 = Release|x64
+		{50887C2C-5033-4DB4-81F5-969ED71D2FAE}.Debug|x64.ActiveCfg = Debug|x64
+		{50887C2C-5033-4DB4-81F5-969ED71D2FAE}.Debug|x64.Build.0 = Debug|x64
+		{50887C2C-5033-4DB4-81F5-969ED71D2FAE}.Release|x64.ActiveCfg = Release|x64
+		{50887C2C-5033-4DB4-81F5-969ED71D2FAE}.Release|x64.Build.0 = Release|x64
+		{97E29BC9-8182-4967-AB54-A4078AAD44E8}.Debug|x64.ActiveCfg = Debug|x64
+		{97E29BC9-8182-4967-AB54-A4078AAD44E8}.Debug|x64.Build.0 = Debug|x64
+		{97E29BC9-8182-4967-AB54-A4078AAD44E8}.Release|x64.ActiveCfg = Release|x64
+		{97E29BC9-8182-4967-AB54-A4078AAD44E8}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{17E5E1FD-6C0D-4E9D-9C66-D69535EB4E7E} = {E606CC40-638C-466D-B7B0-851F3B1910A4}
+		{47B7A87F-9FE6-4CBE-8B0B-E27C3DB744FD} = {E606CC40-638C-466D-B7B0-851F3B1910A4}
+		{50887C2C-5033-4DB4-81F5-969ED71D2FAE} = {E606CC40-638C-466D-B7B0-851F3B1910A4}
+		{97E29BC9-8182-4967-AB54-A4078AAD44E8} = {E606CC40-638C-466D-B7B0-851F3B1910A4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50D6E5E5-3BED-48BC-A481-6C77CAF90908}
+	EndGlobalSection
+EndGlobal

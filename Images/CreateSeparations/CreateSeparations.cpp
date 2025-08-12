@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2004-2025, Datalogics, Inc. All rights reserved.
 //
 // The sample demonstrates how to create color separations for spot color images.
 //

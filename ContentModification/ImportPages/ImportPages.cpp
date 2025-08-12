@@ -1,14 +1,15 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // This program demonstrates how to copy the contents of one page from a PDF input file and place that content
 // into a PDF page in a different document. The program creates a PDEForm to hold the page contents, and scales
 // the page so that the imported content occupies one quarter of the PDF page where it will be placed. The program
 // creates the PDEForm by calling the PDF Library API known as PDEContentAddPage.
 //
-// The PDFEdit Layer (PDE) contains classes that provide for editing a variety of objects
+// The PDFEdit Layer (PDE) of the Adobe Acrobat API contains classes that provide for editing a variety of objects
 // in PDF documents, including form XObjects with this sample.
 //
+
 #include "PEWCalls.h"
 #include "PERCalls.h"
 #include "PagePDECntCalls.h"

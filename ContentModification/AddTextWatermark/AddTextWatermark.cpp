@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2020-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2020-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample adds a text watermark to a documents contents, rather than using the Watermark Annotation.
 // The resulting document is saved encrypted, with only view and Print permissions. The font used to render the watermark
@@ -15,7 +16,6 @@
 //
 // Command-line:   <input-file-name> <output-file-name> <Watermark text string> <font name> <Text Color> <Text Opacity> <Stroke Color> <Stroke Opacity> (All optional)
 //
-
 
 /* Presumptions
 ** The watermark to be used will be single test string, in a single font. The string an font name may be supplied from the command line,

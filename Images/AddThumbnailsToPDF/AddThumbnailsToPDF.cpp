@@ -1,8 +1,8 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // In a PDF document, a thumbnail is a small graphic image that represents a page.
-// Thumbnails appear in a panel of a PDF Viewer and
+// Thumbnails appear in a panel on the left side of the Adobe Acrobat window and
 // aid in navigating through a document, as a user can scroll through a series of
 // thumbnails quickly to find a page. This sample program demonstrates how to create
 // thumbnails for a PDF document, one for each page. The program saves the thumbnail

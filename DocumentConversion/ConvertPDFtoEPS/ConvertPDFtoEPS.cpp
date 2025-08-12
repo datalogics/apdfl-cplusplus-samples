@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // ConvertPDFtoEPS converts the contents of each page of an input PDF into a series of new
 // Encapsulated Postscript files.

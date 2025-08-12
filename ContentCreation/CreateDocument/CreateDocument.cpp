@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample creates a new PDF document and inserts pages.
 //

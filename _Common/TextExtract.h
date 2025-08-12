@@ -1,5 +1,6 @@
-// Copyright (c) 2022-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2023-2025, Datalogics, Inc. All rights reserved.
 //
+
 //
 //===============================================================================
 // Sample: TextExtract -This class is intended to assist with operations common to

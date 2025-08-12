@@ -1,0 +1,7 @@
+dl-val-toolkit
+dl-signing-tools
+pyyaml!=6.0.0,!=5.4.0,!=5.4.1
+invoke
+pipdeptree
+cmake<4.0.0; sys_platform != 'aix' and sys_platform != 'sunos5'
+

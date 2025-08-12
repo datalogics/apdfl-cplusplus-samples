@@ -1,0 +1,119 @@
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
+
+//
+
+//  Disable code signing
+CODE_SIGN_IDENTITY = ;
+CODE_SIGN_STYILE = Manual;
+DEVELOPMENT_TEAM = ;
+PROVISIONING_PROFILE_SPECIFIER = ;
+PRODUCT_BUNDLE_IDENTIFIER = "$(name)";
+
+// Build for native architecture
+VALID_ARCHS = x86_64 arm64
+ARCHS = $(NATIVE_ARCH_ACTUAL)
+
+// Set deployment target to 10.9.
+MACOSX_DEPLOYMENT_TARGET = 10.9;
+
+// Use the new runtime library
+CLANG_CXX_LIBRARY = libc++;
+
+// Library search paths for all targets
+FRAMEWORK_SEARCH_PATHS = ../../../Binaries
+LIBRARY_SEARCH_PATHS = ../../../Binaries
+
+// Add an rpath setting to allow us to use @rpath in the APDFL Frameworks
+LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks"
+
+// Define frameworks to link here, rather than by including references in the project.
+DL_PDFL_FRAMEWORKS = -framework DL180ACE -framework DL180AGM -framework DL180ARE -framework DL180AXE8SharedExpat -framework DL180BIB -framework DL180BIBUtils -framework DL180CoolType -framework DL180JP2K -framework DL180AdobeXMP -framework DL180PDFL
+
+// Common Header search paths for all targets
+HEADER_SEARCH_PATHS = $(HEADER_SEARCH_PATHS) ../../dlutils ../../../Include/Headers
+
+// Compile everything as objective-c++
+GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp
+
+//
+// GENERAL - Build Locations
+//
+
+// Use the latest Mac SDK
+SDKROOT = macosx
+
+// Put our PCH's in our Build folder
+SHARED_PRECOMPS_DIR = $(SRCROOT)/Build/pch
+
+//
+// GENERAL - Linking
+//
+
+PREBINDING = NO
+
+// Always dead code strip
+DEAD_CODE_STRIPPING = YES
+
+// Allow for multiple definitions
+BASE_OTHER_LDFLAGS =
+OTHER_LDFLAGS = $(OTHER_LDFLAGS) $(BASE_OTHER_LDFLAGS) $(DL_PDFL_FRAMEWORKS)
+
+//
+// GENERAL - Packaging
+//
+
+// Set product name to the target name with configuration in order to distinguish between
+// debug and release binaries. Use hyphen instead of underscore for product name. Underscores
+// are considered invalid characters for bundle identifiers in Xcode 4.3+
+PRODUCT_NAME = $(TARGET_NAME)-$(CONFIGURATION)
+
+// Plug-ins have the .acroplugin extension
+WRAPPER_EXTENSION = app
+
+// Info.plist file always has the same name and is in the Samples/dlutils folder
+INFOPLIST_FILE = ../../dlutils/Info.plist
+
+//
+// GENERAL - Deployment
+//
+
+// build the app bundles in the project dir, and do NOT use DSTROOT.
+// this way the relative paths for resources work out correctly.
+CONFIGURATION_BUILD_DIR = $(PROJECT_DIR)
+
+// Don't strip at copy
+COPY_PHASE_STRIP = NO
+
+//
+// GNU C/C++ - Language
+//
+
+//Prefix header is in dlutils
+GCC_PREFIX_HEADER = ../../dlutils/PDFLPrecompile.pch
+
+// Precompile the prefix
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+
+//
+// GNU C/C++ -  Code Generation
+//
+
+// Only show debug symbols for items used
+GCC_DEBUGGING_SYMBOLS = used
+
+// Tune for G5
+GCC_MODEL_TUNING = G5
+
+// Enums are INT
+GCC_SHORT_ENUMS = NO
+
+//
+// GNU C/C++ - Warnings
+//
+
+// So void* can be cast to short, etc. w/o errors
+GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = YES
+
+// Warn about mismatched return types
+GCC_WARN_ABOUT_RETURN_TYPE = YES

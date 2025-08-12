@@ -1,5 +1,8 @@
 //
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
+
+
 //
 // Sample: FindImageResolutions - Create a list of all images in a document, and their parameters,
 //         with a sublist of instances where these images are displayed, and

@@ -1,6 +1,9 @@
 /**
- * Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
  *
+ *
+ * @file   ScopeGuard.h
+ * @date   9/21/2009 17:20
  *
  * @brief  Scope guard objects
  *
@@ -10,6 +13,7 @@
  * Appeared in CUJ (Dec 2000) and DDJ (April 15, 2003)
  *
  * Article: http://www.ddj.com/dept/cpp/184403758
+ * Download: ftp://66.77.27.238/sourcecode/cuj/2000/cujdec2000.zip
  *
  * ScopeGuard creates automatic variables that can cause functions to be called
  * when going out of scope (including function return and exception throw).

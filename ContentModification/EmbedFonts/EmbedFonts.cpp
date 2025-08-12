@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2010-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2010-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample program demonstrates how to scan a PDF document to determine whether the fonts
 // used in that document are embedded.
