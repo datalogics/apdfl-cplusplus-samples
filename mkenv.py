@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import importlib
 import os
 import subprocess
@@ -26,7 +25,8 @@ def run(command_args, verbose=False, check=True, capture_output=False, *args, **
         print(' '.join(command_args), file=sys.stderr)
     redirect_stderr = subprocess.PIPE if capture_output else None
     redirect_stdout = subprocess.PIPE if capture_output else sys.stderr
-    return subprocess.run(command_args, check=check, stdout=redirect_stdout, stderr=redirect_stderr,
+    return subprocess.run(command_args, check=check, shell=False,
+                          stdout=redirect_stdout, stderr=redirect_stderr,
                           *args, **kwargs)
 
 
