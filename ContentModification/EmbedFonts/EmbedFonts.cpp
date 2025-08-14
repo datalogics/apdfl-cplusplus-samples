@@ -163,7 +163,7 @@ ACCB1 ASBool ACCB2 GetFontInfoProc(PDFont pdFont, PDFontFlags* fontFlags, std::v
             UnembeddedFont fontToBeEmbedded;
             fontToBeEmbedded.cosObj = PDFontGetCosObj(pdFont);
 
-            // Sometimes fonts share the same /FontDesctriptor, if we're embedding a new Font Program and
+            // Sometimes fonts share the same /FontDescriptor, if we're embedding a new Font Program and
             // the Descriptor happens to be re-used then it may not work as intended for the _other_ font.
             // To avoid problems make each FontDescriptor a new object so it's no longer shared with others.
             CosObj parentOfFontDescriptor = CosNewNull();
