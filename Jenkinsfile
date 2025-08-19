@@ -53,7 +53,7 @@ pipeline {
                     }
                 }
                 environment {
-                    CONAN_USER_HOME = "${WORKSPACE}"
+                    CONAN_HOME = "${WORKSPACE}"
                     CONAN_NON_INTERACTIVE = '1'
                     CONAN_PRINT_RUN_COMMANDS = '1'
                     CONAN_LOGIN_USERNAME='devauto'
