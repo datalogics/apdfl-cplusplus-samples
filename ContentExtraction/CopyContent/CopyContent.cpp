@@ -7,11 +7,7 @@
 //
 // Command-line:   <input-file>  <output-file>     (Both optional)
 //
-#include <iostream>
-#include <map>
 #include <set>
-#include <utility>
-#include <string>
 
 #include "InitializeLibrary.h"
 #include "APDFLDoc.h"
@@ -46,7 +42,6 @@ int main(int argc, char **argv) {
               << " and writing to " << csOutputFileName.c_str() << std::endl;
 
     // Step 1) Determine what kinds of content will be copied.
-
     // All element types in this set will be copied, others will be ignored
     std::set<ASInt32> sContentTypes;
     sContentTypes.insert(kPDEContainer);
@@ -70,9 +65,7 @@ int main(int argc, char **argv) {
     sPagesToCopy.insert(5);
 
     DURING
-
         // Step 2) Open the input PDF, create the output PDF.
-
         APDFLDoc inAPDoc(csInputFileName.c_str(), true);
         PDDoc inDoc = inAPDoc.getPDDoc();
 
@@ -83,7 +76,6 @@ int main(int argc, char **argv) {
         PDDoc outDoc = outAPDoc.getPDDoc();
 
         // Step 3) Copy the specified content from the input PDF into the output PDF.
-
         for (int i = 0; i < iInDocPages; i++) {
             if (!sPagesToCopy.empty() && (sPagesToCopy.find(i) == sPagesToCopy.end())) {
                 // Don't copy this page if the page selection set is not empty, and this page number isn't in it!
@@ -115,12 +107,10 @@ int main(int argc, char **argv) {
         }
 
         // Step 4) Save the output PDF and close both PDFs.
-
         outAPDoc.saveDoc(csOutputFileName.c_str());
 
         // APDFLDoc's destructor will properly close both documents,
         //    and APDFLib's will shut down the library
-
     HANDLER
         errCode = ERRORCODE;
         lib.displayError(errCode);
@@ -135,22 +125,23 @@ int main(int argc, char **argv) {
 //    "scalar" element types are copied directly
 void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &ElementTypesSet) {
     DURING
-
         ASInt32 i, iNumElems = PDEContentGetNumElems(from);
 
         for (i = 0; i < iNumElems; ++i) {
             // Fetch each element, and get its type
-            PDEElement nextElem = PDEContentGetElem(from, i);
-            ASInt32 type = PDEObjectGetType(reinterpret_cast<PDEObject>(nextElem));
+            PDEElement elem = PDEContentGetElem(from, i);
+            ASInt32 type = PDEObjectGetType(reinterpret_cast<PDEObject>(elem));
 
             if (ElementTypesSet.find(type) == ElementTypesSet.end()) {
                 continue;
             }
 
+            PDEClip clip = PDEElementGetClip(elem);
+
             switch (type) {
             case kPDEContainer: {
                 // This is a compound container, need to recurse
-                PDEContainer fromContainer = reinterpret_cast<PDEContainer>(nextElem);
+                PDEContainer fromContainer = reinterpret_cast<PDEContainer>(elem);
                 PDEContent fromContent = PDEContainerGetContent(fromContainer);
 
                 // The new container, to which which we give blank contents, and give to the output document.
@@ -160,6 +151,10 @@ void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &Eleme
                 PDEContent toContent = PDEContainerGetContent(toContainer);
 
                 copyElements(toContent, fromContent, ElementTypesSet);
+
+                if (clip != NULL) {
+                    PDEElementSetClip(reinterpret_cast<PDEElement>(toContainer), clip);
+                }
 
                 // Now copy the new container into "to".
                 PDEContentAddElem(to, kPDEAfterLast, reinterpret_cast<PDEElement>(toContainer));
@@ -171,7 +166,7 @@ void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &Eleme
 
             case kPDEGroup: {
                 // This is a compound container, need to recurse
-                PDEGroup fromGroup = reinterpret_cast<PDEGroup>(nextElem);
+                PDEGroup fromGroup = reinterpret_cast<PDEGroup>(elem);
                 PDEContent fromContent = PDEGroupGetContent(fromGroup);
 
                 PDEGroup toGroup = PDEGroupCreate();
@@ -179,6 +174,10 @@ void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &Eleme
                 PDEContent toContent = PDEGroupGetContent(toGroup);
 
                 copyElements(toContent, fromContent, ElementTypesSet);
+
+                if (clip != NULL) {
+                    PDEElementSetClip(reinterpret_cast<PDEElement>(toGroup), clip);
+                }
 
                 // Now copy the new group  into "to".
                 PDEContentAddElem(to, kPDEAfterLast, reinterpret_cast<PDEElement>(toGroup));
@@ -189,16 +188,20 @@ void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &Eleme
 
             case kPDEForm: {
                 // This is a compound container, need to recurse
-                PDEForm fromForm = reinterpret_cast<PDEForm>(nextElem);
+                PDEForm fromForm = reinterpret_cast<PDEForm>(elem);
                 PDEContent fromFormContent = PDEFormGetContent(fromForm);
 
-                // Note: this also clones the underlying xObject Cos Object(s), for each occurence.
+                // Note: this also clones the underlying xObject Cos Object(s), for each occurrence.
                 PDEForm toForm = PDEFormCreateClone(fromForm);
 
                 // Replace the contents of toForm with a new one, with only the elements we want copied
                 PDEContent toContent = PDEContentCreate();
                 copyElements(toContent, fromFormContent, ElementTypesSet);
                 PDEFormSetContent(toForm, toContent);
+
+                if (clip != NULL) {
+                    PDEElementSetClip(reinterpret_cast<PDEElement>(toForm), clip);
+                }
 
                 // Now copy the new form  into "to".
                 PDEContentAddElem(to, kPDEAfterLast, reinterpret_cast<PDEElement>(toForm));
@@ -211,7 +214,12 @@ void copyElements(PDEContent to, PDEContent from, const std::set<ASInt32> &Eleme
             }
             default: {
                 // Must be a "scalar"  - just copy it
-                PDEElement copyNextElem = PDEElementCopy(nextElem, kPDEElementCopyClipping);
+                PDEElement copyNextElem = PDEElementCopy(elem, kPDEElementCopyClipping);
+
+                if (clip != NULL) {
+                    PDEElementSetClip(reinterpret_cast<PDEElement>(copyNextElem), clip);
+                }
+
                 PDEContentAddElem(to, kPDEAfterLast, copyNextElem);
                 PDERelease(reinterpret_cast<PDEObject>(copyNextElem));
             } break;
