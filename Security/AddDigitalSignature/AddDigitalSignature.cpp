@@ -53,6 +53,10 @@ int main(int argc, char **argv) {
         // Setup Sign params
         PDSignDocSignParams const signParams = PDSignDocSignInitParams();
 
+        // Set the signature type to be used. The available types are defined in the SignatureType enum. Default CMS.
+        // If ever unsure of the signature type applied, use PDSignDocGetDocSignType(signParams);
+        PDSignDocSetDocSignType(signParams, CMS);
+
         PDSignDocSetFieldID(signParams, CreateFieldWithQualifiedName);
 
         // Set the size and location of the signature box (optional)
