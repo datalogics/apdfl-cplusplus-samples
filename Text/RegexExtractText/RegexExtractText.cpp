@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2021-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2021-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample demonstrates using PDDocTextFinder to find instances of a phrase
 // that matches a user-supplied regular expression. The output is a JSON file that
@@ -7,7 +8,6 @@
 //
 // Command-line:   <input-file> <output-file> <search-regular-expression>    (All optional)
 //
-
 #include <fstream>
 #include <iomanip>
 #include <iostream>

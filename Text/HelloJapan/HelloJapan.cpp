@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2004-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample program is effectively a version of Hello World, except that when run it generates a PDF document
 // with the text “Hello Japan,” using Japanese Kanji characters. Two default fonts are provided in the sample program,

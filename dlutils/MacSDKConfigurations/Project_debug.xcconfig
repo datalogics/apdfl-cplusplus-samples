@@ -1,0 +1,25 @@
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
+
+//
+
+#include "../../dlutils/MacSDKConfigurations/Common.xcconfig"
+
+//
+// GNU C/C++ - Language
+//
+
+// Enable Fix & Continue
+GCC_ENABLE_FIX_AND_CONTINUE = YES
+
+//
+// GNU C/C++ - Code Generation
+//
+
+GCC_OPTIMIZATION_LEVEL = 0
+
+//
+// GNU C/C++ - Preprocessing
+//
+
+GCC_PREPROCESSOR_DEFINITIONS = AS_DEBUG=1 DEBUG=1 _DEBUG=1 DISABLECPLUSPLUSDURING=0 EXCEPTIONS_ALWAYS_CPLUSPLUS=1

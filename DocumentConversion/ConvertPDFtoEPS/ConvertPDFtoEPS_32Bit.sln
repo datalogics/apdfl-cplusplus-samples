@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertPDFtoEPS", "ConvertPDFtoEPS.vcxproj", "{F1B7F67C-A923-41D7-9C99-0AF318DF2198}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1B7F67C-A923-41D7-9C99-0AF318DF2198}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F1B7F67C-A923-41D7-9C99-0AF318DF2198}.Debug|Win32.Build.0 = Debug|Win32
+		{F1B7F67C-A923-41D7-9C99-0AF318DF2198}.Release|Win32.ActiveCfg = Release|Win32
+		{F1B7F67C-A923-41D7-9C99-0AF318DF2198}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76CD707C-A457-40DB-A8D1-EA85B93A2940}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateAnnotations", "CreateAnnotations.vcxproj", "{F3E1C9B0-D3D9-4BE1-AE20-AFAC2C5B9131}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3E1C9B0-D3D9-4BE1-AE20-AFAC2C5B9131}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F3E1C9B0-D3D9-4BE1-AE20-AFAC2C5B9131}.Debug|Win32.Build.0 = Debug|Win32
+		{F3E1C9B0-D3D9-4BE1-AE20-AFAC2C5B9131}.Release|Win32.ActiveCfg = Release|Win32
+		{F3E1C9B0-D3D9-4BE1-AE20-AFAC2C5B9131}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F976FFF-CE32-4318-A8A2-B5F8E8180E78}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddTextWatermark", "AddTextWatermark.vcxproj", "{CCB809B8-E529-42BA-BD0D-41644CC3AAEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCB809B8-E529-42BA-BD0D-41644CC3AAEF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CCB809B8-E529-42BA-BD0D-41644CC3AAEF}.Debug|Win32.Build.0 = Debug|Win32
+		{CCB809B8-E529-42BA-BD0D-41644CC3AAEF}.Release|Win32.ActiveCfg = Release|Win32
+		{CCB809B8-E529-42BA-BD0D-41644CC3AAEF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DF94183-67AA-4F68-9C83-B50BFEAD26C4}
+	EndGlobalSection
+EndGlobal

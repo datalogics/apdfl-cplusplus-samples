@@ -136,7 +136,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDI_ICON1,IDC_STATIC,11,17,20,20
     LTEXT           "PDFViewer Sample",IDC_STATIC,40,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2014-2024 Datalogics",IDC_STATIC,40,25,119,8
+    LTEXT           "Copyright (C) 2014-2025 Datalogics",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
 END
 
@@ -168,7 +168,7 @@ BEGIN
             VALUE "FileDescription", "PDFViewer Version 1 Sample Appication"
             VALUE "FileVersion", "1, 0, 0, 0"
             VALUE "InternalName", "PDFViewer"
-            VALUE "LegalCopyright", "Copyright (C) 2014-2024 Datalogics"
+            VALUE "LegalCopyright", "Copyright (C) 2014-2025 Datalogics"
             VALUE "OriginalFilename", "PDFViewer.EXE"
             VALUE "ProductName", "PDFViewer Version 1 Sample Application"
             VALUE "ProductVersion", "1, 0, 0, 0"
@@ -198,14 +198,6 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Cursor
-//
-
-IDC_HANDCURSOR          CURSOR                  "res\\handcurs.cur"
 
 
 /////////////////////////////////////////////////////////////////////////////

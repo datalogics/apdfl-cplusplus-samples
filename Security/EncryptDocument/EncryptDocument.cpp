@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // The EncryptDocument encrypts a PDF document to secure it, and saves it with a password.
 //

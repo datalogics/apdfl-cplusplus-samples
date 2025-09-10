@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2021-2025, Datalogics, Inc. All rights reserved.
 //
 // The AddRegexRedaction sample program uses DocTextFinder to locate matches to be
 // redacted in a PDF document when given a user-supplied regular expression. The text is

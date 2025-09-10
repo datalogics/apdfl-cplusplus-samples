@@ -1,0 +1,2 @@
+adobe_pdf_library: adobe_pdf_library/[>=18.0.5+]@datalogics/nightly
+installer-resources: installer-resources/[>=0.7]@datalogics/stable

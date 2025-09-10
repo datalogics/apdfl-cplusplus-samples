@@ -6,8 +6,6 @@
 #define IDR_MAINFRAME                   128
 #define IDR_DLVIEWTYPE                  129
 #define IDI_ICON1                       130
-#define IDC_CURSOR1                     133
-#define IDC_HANDCURSOR                  133
 #define IDI_ICON2                       134
 #define ID_PAGE_SELECT                  32772
 #define ID_PAGE_ROTATE                  32773

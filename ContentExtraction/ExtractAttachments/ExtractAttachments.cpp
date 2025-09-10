@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample extracts from a PDF input document all of the embedded attachments
 // found on the first page, and all attachments in the nametree.

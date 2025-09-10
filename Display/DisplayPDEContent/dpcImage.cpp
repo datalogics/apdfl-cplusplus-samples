@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2008-2025, Datalogics, Inc. All rights reserved.
 //
 
 #include <sstream>
@@ -14,7 +14,7 @@
 #include "DisplayPDEContent.h"
 #include "dpcOutput.h"
 
-void DisplayImage(PDEImage Image, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+void DisplayImage(PDEImage Image, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     PDEImageAttrs Attributes;
     PDEColorSpace ColorSpace = PDEImageGetColorSpace(Image);
     ASInt32 ImageDataSize = PDEImageGetDataLen(Image);
@@ -48,7 +48,7 @@ void DisplayImage(PDEImage Image, ASFixedMatrix *Matrix, PDEGraphicState *GState
 
     ASInt32 NumberOfFilters = PDEImageGetFilterArray(Image, NULL);
     PDEFilterArray *Filters =
-        (PDEFilterArray *)ASmalloc(sizeof(PDEFilterArray) + (NumberOfFilters * sizeof(PDEFilterSpec)));
+        static_cast<PDEFilterArray *>(ASmalloc(sizeof(PDEFilterArray) + (NumberOfFilters * sizeof(PDEFilterSpec))));
     NumberOfFilters = PDEImageGetFilterArray(Image, Filters);
     std::ostringstream ossFilter;
     if (NumberOfFilters > 1)

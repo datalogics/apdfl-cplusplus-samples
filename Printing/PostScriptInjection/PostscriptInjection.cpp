@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample illustrates adding PostScript comments and commands into a printable
 // output document, generated using the Adobe PDF Library print API, PDFLPrintDoc.

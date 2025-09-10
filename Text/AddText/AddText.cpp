@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample demonstrates creating a new PDF document and adding text to the page, using a PDEFont element.
 //

@@ -1,8 +1,8 @@
 //
-// Copyright (c) 2008-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2008-2025, Datalogics, Inc. All rights reserved.
 //
 // This program generates an output text file that lists details regarding the PDE content on every page
-// in an input PDF document. The PDFEdit Layer (PDE) contains classes that provide
+// in an input PDF document. The PDFEdit Layer (PDE) of the Adobe Acrobat API contains classes that provide
 // for editing objects in PDF documents, including color spaces, clip and page objects, fonts, form XObjects,
 // and other objects. This program can list the number of pages in the document and the file size, and identify
 // and describe a variety of features within the PDF, such as the page layout (landscape or portrait), annotations,
@@ -65,14 +65,12 @@ int main(int argc, char *argv[]) {
                                     << pagesInDoc << " pages contained in " << fileSize << " bytes.\n{\n";
         Outputter::Inst()->Indent();
 
-        // Set up a unity matrix
-        ASFixedMatrix UnityMatrix;
-        UnityMatrix.a = UnityMatrix.d = fixedOne;
-        UnityMatrix.b = UnityMatrix.c = 0;
-        UnityMatrix.h = UnityMatrix.v = 0;
 
         // Acquire each page in turn from the document
         for (ASUns32 pageNumber = 0; pageNumber < pagesInDoc; pageNumber++) {
+            // Set up a unity matrix
+            ASDoubleMatrix UnityMatrix = { 1,0,0,1,0,0 };
+
             // Obtain the page and its PDE content
             PDPage page = PDDocAcquirePage(pdDoc, pageNumber);
             PDEContent content = PDPageAcquirePDEContent(page, 0);
@@ -120,7 +118,7 @@ static const char *GetRotationText(PDRotate r) {
     }
 }
 
-static std::string DisplayRectangle(ASFixedRect &r) {
+static std::string DisplayFixedRectangle(ASFixedRect &r) {
     char Left[20], Right[20], Bottom[20], Top[20];
     ASFixedToCString(r.left, Left, 20, 5);
     ASFixedToCString(r.right, Right, 20, 5);
@@ -131,6 +129,14 @@ static std::string DisplayRectangle(ASFixedRect &r) {
     return oss.str();
 }
 
+static std::string DisplayRectangle(ASDoubleRect& r) {
+    std::ostringstream oss;
+    oss.precision(4);
+    oss << "[" << r.left << ", " << r.bottom << ", " << r.right << ", " << r.top << "]";
+    return oss.str();
+}
+
+
 static std::string GetBoxDimsText(PDPage p, const char *box = 0) {
     ASFixedRect r;
     if (!box) {
@@ -138,7 +144,7 @@ static std::string GetBoxDimsText(PDPage p, const char *box = 0) {
     } else {
         PDPageGetBox(p, ASAtomFromString(box), &r);
     }
-    return DisplayRectangle(r);
+    return DisplayFixedRectangle(r);
 }
 
 //
@@ -169,7 +175,7 @@ static void DisplayPageInfo(PDPage page) {
     Outputter::Inst()->Indent();
 }
 
-static void StartDisplayContent(PDEContent Container, ASFixedMatrix *Matrix,
+static void StartDisplayContent(PDEContent Container, ASDoubleMatrix *Matrix,
                                 PDEGraphicState *GState, ASBool HasGState) {
     PDEContentAttrs Attributes;
     std::ostringstream outText;
@@ -202,9 +208,9 @@ static void StartDisplayContent(PDEContent Container, ASFixedMatrix *Matrix,
 
     if (Attributes.formType) {
         outText << "Contains Form type " << Attributes.formType
-                << ". Rounding Box: " << DisplayRectangle(Attributes.bbox).c_str();
+                << ". Bounding Box: " << DisplayFixedRectangle(Attributes.bbox).c_str();
         if (Attributes.flags & kPDEFormMatrix) {
-            outText << ", Matrix " << DisplayMatrix(&Attributes.matrix);
+            outText << ", Matrix " << DisplayFixedMatrix(&Attributes.matrix);
         }
     }
 
@@ -216,7 +222,7 @@ static void StartDisplayContent(PDEContent Container, ASFixedMatrix *Matrix,
 
 static void EndDisplayContent() { Outputter::Inst()->GetOfs() << "}" << std::endl; }
 
-static void StartDisplayContainer(PDEContainer Container, ASFixedMatrix *Matrix,
+static void StartDisplayContainer(PDEContainer Container, ASDoubleMatrix *Matrix,
                                   PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "Container Object: " << ASAtomGetString(PDEContainerGetMCTag(Container))
                                 << std::endl;
@@ -233,50 +239,46 @@ static void StartDisplayContainer(PDEContainer Container, ASFixedMatrix *Matrix,
     Outputter::Inst()->Indent();
 }
 
-static void EndDisplayContainer(PDEContainer Container, ASFixedMatrix *Matrix,
+static void EndDisplayContainer(PDEContainer Container, ASDoubleMatrix *Matrix,
                                 PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->Outdent();
     Outputter::Inst()->GetOfs() << "} End Marked Content Container "
                                 << ASAtomGetString(PDEContainerGetMCTag(Container)) << std::endl;
 }
 
-static void StartDisplayGroup(PDEGroup Group, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void StartDisplayGroup(PDEGroup Group, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "Group Object: at " << DisplayMatrix(Matrix) << std::endl;
     Outputter::Inst()->GetOfs() << "{" << std::endl;
     Outputter::Inst()->Indent();
 }
 
-static void EndDisplayGroup(PDEGroup Group, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void EndDisplayGroup(PDEGroup Group, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "}" << std::endl;
     Outputter::Inst()->Outdent();
 }
 
-static void StartDisplayForm(PDEForm Form, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void StartDisplayForm(PDEForm Form, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "Forms XObject: At " << DisplayMatrix(Matrix) << std::endl;
 
     CosObj FormsObj, WorkObj;
     PDEFormGetCosObj(Form, &FormsObj);
     WorkObj = CosDictGet(FormsObj, ASAtomFromString("BBox"));
-    ASFixedRect FormsBB;
-    FormsBB.bottom = CosFixedValue(CosArrayGet(WorkObj, 0));
-    FormsBB.left = CosFixedValue(CosArrayGet(WorkObj, 1));
-    FormsBB.top = CosFixedValue(CosArrayGet(WorkObj, 2));
-    FormsBB.right = CosFixedValue(CosArrayGet(WorkObj, 3));
+    ASDoubleRect FormsBB = { 0,0,0,0 };
+    FormsBB.bottom = CosDoubleValue(CosArrayGet(WorkObj, 0));
+    FormsBB.left = CosDoubleValue(CosArrayGet(WorkObj, 1));
+    FormsBB.top = CosDoubleValue(CosArrayGet(WorkObj, 2));
+    FormsBB.right = CosDoubleValue(CosArrayGet(WorkObj, 3));
     std::string BBText(DisplayRectangle(FormsBB));
 
     WorkObj = CosDictGet(FormsObj, ASAtomFromString("Matrix"));
-    ASFixedMatrix FormsMatrix;
+    ASDoubleMatrix FormsMatrix = { 1,0,0,1,0,0 };
     if (CosObjGetType(WorkObj) == CosArray) {
-        FormsMatrix.a = CosFixedValue(CosArrayGet(WorkObj, 0));
-        FormsMatrix.b = CosFixedValue(CosArrayGet(WorkObj, 1));
-        FormsMatrix.c = CosFixedValue(CosArrayGet(WorkObj, 2));
-        FormsMatrix.d = CosFixedValue(CosArrayGet(WorkObj, 3));
-        FormsMatrix.h = CosFixedValue(CosArrayGet(WorkObj, 4));
-        FormsMatrix.v = CosFixedValue(CosArrayGet(WorkObj, 5));
-    } else {
-        FormsMatrix.a = FormsMatrix.d = fixedOne;
-        FormsMatrix.b = FormsMatrix.c = 0;
-        FormsMatrix.h = FormsMatrix.v = 0;
+        FormsMatrix.a = CosDoubleValue(CosArrayGet(WorkObj, 0));
+        FormsMatrix.b = CosDoubleValue(CosArrayGet(WorkObj, 1));
+        FormsMatrix.c = CosDoubleValue(CosArrayGet(WorkObj, 2));
+        FormsMatrix.d = CosDoubleValue(CosArrayGet(WorkObj, 3));
+        FormsMatrix.h = CosDoubleValue(CosArrayGet(WorkObj, 4));
+        FormsMatrix.v = CosDoubleValue(CosArrayGet(WorkObj, 5));
     }
 
     Outputter::Inst()->GetOfs() << "    Forms Matrix: " << DisplayMatrix(&FormsMatrix)
@@ -285,12 +287,12 @@ static void StartDisplayForm(PDEForm Form, ASFixedMatrix *Matrix, PDEGraphicStat
     Outputter::Inst()->Indent();
 }
 
-static void EndDisplayForm(PDEForm Form, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void EndDisplayForm(PDEForm Form, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->Outdent();
     Outputter::Inst()->GetOfs() << "} End of Forms XObject content\n";
 }
 
-static void StartDisplayPostscript(PDEPS EPSImage, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void StartDisplayPostscript(PDEPS EPSImage, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     char First100[101];
 
     // Review the stream to determine the length, but only show first 100 characters
@@ -315,7 +317,7 @@ static void StartDisplayPostscript(PDEPS EPSImage, ASFixedMatrix *Matrix, PDEGra
     Outputter::Inst()->Outdent();
 }
 
-static void DisplayPlace(PDEPlace Place, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+static void DisplayPlace(PDEPlace Place, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "Place Object: " << ASAtomGetString(PDEPlaceGetMCTag(Place)) << std::endl;
 
     CosObj MCDict;
@@ -328,7 +330,7 @@ static void DisplayPlace(PDEPlace Place, ASFixedMatrix *Matrix, PDEGraphicState 
     }
 }
 
-static void DisplayBeginContainer(PDEBeginContainer Container, ASFixedMatrix *Matrix,
+static void DisplayBeginContainer(PDEBeginContainer Container, ASDoubleMatrix *Matrix,
                                   PDEGraphicState *GState, ASBool HasGState) {
     Outputter::Inst()->GetOfs() << "Begin Container: "
                                 << ASAtomGetString(PDEBeginContainerGetMCTag(Container)) << std::endl;
@@ -361,7 +363,7 @@ static void DisplayEndGroup() {
     Outputter::Inst()->GetOfs() << "} End of a group" << std::endl;
 }
 
-void AnalyzePDEContent(PDEContent Content, ASFixedMatrix *Matrix) {
+void AnalyzePDEContent(PDEContent Content, ASDoubleMatrix *Matrix) {
     // Get the number of PDE elements contained
     ASUns32 NumberOfElems = PDEContentGetNumElems(Content);
 
@@ -377,23 +379,39 @@ void AnalyzePDEContent(PDEContent Content, ASFixedMatrix *Matrix) {
         // Obtain its Graphic State (if any)
         HasGState = PDEElementHasGState(Element, &GState, sizeof(PDEGraphicState));
 
-        // Obtain its position in the container
-        ASFixedMatrix ContentMatrix;
-        PDEElementGetMatrix(Element, &ContentMatrix);
+        /* Obtain its position in the container */
+
+        // if the element matrix is all zeros, invert it for a Unity matrix and use that instead
+        ASDoubleMatrix ContentMatrix;
+        ASFixedMatrix fm1;
+        PDEElementGetMatrix(Element, &fm1);
+        if ((fixedZero == fm1.a) &&
+            (fixedZero == fm1.b) &&
+            (fixedZero == fm1.c) &&
+            (fixedZero == fm1.d) &&
+            (fixedZero == fm1.h) &&
+            (fixedZero == fm1.v))
+        {
+            ContentMatrix = { 1,0,0,1,0,0 };
+        }
+        else {
+            PDEElementGetMatrixEx(Element, &ContentMatrix);
+        }
+
 
         // And Convert to a position in the page
-        ASFixedMatrix PageMatrix;
-        ASFixedMatrixConcat(&PageMatrix, &ContentMatrix, Matrix);
+        ASDoubleMatrix PageMatrix;
+        ASDoubleMatrixConcat(&PageMatrix, &ContentMatrix, Matrix);
 
         // Process the PDE element by type
-        PDEType Type = (PDEType)PDEObjectGetType((PDEObject)Element);
+        PDEType Type = static_cast<PDEType>(PDEObjectGetType(reinterpret_cast<PDEObject>(Element)));
         switch (Type) {
         case kPDEContent:
             // Display a content object
-            StartDisplayContent((PDEContent)Element, &PageMatrix, &GState, HasGState);
+            StartDisplayContent(reinterpret_cast<PDEContent>(Element), &PageMatrix, &GState, HasGState);
 
             // Analyze and display its content
-            AnalyzePDEContent((PDEContent)Element, &PageMatrix);
+            AnalyzePDEContent(reinterpret_cast<PDEContent>(Element), &PageMatrix);
 
             // Display end of a content object
             EndDisplayContent();
@@ -401,73 +419,73 @@ void AnalyzePDEContent(PDEContent Content, ASFixedMatrix *Matrix) {
 
         case kPDEContainer:
             // Display a container object
-            StartDisplayContainer((PDEContainer)Element, &PageMatrix, &GState, HasGState);
+            StartDisplayContainer(reinterpret_cast<PDEContainer>(Element), &PageMatrix, &GState, HasGState);
 
             // Obtain, Analyze, and Display its content
             SubContent = PDEContainerGetContent((PDEContainer)Element);
             AnalyzePDEContent(SubContent, &PageMatrix);
 
             // Display the end of a container object
-            EndDisplayContainer((PDEContainer)Element, &PageMatrix, &GState, HasGState);
+            EndDisplayContainer(reinterpret_cast<PDEContainer>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEGroup:
             // Display a group object
-            StartDisplayGroup((PDEGroup)Element, &PageMatrix, &GState, HasGState);
+            StartDisplayGroup(reinterpret_cast<PDEGroup>(Element), &PageMatrix, &GState, HasGState);
 
             // Obtain, Analyze, and display its content
-            SubContent = PDEGroupGetContent((PDEGroup)Element);
+            SubContent = PDEGroupGetContent(reinterpret_cast<PDEGroup>(Element));
             AnalyzePDEContent(SubContent, &PageMatrix);
 
             // Display the end of a group object
-            EndDisplayGroup((PDEGroup)Element, &PageMatrix, &GState, HasGState);
+            EndDisplayGroup(reinterpret_cast<PDEGroup>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEText:
             // Display a complete text object
-            DisplayText((PDEText)Element, &PageMatrix, &GState, HasGState);
+            DisplayText(reinterpret_cast<PDEText>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEPath:
             // Display a complete path
-            DisplayPath((PDEPath)Element, &PageMatrix, &GState, HasGState);
+            DisplayPath(reinterpret_cast<PDEPath>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEImage:
             // Display an image object
-            DisplayImage((PDEImage)Element, &PageMatrix, &GState, HasGState);
+            DisplayImage(reinterpret_cast<PDEImage>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEShading:
             // Display the info for a Shading Operator
-            DisplayShading((PDEShading)Element, &PageMatrix, &GState, HasGState);
+            DisplayShading(reinterpret_cast<PDEShading>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEForm:
             // Display a forms object
-            StartDisplayForm((PDEForm)Element, &PageMatrix, &GState, HasGState);
+            StartDisplayForm(reinterpret_cast<PDEForm>(Element), &PageMatrix, &GState, HasGState);
 
             // Obtain, Analyze, and Display its content
-            SubContent = PDEFormGetContent((PDEForm)Element);
+            SubContent = PDEFormGetContent(reinterpret_cast<PDEForm>(Element));
             AnalyzePDEContent(SubContent, &PageMatrix);
 
             // Display the end of a form object
-            EndDisplayForm((PDEForm)Element, &PageMatrix, &GState, HasGState);
+            EndDisplayForm(reinterpret_cast<PDEForm>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEPS:
             // Display a Postscript Object
-            StartDisplayPostscript((PDEPS)Element, &PageMatrix, &GState, HasGState);
+            StartDisplayPostscript(reinterpret_cast<PDEPS>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEPlace:
             // Display a Place Object
-            DisplayPlace((PDEPlace)Element, &PageMatrix, &GState, HasGState);
+            DisplayPlace(reinterpret_cast<PDEPlace>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         // These don't actually have content, but serve to group content in a stream
         case kPDEBeginContainer:
-            DisplayBeginContainer((PDEBeginContainer)Element, &PageMatrix, &GState, HasGState);
+            DisplayBeginContainer(reinterpret_cast<PDEBeginContainer>(Element), &PageMatrix, &GState, HasGState);
             break;
 
         case kPDEEndContainer:

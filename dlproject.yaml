@@ -1,0 +1,171 @@
+# Config file for the project. Used by the Invoke tasks, primarily.
+config:
+  # Basic configuration variables
+  global:
+    # Conan configuration. `conan config install` installs configuration file from this URL.
+    # See: https://docs.conan.io/en/latest/reference/commands/consumer/config.html#conan-config-install
+    # This is usually a pointer to a Git repo, from which it clones the default branch
+    config_url: git@github.com:datalogics/conan-config.git
+
+    # Regex that indicates a release branch
+    stable_branch_pattern: release-.*
+
+    # Configs based on platform information
+    #
+    # Keys can be (and are merged in this order)
+    #
+    # system
+    # system-machine
+    # system-version
+    # system-version-machine
+    #
+    # Where:
+    #   system is macos, windows, or the name of the linux distribution (redhat includes centos)
+    #   version is the major version number (major.minor on macos)
+    #   machine is the processor architecture, i.e. x86_64
+    #
+    # items from global and modify them here.
+    # When merging:
+    #     Dictionary keys override the base
+    #     Lists are appended
+
+  macos-x86_64:
+    config:
+      Release:
+        profile_host:
+          - apple-clang-15.0-intel-cppstd-17
+        profile_build:
+          - apple-clang-15.0-intel-cppstd-17
+        build: missing
+
+  macos-arm64:
+    config:
+      Release:
+        profile_host:
+          - apple-clang-15.0-arm-cppstd-17
+        profile_build:
+          - apple-clang-15.0-arm-cppstd-17
+        build: missing
+      LicenseManaged:
+        include: Release
+        options:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
+
+  aix-powerpc:
+    config:
+      Release:
+        profile_host:
+          - gcc-10-aix72-64-cppstd-14
+        profile_build:
+          - gcc-10-aix72-64-cppstd-17
+        options_host:
+          - include_dli=False
+        profile_build:
+          - gcc-10-aix72-64
+        build: missing
+
+  sunos-sparc:
+    config:
+      Release:
+        profile_build:
+          - gcc-9-sparc-solaris
+        options_host:
+          - include_dli=False
+        profile_host:
+          - gcc-9-sparc-solaris
+        build: missing
+      Release32:
+        profile_build:
+          - gcc-9-sparc-solaris
+        profile_host:
+          - gcc-9-sparc32-solaris
+        options_host:
+          - include_dli=False
+        build: missing
+
+  rocky-8-x86_64:
+    # Use the clang 18 compiler on Rocky 8 Linux
+    config:
+      Release:
+        profile_host:
+          - clang-18-linux-x86_64-cppstd-14
+        profile_build:
+          - clang-18-linux-x86_64-cppstd-17
+        build: missing
+      LicenseManaged:
+        include: Release
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
+      Release32:
+        profile_host:
+          - clang-18-linux-x86
+        profile_build:
+          - clang-18-linux-x86_64
+        build: missing
+
+  rocky-8-aarch64:
+    # Use the clang 18 compiler on Rocky 8 Linux
+    config:
+      Release:
+        profile_host:
+          - clang-18-linux-armv8-cppstd-14
+        profile_build:
+          - clang-18-linux-armv8-cppstd-17
+        build: missing
+      LicenseManaged:
+        include: Release
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
+
+  windows-x86_64:
+    config:
+      Release:
+        profile_host:
+          - msvc-x64-194-cppstd-14
+        profile_build:
+          - msvc-x64-194-cppstd-17
+        settings_host:
+          - adobe_pdf_library/*:compiler.runtime=static
+        settings_build:
+          - innoextract/*:compiler.cppstd=14
+        build:
+        - missing
+      LicenseManaged:
+        include: Release
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
+      Release32:
+        profile_host:
+          - msvc-x86-194-cppstd-14
+        profile_build:
+          - msvc-x86-194-cppstd-17
+        build:
+        - missing
+        settings_host:
+          - adobe_pdf_library/*:compiler.runtime=static
+        settings_build:
+          - innoextract/*:compiler.cppstd=14
+          - msys2/*:arch=x86_64
+      LicenseManaged32:
+        include: Release32
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
+
+  windows-arm64:
+    config:
+      Release:
+        profile_host:
+          - msvc-arm64-193-cppstd-14
+        profile_build:
+          - msvc-arm64-193-cppstd-17
+        settings_host:
+          - adobe_pdf_library/*:build_type=RelWithDebInfo
+          - adobe_pdf_library/*:compiler.runtime=static
+          - adobe_pdf_library/*:compiler.runtime_type=Release
+          - adobe_pdf_library/*:compiler.update=8
+        build: missing

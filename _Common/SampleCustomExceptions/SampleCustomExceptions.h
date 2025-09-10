@@ -1,6 +1,7 @@
 /*
-// Copyright 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright 2015-2025, Datalogics, Inc. All rights reserved.
 //
+
 */
 
 #ifndef _SAMPLE_CUSTOM_EXCEPTIONS_H_
