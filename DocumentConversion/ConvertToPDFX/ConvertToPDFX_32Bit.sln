@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToPDFX", "ConvertToPDFX.vcxproj", "{A51E0247-F7EF-4C7E-96B7-F50752C73D81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Debug|Win32.Build.0 = Debug|Win32
+		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Release|Win32.ActiveCfg = Release|Win32
+		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {985E6F19-F0C1-48A4-89DD-C4403FFC008C}
+	EndGlobalSection
+EndGlobal

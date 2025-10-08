@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageImport", "ImageImport.vcxproj", "{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}.Debug|x64.ActiveCfg = Debug|x64
+		{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}.Debug|x64.Build.0 = Debug|x64
+		{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}.Release|x64.ActiveCfg = Release|x64
+		{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69850525-F123-43FE-A087-CFA5F38641DE}
+	EndGlobalSection
+EndGlobal

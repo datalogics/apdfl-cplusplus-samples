@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SetUniquePermissions", "SetUniquePermissions.vcxproj", "{6A187553-5DE6-461E-9838-3A3765330451}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A187553-5DE6-461E-9838-3A3765330451}.Debug|x64.ActiveCfg = Debug|x64
+		{6A187553-5DE6-461E-9838-3A3765330451}.Debug|x64.Build.0 = Debug|x64
+		{6A187553-5DE6-461E-9838-3A3765330451}.Release|x64.ActiveCfg = Release|x64
+		{6A187553-5DE6-461E-9838-3A3765330451}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A875D06-BFD7-4DB3-9BC3-F9853AEF72A3}
+	EndGlobalSection
+EndGlobal

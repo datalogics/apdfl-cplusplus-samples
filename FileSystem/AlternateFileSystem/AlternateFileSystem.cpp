@@ -1,16 +1,16 @@
 //
-//  Copyright (c) 2004-2023, Datalogics, Inc. All rights reserved.
-///
+//  Copyright (c) 2004-2025, Datalogics, Inc. All rights reserved.
+//
 // This sample program shows how to implement an ASFileSys structure in an
-// application. It also demonstrates adding a simplified
+// Adobe PDF Library application. It also demonstrates adding a simplified
 // “in memory” file system for use in an app.
 //
 // The Alternate File System structure (ASFileSys) is a series of routines within
-// the Library that allows a developer to implement file system services
-// in an application. ASFileSys allows an application to open and delete files,
-// read data from a file, and write data to a file. The Library offers a
-// built-in Alternate File System that serves as the platform’s
-// native file system, but developers working with the Library can create
+// the Adobe PDF Library that allows a developer to implement file system services
+// in an APDFL application. ASFileSys allows an application to open and delete files,
+// read data from a file, and write data to a file. Adobe Acrobat and the Adobe PDF
+// Library both offer a built-in Alternate File System that serves as the platform’s
+// native file system, but developers working with the Adobe PDF Library can create
 // additional ASFileSys objects to serve other file systems.  The sample does not
 // demonstrate all of the calls available for use with ASFileSys, but it implements
 // enough to illustrate the most common uses.

@@ -1,5 +1,6 @@
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
 //
+
 //
 //===============================================================================
 // Sample: SetupPrintParams -These functions are intended to assist with
@@ -36,7 +37,7 @@ void SetupPDPrintParams(PDPrintParams psParams) {
     psParams->reverse = false; // Reverse the order of page output
                                // (NOTE: This does NOT add a blank backing page, in the event of
                                // duplex is true, and number of pages is odd.)
-    psParams->doOPP = false; // When true, CMYK colors will “mix” in the manner of the OP blending model.
+    psParams->doOPP = false; // When true, CMYK colors will ï¿½mixï¿½ in the manner of the OP blending model.
     psParams->transparencyQuality =
         100; // Echoed in PDFLPrintUserParams as the transQuality attribute.
                // Used to establish how much time/resources should be applied to flattening
@@ -143,7 +144,7 @@ void SetupPDPrintParams(PDPrintParams psParams) {
                // while downloading the font. When false, the base font name is used.
 
     psParams->emitPageClip = true; // When true, will emit a clip region around the pages clip path.
-                                   // This is useful if the page actually contains content outside of it’s clip path.
+                                   // This is useful if the page actually contains content outside of itï¿½s clip path.
     psParams->emitTransfer = true; // When true, will emit transfer functions to the PostScript
                                    // document, rather than resolving their usage on the host.
     psParams->emitBG = true; // When true,  will emit Black Generation values to the PostScript
@@ -168,7 +169,7 @@ void SetupPDPrintParams(PDPrintParams psParams) {
     psParams->emitFlatness = false; // When true, causes the flatness setting in Graphics State to be honored.
     psParams->trapType = 0; // Controls whether trapping is done on the host or on the printer.
     psParams->suppressSnapToDevice =
-        false; // When true, will disable the “Snap To Device” rendering option.
+        false; // When true, will disable the ï¿½Snap To Deviceï¿½ rendering option.
                // Snap To Device causes all elements to be pixel aligned at the printer resolution.
     psParams->suppressElement = 0; // Controls suppression of XMP data, written to the PostScript
                                    // stream. Data may be controlled by type.
@@ -289,7 +290,7 @@ void SetupPDFLPrintUserParams(PDFLPrintUserParams userParams) {
     userParams->outFileName = NULL; // Used only when printing to a printer. They indicate that the final driver
     userParams->outFileNameW =
         NULL; // file should be saved in the named file, rather than passed to the printer
-              // Effectively, they are equivalent to the “print to a file” toggle in most
+              // Effectively, they are equivalent to the ï¿½print to a fileï¿½ toggle in most
               // printer controls.
               // When both are supplied, the wide form will be used.
 
@@ -299,7 +300,7 @@ void SetupPDFLPrintUserParams(PDFLPrintUserParams userParams) {
               // When present, it will be used to establish values for printer control information.
               // When it is NOT present, and  printing to a printer, APDFL will obtain the default
               // DevMode for the selected printer to use in its place.
-              // When the user supplies the DevMode, it’s values for nCopies, Duplex, and Collate
+              // When the user supplies the DevMode, itï¿½s values for nCopies, Duplex, and Collate
               // will be used, rather than the values specified in the control structures.
               // When it is obtained from the default for the printer, the values specified in the
               // control structures will be preferred.
@@ -378,7 +379,7 @@ void SetupPDFLPrintUserParams(PDFLPrintUserParams userParams) {
     userParams->reverse = false; // When true,  will cause the pages to be printed from last to first.
 
     userParams->doOPP = false; // Echoes the PDPrintParamsRec attribute of the same name. When true,
-                               // we will “blend” CMYK colors using the OP transparency model.
+                               // we will ï¿½blendï¿½ CMYK colors using the OP transparency model.
 #endif
 }
 

@@ -1,0 +1,22 @@
+CC=$(CXX)
+
+ifeq ($(STAGE), debug)
+    DEBUG=-DDEBUG -D_DEBUG
+else
+    DEBUG=-DNDEBUG
+endif
+
+ARCH_FLAGS = -march=armv8-a
+
+CCFLAGS  = $(ARCH_FLAGS) -g $(PDF_FDIR_DEF) -DNO_PRAGMA_ONCE -DUNIX_PLATFORM=1 -DUNIX_ENV=1 -DPRODUCT=\"HFTLibrary.h\" $(DEBUG) -D_REENTRANT -Wno-multichar
+CCFLAGS += -DPDFL_SDK_SAMPLE -DPI_ACROCOLOR_VERSION=AcroColorHFT_VERSION_6 -DTOOLKIT
+
+CXXFLAGS = -std=c++11 $(CCFLAGS)
+CXXFLAGS += -Wno-write-strings
+
+LD = $(CXX)
+
+LDFLAGS = $(ARCH_FLAGS) -Wl,-rpath,\$${ORIGIN}/$(PDFL_PATH) -L$(PDFL_PATH)
+LIBS = -lDL180pdfl -lDL180CoolType -lDL180AGM -lDL180BIB -lDL180ACE -lDL180ARE \
+	   -lDL180BIBUtils -lDL180JP2K -lDL180AdobeXMP -lDL180AXE8SharedExpat \
+	   -licuuc -licudata -lpthread

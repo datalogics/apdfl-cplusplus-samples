@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // A bookmark in a PDF document labels a place within the PDF document to serve as a destination,
 // often a heading or a graphic. If you manually add a bookmark to a PDF, you can create a link

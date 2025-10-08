@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // The UnicodeText sample demonstrates how the Library works with Unicode text.
 // The sample converts hexadecimal characters into Unicode.

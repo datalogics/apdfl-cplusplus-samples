@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2019-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2019-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // ConvertToZUGFeRD converts the input PDF with the input Invoice ZUGFeRD XML to a ZUGFeRD compliant PDF.
 //

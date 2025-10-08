@@ -27,6 +27,9 @@ int nextImg = 1;
 
 // This function is used to create unique export file names with appropriate file extension.
 void ExportImage(PDEImage image, DLImageExportType exportType, DLPDEImageExportParams exportParams, int page) {
+    PDEImageAttrs attrs;
+    PDEImageGetAttrs(image, &attrs, sizeof(PDEImageAttrs));
+
     // Find the file extension.
     char *imgExt = "";
     switch (exportType) {
@@ -54,10 +57,16 @@ void ExportImage(PDEImage image, DLImageExportType exportType, DLPDEImageExportP
     if (PDEImageHasSMask(image) && (exportType == ExportType_BMP || exportType == ExportType_JPEG || exportType == ExportType_GIF)) {
         return;
     }
+    if (attrs.bitsPerComponent != 8 && exportType == ExportType_JPEG) {
+        return;
+    }
+    if (attrs.bitsPerComponent == 1 && exportType == ExportType_GIF) {
+        return;
+    }
 
     // Create and format the output file name.
     char buf[1024];
-    sprintf(buf, "ImageExport_page%d_i%d%s", page + 1, nextImg, imgExt);
+    snprintf(buf, sizeof(buf), "ImageExport_page%d_i%d%s", page + 1, nextImg, imgExt);
     ASPathName sOutput = APDFLDoc::makePath(buf);
 
     DLExportPDEImage(image, sOutput, exportType, exportParams);
@@ -78,7 +87,7 @@ void PrintImageInfo(PDEImage image) {
 
     const char *renderIntent = DLPDEImageGetIntent(image);
     char message[1024];
-    sprintf(message,
+    snprintf(message, sizeof(message),
             "PDEImage data:\n\tWidth:\t%f\n\tHeight:\t%f\n\tNumber of components:\t%i\n"
             "\tBits per component\t%i\n\tRender Intent:\t%s\n",
             width, height, numComps, bpc, renderIntent);
@@ -102,24 +111,26 @@ void FindAndExportImages(PDEContent content, int pageNum) {
         if (PDEObjectGetType(((PDEObject)contentElement)) == kPDEImage) {
             PDEImage image = (PDEImage)contentElement;
 
-            // DLPDEImageExportParams is a structure containing optional user defined parameters. See definition for more details.
-            DLPDEImageExportParams exportParams = DLPDEImageGetExportParams();
+            if (PDEImageIsCosObj(image)) {
+                // DLPDEImageExportParams is a structure containing optional user defined parameters. See definition for more details.
+                DLPDEImageExportParams exportParams = DLPDEImageGetExportParams();
 
-            char message[1024];
-            sprintf(message, "Exporting PDEImage file on page %i from element %i", pageNum + 1, element);
-            std::cout << message << std::endl;
-            PrintImageInfo(image);
+                char message[1024];
+                sprintf(message, "Exporting PDEImage file on page %i from element %i", pageNum + 1, element);
+                std::cout << message << std::endl;
+                PrintImageInfo(image);
 
-            ExportImage(image, DLImageExportType::ExportType_BMP, exportParams, pageNum);
-            ExportImage(image, DLImageExportType::ExportType_PNG, exportParams, pageNum);
-            ExportImage(image, DLImageExportType::ExportType_JPEG, exportParams, pageNum);
-            ExportImage(image, DLImageExportType::ExportType_GIF, exportParams, pageNum);
+                ExportImage(image, DLImageExportType::ExportType_BMP, exportParams, pageNum);
+                ExportImage(image, DLImageExportType::ExportType_PNG, exportParams, pageNum);
+                ExportImage(image, DLImageExportType::ExportType_JPEG, exportParams, pageNum);
+                ExportImage(image, DLImageExportType::ExportType_GIF, exportParams, pageNum);
 
-            exportParams.TIFFCompression = Compression_LZW;
-            ExportImage(image, DLImageExportType::ExportType_TIF, exportParams, pageNum);
+                exportParams.TIFFCompression = Compression_LZW;
+                ExportImage(image, DLImageExportType::ExportType_TIF, exportParams, pageNum);
 
-            // Increment the global variable to be used when the next PDEImage is found.
-            nextImg++;
+                // Increment the global variable to be used when the next PDEImage is found.
+                nextImg++;
+            }
         } else if (PDEObjectGetType(((PDEObject)contentElement)) == kPDEContainer) {
             std::cout << "Recursing through a PDEContainer." << std::endl;
             FindAndExportImages(PDEContainerGetContent((PDEContainer)contentElement), pageNum);

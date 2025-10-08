@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MergeDocuments", "MergeDocuments.vcxproj", "{729F3CA8-F868-42B8-B061-446C423DA9A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{729F3CA8-F868-42B8-B061-446C423DA9A8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{729F3CA8-F868-42B8-B061-446C423DA9A8}.Debug|Win32.Build.0 = Debug|Win32
+		{729F3CA8-F868-42B8-B061-446C423DA9A8}.Release|Win32.ActiveCfg = Release|Win32
+		{729F3CA8-F868-42B8-B061-446C423DA9A8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C846719-35B4-4E38-86C8-B239C3875BFB}
+	EndGlobalSection
+EndGlobal

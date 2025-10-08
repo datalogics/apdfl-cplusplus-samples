@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+ * Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
  *
  * @file   ScopeGuard.h
  * @date   9/21/2009 17:20
