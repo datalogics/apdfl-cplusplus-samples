@@ -29,8 +29,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2455491e-6218-402a-9bb3-d09fa1f5c284}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AddDigitalSignature</RootNamespace>
-    <ProjectName>AddDigitalSignature</ProjectName>
+    <RootNamespace>AddDigitalSignatureCMS</RootNamespace>
+    <ProjectName>AddDigitalSignatureCMS</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -235,7 +235,7 @@
     <ClCompile Include="..\..\_Common\InitializeLibrary.cpp" />
     <ClCompile Include="..\..\..\Include\Source\PDFLInitCommon.c" />
     <ClCompile Include="..\..\..\Include\Source\PDFLInitHFT.c" />
-    <ClCompile Include="AddDigitalSignature.cpp" />
+    <ClCompile Include="AddDigitalSignatureCMS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\_Common\APDFLDoc.h" />

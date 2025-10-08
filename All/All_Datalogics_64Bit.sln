@@ -161,7 +161,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageExport", "..\Images\Im
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageImport", "..\Images\ImageImport\ImageImport.vcxproj", "{C2FDB39D-49DA-4237-BC31-85284AAFE6BC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignature", "..\Security\AddDigitalSignature\AddDigitalSignature.vcxproj", "{2455491E-6218-402A-9BB3-D09FA1F5C284}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureCMS", "..\Security\AddDigitalSignatureCMS\AddDigitalSignatureCMS.vcxproj", "{2455491E-6218-402A-9BB3-D09FA1F5C284}"
+EndProject
+Project("{1D787362-28C9-4460-9606-840F3B484350}") = "AddDigitalSignatureRFC3161", "..\Security\AddDigitalSignatureRFC3161\AddDigitalSignatureRFC3161.vcxproj", "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -485,6 +487,10 @@ Global
 		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Debug|x64.Build.0 = Debug|x64
 		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Release|x64.ActiveCfg = Release|x64
 		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Release|x64.Build.0 = Release|x64
+		{1D787362-28C9-4460-9606-840F3B484350}.Debug|x64.ActiveCfg = Debug|x64
+		{1D787362-28C9-4460-9606-840F3B484350}.Debug|x64.Build.0 = Debug|x64
+		{1D787362-28C9-4460-9606-840F3B484350}.Release|x64.ActiveCfg = Release|x64
+		{1D787362-28C9-4460-9606-840F3B484350}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

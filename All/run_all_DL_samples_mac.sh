@@ -288,9 +288,14 @@ cd ../../Security/AESEncryption
 ./AESEncryption-${stage}.app/Contents/MacOS/AESEncryption-${stage}
 echo ""
 
-echo Running sample AddDigitalSignature
-cd ../../Security/AddDigitalSignature
-./AddDigitalSignature-${stage}.app/Contents/MacOS/AddDigitalSignature-${stage}
+echo Running sample AddDigitalSignatureCMS
+cd ../../Security/AddDigitalSignatureCMS
+./AddDigitalSignatureCMS-${stage}.app/Contents/MacOS/AddDigitalSignatureCMS-${stage}
+echo ""
+
+echo Running sample AddDigitalSignatureRFC3161
+cd ../../Security/AddDigitalSignatureRFC3161
+./AddDigitalSignatureRFC3161-${stage}.app/Contents/MacOS/AddDigitalSignatureRFC3161-${stage}
 echo ""
 
 echo Running sample AddPassword
