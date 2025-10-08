@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignature", "AddDigitalSignature.vcxproj", "{2455491E-6218-402A-9BB3-D09FA1F5C284}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureRFC3161", "AddDigitalSignatureRFC3161.vcxproj", "{1D787362-28C9-4460-9606-840F3B484350}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|ARM64 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Debug|ARM64.Build.0 = Debug|ARM64
-		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Release|ARM64.ActiveCfg = Release|ARM64
-		{2455491E-6218-402A-9BB3-D09FA1F5C284}.Release|ARM64.Build.0 = Release|ARM64
+		{1D787362-28C9-4460-9606-840F3B484350}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{1D787362-28C9-4460-9606-840F3B484350}.Debug|ARM64.Build.0 = Debug|ARM64
+		{1D787362-28C9-4460-9606-840F3B484350}.Release|ARM64.ActiveCfg = Release|ARM64
+		{1D787362-28C9-4460-9606-840F3B484350}.Release|ARM64.Build.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B4065D7E-6C6C-42E0-8118-1D8F3CF63D1C}
+		SolutionGuid = {50DC18C8-2B81-40A7-9A7A-3714D309B2F8}
 	EndGlobalSection
 EndGlobal

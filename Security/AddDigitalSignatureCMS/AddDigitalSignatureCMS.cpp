@@ -17,7 +17,7 @@
 
 #define INPUT_LOC "../../../../Resources/Sample_Input/"
 #define DEF_INPUT "SixPages.pdf"
-#define DEF_OUTPUT "AddDigitalSignature-out.pdf"
+#define DEF_OUTPUT "AddDigitalSignatureCMS-out.pdf"
 #define DEF_LOGO_FILE "ducky_alpha.tif"
 
 // DEF_CERT_FILE points to the signer certificate which may be binary(.der file format)
