@@ -1,4 +1,4 @@
-SAMPNAME=AddDigitalSignature
+SAMPNAME=AddDigitalSignatureRFC3161
 OTHER_OBJS = $(SAMPNAME).o
 
 include ../../dlutils/common.mak
