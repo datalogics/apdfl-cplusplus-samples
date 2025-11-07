@@ -163,10 +163,11 @@ config:
           - msvc-arm64-193-cppstd-17
         profile_build:
           - msvc-arm64-193-cppstd-17
+        settings_build:
+          - xapian-core/*:arch=x86_64
         settings_host:
           - adobe_pdf_library/*:build_type=RelWithDebInfo
           - adobe_pdf_library/*:compiler.runtime=static
           - adobe_pdf_library/*:compiler.runtime_type=Release
           - adobe_pdf_library/*:compiler.update=8
-          - xapian-core/*:arch=x86_64
         build: missing
