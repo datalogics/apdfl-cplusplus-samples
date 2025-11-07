@@ -250,13 +250,14 @@ SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% ContentExtraction\ExtractAttachments"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% ContentExtraction\ExtractFonts"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% InformationExtraction\CountColorsInDoc"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% InformationExtraction\ExtractDocumentInfo"
+SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% OCR\OCRImage"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% FileSystem\AlternateFileSystem"
 
 REM *** The total number of DL samples. This must be accurate!
 IF NOT "%ARCH%"=="ARM64" (
   SET /A "NUM_DL_SAMPLES=73"
 ) ELSE (
-  SET /A "NUM_DL_SAMPLES=74"
+  SET /A "NUM_DL_SAMPLES=75"
 )
 
 

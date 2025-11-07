@@ -56,7 +56,7 @@ config:
     config:
       Release:
         profile_host:
-          - gcc-10-aix72-64-cppstd-14
+          - gcc-10-aix72-64-cppstd-17
         profile_build:
           - gcc-10-aix72-64-cppstd-17
         options_host:
@@ -89,7 +89,7 @@ config:
     config:
       Release:
         profile_host:
-          - clang-18-linux-x86_64-cppstd-14
+          - clang-18-linux-x86_64-cppstd-17
         profile_build:
           - clang-18-linux-x86_64-cppstd-17
         build: missing
@@ -110,7 +110,7 @@ config:
     config:
       Release:
         profile_host:
-          - clang-18-linux-armv8-cppstd-14
+          - clang-18-linux-armv8-cppstd-17
         profile_build:
           - clang-18-linux-armv8-cppstd-17
         build: missing
@@ -124,7 +124,7 @@ config:
     config:
       Release:
         profile_host:
-          - msvc-x64-194-cppstd-14
+          - msvc-x64-194-cppstd-17
         profile_build:
           - msvc-x64-194-cppstd-17
         settings_host:
@@ -140,7 +140,7 @@ config:
           - '*:license_managed=True'
       Release32:
         profile_host:
-          - msvc-x86-194-cppstd-14
+          - msvc-x86-194-cppstd-17
         profile_build:
           - msvc-x86-194-cppstd-17
         build:
@@ -160,9 +160,11 @@ config:
     config:
       Release:
         profile_host:
-          - msvc-arm64-193-cppstd-14
+          - msvc-arm64-193-cppstd-17
         profile_build:
           - msvc-arm64-193-cppstd-17
+        settings_build:
+          - xapian-core/*:arch=x86_64
         settings_host:
           - adobe_pdf_library/*:build_type=RelWithDebInfo
           - adobe_pdf_library/*:compiler.runtime=static

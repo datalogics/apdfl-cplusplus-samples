@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OCRImage_ARM64", "OCRImage.vcxproj", "{CFABC1FE-3F70-47E9-A911-EA085E6D127A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Debug|ARM64.Build.0 = Debug|ARM64
+		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Release|ARM64.ActiveCfg = Release|ARM64
+		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BAB73C82-51E9-4B70-956D-875079420EC4}
+	EndGlobalSection
+EndGlobal
