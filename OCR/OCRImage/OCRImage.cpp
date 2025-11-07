@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     }
 
     std::string csInputFileName(argc > 1 ? argv[1] : DIR_LOC DEF_INPUT);
-    std::string csOutputFileName(argc > 4 ? argv[4] : DEF_OUTPUT);
+    std::string csOutputFileName(argc > 2 ? argv[2] : DEF_OUTPUT);
     std::cout << "Recognizing text in " << csInputFileName.c_str() << std::endl;
 
     ASPathName sInput = APDFLDoc::makePath(csInputFileName.c_str());
