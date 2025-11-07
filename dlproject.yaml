@@ -168,4 +168,5 @@ config:
           - adobe_pdf_library/*:compiler.runtime=static
           - adobe_pdf_library/*:compiler.runtime_type=Release
           - adobe_pdf_library/*:compiler.update=8
+          - xapian-core/*:arch=x86_64
         build: missing
