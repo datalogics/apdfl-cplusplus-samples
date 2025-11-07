@@ -165,6 +165,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureCMS", ".
 EndProject
 Project("{1D787362-28C9-4460-9606-840F3B484350}") = "AddDigitalSignatureRFC3161", "..\Security\AddDigitalSignatureRFC3161\AddDigitalSignatureRFC3161.vcxproj", "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OCRImage", "..\OCR\OCRImage\OCRImage.vcxproj", "{26B0DAAC-1B6E-4020-BEC0-D47DDBA263C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -491,6 +493,10 @@ Global
 		{1D787362-28C9-4460-9606-840F3B484350}.Debug|x64.Build.0 = Debug|x64
 		{1D787362-28C9-4460-9606-840F3B484350}.Release|x64.ActiveCfg = Release|x64
 		{1D787362-28C9-4460-9606-840F3B484350}.Release|x64.Build.0 = Release|x64
+		{26B0DAAC-1B6E-4020-BEC0-D47DDBA263C6}.Debug|x64.ActiveCfg = Debug|x64
+		{26B0DAAC-1B6E-4020-BEC0-D47DDBA263C6}.Debug|x64.Build.0 = Debug|x64
+		{26B0DAAC-1B6E-4020-BEC0-D47DDBA263C6}.Release|x64.ActiveCfg = Release|x64
+		{26B0DAAC-1B6E-4020-BEC0-D47DDBA263C6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

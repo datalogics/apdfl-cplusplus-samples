@@ -109,6 +109,7 @@ declare -a DL_SAMPLE_LIST=( \
   "Images/OutputPreview" \
   "InformationExtraction/CountColorsInDoc" \
   "InformationExtraction/ExtractDocumentInfo" \
+  "OCR/OCRImage" \
   "Printing/PostScriptInjection" \
   "Security/AESEncryption" \
   "Security/AddDigitalSignatureCMS" \
