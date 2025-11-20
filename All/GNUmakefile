@@ -78,6 +78,7 @@ SAMPLES = Annotations/CreateAnnotations \
           Images/RenderPage \
           InformationExtraction/CountColorsInDoc \
           InformationExtraction/ExtractDocumentInfo \
+          OCR/OCRImage \
           Printing/PostScriptInjection \
           Security/AddDigitalSignatureCMS \
           Security/AddDigitalSignatureRFC3161 \

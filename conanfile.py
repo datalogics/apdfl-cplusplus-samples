@@ -57,6 +57,10 @@ class Pdfl18installerConan(ConanFile):
         if self.settings.os != "Windows":
             copy(self, "*", src=forms_ext_lib, dst=destination)
 
+        tessdata_path = os.path.join(apdfl_pkg.cpp_info.bindir, "tessdata4")
+        if os.path.isdir(tessdata_path):
+            copy(self, "*", src=tessdata_path, dst=os.path.join(destination, "tessdata4"), keep_path=True)
+
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')

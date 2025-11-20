@@ -269,6 +269,13 @@ cd ../../InformationExtraction/ExtractDocumentInfo
 ./ExtractDocumentInfo-${stage}.app/Contents/MacOS/ExtractDocumentInfo-${stage}
 echo ""
 
+# OCR
+
+echo Running sample OCRImage
+cd ../../OCR/OCRImage
+./OCRImage-${stage}.app/Contents/MacOS/OCRImage-${stage}
+echo ""
+
 # Printing
 
 echo Running sample PostScriptInjection
