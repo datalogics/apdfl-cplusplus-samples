@@ -11,11 +11,6 @@
 
 #include "ASExtraCalls.h"
 #include "DLExtrasCalls.h"
-#include "PSFCalls.h"
-#include "PERCalls.h"
-#include "PEWCalls.h"
-#include "PagePDECntCalls.h"
-#include "PagePDECntCalls.h"
 #include "OCREngineCalls.h"
 
 #include "InitializeLibrary.h"
@@ -69,8 +64,8 @@ int main(int argc, char **argv) {
 
             // Save document with recognized text.
             ASPathName path = APDFLDoc::makePath(csOutputFileName.c_str());
-            PDDocSave(pdDoc, PDSaveFull, path, ASGetDefaultFileSys(), NULL, NULL);
-            ASFileSysReleasePath(NULL, path);
+            PDDocSave(pdDoc, PDSaveFull, path, ASGetDefaultFileSys(), nullptr, nullptr);
+            ASFileSysReleasePath(nullptr, path);
 
             // Release resources.
             PDPageRelease(inputPage1);
