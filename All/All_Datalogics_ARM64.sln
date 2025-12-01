@@ -165,6 +165,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureRFC3161"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OCRImage", "..\OCR\OCRImage\OCRImage.vcxproj", "{CFABC1FE-3F70-47E9-A911-EA085E6D127A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OCRPage", "..\OCR\OCRPage\OCRPage.vcxproj", "{E9F316EC-E669-4D97-B01F-92BA3200C2C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -491,6 +493,10 @@ Global
 		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Debug|ARM64.Build.0 = Debug|ARM64
 		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Release|ARM64.ActiveCfg = Release|ARM64
 		{CFABC1FE-3F70-47E9-A911-EA085E6D127A}.Release|ARM64.Build.0 = Release|ARM64
+		{E9F316EC-E669-4D97-B01F-92BA3200C2C9}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{E9F316EC-E669-4D97-B01F-92BA3200C2C9}.Debug|ARM64.Build.0 = Debug|ARM64
+		{E9F316EC-E669-4D97-B01F-92BA3200C2C9}.Release|ARM64.ActiveCfg = Release|ARM64
+		{E9F316EC-E669-4D97-B01F-92BA3200C2C9}.Release|ARM64.Build.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
