@@ -276,6 +276,11 @@ cd ../../OCR/OCRImage
 ./OCRImage-${stage}.app/Contents/MacOS/OCRImage-${stage}
 echo ""
 
+echo Running sample OCRPage
+cd ../../OCR/OCRPage
+./OCRPage-${stage}.app/Contents/MacOS/OCRPage-${stage}
+echo ""
+
 # Printing
 
 echo Running sample PostScriptInjection
