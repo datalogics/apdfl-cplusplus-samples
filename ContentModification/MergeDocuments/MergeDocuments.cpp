@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2021, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // MergeDocuments opens two PDF input documents, merges them and saves the
 // resulting document in the working directory.

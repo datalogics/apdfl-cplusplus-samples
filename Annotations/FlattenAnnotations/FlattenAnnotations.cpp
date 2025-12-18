@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
 //
 //
 // This sample demonstrates flattening annotations within a PDF document.
@@ -60,13 +60,36 @@ int main(int argc, char **argv) {
 
             if (CosObjGetType(resource) != CosNull) {
                 // Place the annotation's resources in the page's content
-                ASFixedRect nextLoc;
-                PDAnnotGetRect(next, &nextLoc);
+                ASFixedRect rect;
+                PDAnnotGetRect(next, &rect);
                 ASDoubleMatrix unity;
                 unity.a = unity.d = 1.0;
                 unity.b = unity.c = 0.0;
-                unity.h = (ASDouble)ASFixedToFloat(nextLoc.left);
-                unity.v = (ASDouble)ASFixedToFloat(nextLoc.bottom);
+
+                double leftValue = 0;
+                double bottomValue = 0;
+                double rightValue = 0;
+                double topValue = 0;
+                CosObj bbox = CosNewNull();
+                if (CosDictKnown(appearanceStrm, ASAtomFromString("BBox"))) {
+                    bbox = CosDictGet(appearanceStrm, ASAtomFromString("BBox"));
+                    if (CosObjGetType(bbox) == CosArray) {
+                        CosObj left = CosArrayGet(bbox, 0);
+                        leftValue = CosDoubleValue(left);
+                        CosObj bottom = CosArrayGet(bbox, 1);
+                        bottomValue = CosDoubleValue(bottom);
+                        CosObj right = CosArrayGet(bbox, 2);
+                        rightValue = CosDoubleValue(right);
+                        CosObj top = CosArrayGet(bbox, 3);
+                        topValue = CosDoubleValue(top);
+                    }
+                }
+
+                unity.a = ASFixedToFloat(rect.right - rect.left) / (rightValue - leftValue);
+                unity.d = ASFixedToFloat(rect.top - rect.bottom) / (topValue - bottomValue);
+
+                unity.h = ASFixedToFloat(rect.left) - leftValue * unity.a;
+                unity.v = ASFixedToFloat(rect.bottom) - bottomValue * unity.d;
 
                 // Create and add the form xobject.
                 PDEForm formXObject = PDEFormCreateFromCosObjEx(&appearanceStrm, &resource, &unity);

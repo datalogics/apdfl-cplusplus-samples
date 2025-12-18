@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlattenTransparency", "FlattenTransparency.vcxproj", "{0DA6E459-4717-4971-9126-F699804A7570}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DA6E459-4717-4971-9126-F699804A7570}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{0DA6E459-4717-4971-9126-F699804A7570}.Debug|ARM64.Build.0 = Debug|ARM64
+		{0DA6E459-4717-4971-9126-F699804A7570}.Release|ARM64.ActiveCfg = Release|ARM64
+		{0DA6E459-4717-4971-9126-F699804A7570}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BD9CDCB-84A0-4108-989E-D477BB819972}
+	EndGlobalSection
+EndGlobal

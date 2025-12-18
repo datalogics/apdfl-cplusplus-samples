@@ -1,4 +1,5 @@
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample demonstrates the XPS2PDF plugin, which converts a PDF document into an XPS document.
 //

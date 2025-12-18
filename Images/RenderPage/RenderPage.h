@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2017-2024, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
 //
 // Sample: RenderPage
 //
@@ -20,6 +20,16 @@
 #include "PDFLCalls.h"
 #include "DLExtrasCalls.h"
 
+struct Color {
+    ASUns8* value;
+    int numChannels;
+};
+
+struct BackgroundColor {
+    Color color;
+    ASUns8 alphaValue;
+};
+
 class RenderPage {
   private:
     PDPage pdPage;
@@ -33,6 +43,7 @@ class RenderPage {
     char *buffer;
     char *colorSpace;
     char *filterName;
+    BackgroundColor pageBackgroundColor;
 
     ASFixedRect imageSize; // This will carry the image size in PDF units.
 
@@ -49,8 +60,10 @@ class RenderPage {
     static ASAtom sDeviceGray_K;
 
   public:
-    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution, float userUnit);
+    RenderPage(PDPage &pdPage, const char *colorSpace, const char *filterName, ASInt32 bpc, double resolution, float userUnit, bool setBackgroundColor, BackgroundColor backgroundColor);
     ~RenderPage();
+
+    void SetBackgroundColor();
 
     char *GetImageBuffer();
     ASSize_t GetImageBufferSize();

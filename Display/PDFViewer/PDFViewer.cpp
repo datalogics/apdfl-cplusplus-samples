@@ -1,6 +1,8 @@
 /*--------------------------------------------------------------------------------
-** Copyright (c) 2014-2023, Datalogics, Inc. All rights reserved.
+** Copyright (c) 2014-2025, Datalogics, Inc. All rights reserved.
 */
+//
+
 //
 // PDFViewer is an application to use to open and view PDF documents in Windows environments,
 // intended to serve as a model that you can use to build your own viewing tool. As such
@@ -87,11 +89,13 @@ BOOL CPDFViewerApp::InitInstance() {
 
     /* Where to look for fonts */
     ASUTF16Val *Paths[3];
+    memset(Paths, 0x0, sizeof(Paths));
     Paths[0] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\CMap";
     Paths[1] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Font";
 
     /* Where to look for Color Profiles */
     ASUTF16Val *Colors[3];
+    memset(Colors, 0x0, sizeof(Colors));
     Colors[0] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Color";
 
     /* Where Windows keeps color profiles */
@@ -101,6 +105,7 @@ BOOL CPDFViewerApp::InitInstance() {
 
     /* Where to look for Plugins  */
     ASUTF16Val *Plugins[3];
+    memset(Plugins, 0x0, sizeof(Plugins));
     Plugins[0] = (ASUTF16Val *)L"..\\..\\..\\Binaries";
 
     /* Construct the APDFL Initialization record.
@@ -124,6 +129,8 @@ BOOL CPDFViewerApp::InitInstance() {
         return false;
 
     APDFLInitialized = TRUE;
+
+    free(Colors[1]);
 
     /* Set up APDFL parameters to keep throughout the application's lifetime
     ** Typically these options govern how the document appears.
@@ -175,6 +182,7 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 ON_WM_CREATE()
+ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 /* Create the main window Object */
@@ -320,7 +328,22 @@ CPDFViewerDoc::CPDFViewerDoc() {
 }
 
 /* Destroy the document display */
-CPDFViewerDoc::~CPDFViewerDoc() {}
+CPDFViewerDoc::~CPDFViewerDoc() {
+    /* If there is no current document, there is nothing to do */
+    if (!Doc)
+        return;
+
+    /* Release the current page, if there is one */
+    if (Page)
+        PDPageRelease(Page);
+
+    /* Release the current document */
+    PDDocClose(Doc);
+
+    /* Set pointers to NULL, to avoid freeing twice */
+    Doc = NULL;
+    Page = NULL;
+}
 
 /* Open a given document for display in this window */
 BOOL CPDFViewerDoc::OnOpenDocument(LPCTSTR lpszPathName) {
@@ -417,10 +440,32 @@ END_MESSAGE_MAP()
 
 /* Create a View */
 CPDFViewerView::CPDFViewerView() {
-    /* Note that there is no offscreen DC in existance
+    /* Initialization
      */
     OffScreenDC = NULL;
     OldScreenDC = NULL;
+    pDoc = NULL;
+    LastPageToScreenMatrix = { 1.0,0,0,1.0,0,0 };
+    LastPageToScreenMatrix = { 1,0,0,1,0,0 };
+    PageToWindowMatrix = { 1.0,0,0,1.0,0,0 };
+    PageToScreenMatrix = { 1,0,0,1,0,0 };
+    LastRotation = 0;
+    OldRotation = 0;
+    Rotation = 0;
+    Scale = 1.0;
+    OldScale = 1.0;
+    ScreenResolution = 1.0;
+    WindowDeep = 1u;
+    OldWindowDeep = 1u;
+    WindowWide = 1u;
+    OldWindowWide = 1u;
+    PageSize = { 0,0,0,0 };
+    MouseLBDownPosition = { 0,0 };
+    MousePosition = { 0,0 };
+    ScrollLBDownPosition = { 0,0 };
+    ScrollPosition = { 0,0 };
+    memset(&ThreadData, 0x0, sizeof(ThreadCommunication));
+
 
     /* Create mutexes to synch drawing to a DC
     ** in a separate thread.
@@ -516,11 +561,13 @@ DWORD WINAPI RenderToDCViaThreadRepeatedly(void *clientData) {
 
     /* Where to look for fonts */
     ASUTF16Val *Paths[3];
+    memset(Paths, 0x0, sizeof(Paths));
     Paths[0] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\CMap";
     Paths[1] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Font";
 
     /* Where to look for Color Profiles */
     ASUTF16Val *Colors[3];
+    memset(Colors, 0x0, sizeof(Colors));
     Colors[0] = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Color";
 
     /* Where Windows keeps color profiles */
@@ -530,6 +577,7 @@ DWORD WINAPI RenderToDCViaThreadRepeatedly(void *clientData) {
 
     /* Where to look for Plugins  */
     ASUTF16Val *Plugins[3];
+    memset(Plugins, 0x0, sizeof(Plugins));
     Plugins[0] = (ASUTF16Val *)L"..\\..\\..\\Binaries";
 
     /* Construct the APDFL Initialization record.
@@ -548,6 +596,8 @@ DWORD WINAPI RenderToDCViaThreadRepeatedly(void *clientData) {
     pdflData.colorProfileDirListLen = 2;
     if (PDFLInitHFT(&pdflData) != 0)
         return 0;
+
+    free(Colors[1]); //don't need this anymore after initialization.
 
     /* Open the document whose page is to be rendered */
     ASText pathNameASText = ASTextFromUnicode((ASUTF16Val *)threadData->DocName, kUTF16HostEndian);
@@ -620,7 +670,7 @@ DWORD WINAPI RenderToDCViaThreadRepeatedly(void *clientData) {
         PDPrefSetEnableThinLineHeuristics(threadData->AAThinLine);
 
         PDPageDrawWParamsRec drawParams;
-        memset((char *)&drawParams, 0, sizeof(PDPageDrawWParamsRec));
+        memset(&drawParams, 0, sizeof(PDPageDrawWParamsRec));
         drawParams.size = sizeof(PDPageDrawWParamsRec);
         drawParams.asRealMatrix = (ASRealMatrix *)&pageMatrixR;
         drawParams.displayContext = threadData->TargetDC;
@@ -771,7 +821,7 @@ void CPDFViewerView::OnDraw(CDC *pDC) {
                 */
                 Bitmap = (HBITMAP)GetCurrentObject(workingDC, OBJ_BITMAP);
                 BITMAP bitmapHeader;
-                memset((char *)&bitmapHeader, 0, sizeof(BITMAP));
+                memset(&bitmapHeader, 0, sizeof(BITMAP));
                 GetObject(Bitmap, sizeof(BITMAP), &bitmapHeader);
                 OldWindowWide = bitmapHeader.bmWidth;
                 OldWindowDeep = -bitmapHeader.bmHeight;
@@ -829,7 +879,7 @@ void CPDFViewerView::OnDraw(CDC *pDC) {
                 ** old map to the new map size
                 */
                 BITMAP bitmapHeader;
-                memset((char *)&bitmapHeader, 0, sizeof(BITMAP));
+                memset(&bitmapHeader, 0, sizeof(BITMAP));
                 GetObject(oldBitmap, sizeof(BITMAP), &bitmapHeader);
                 OldWindowWide = bitmapHeader.bmWidth;
                 OldWindowDeep = bitmapHeader.bmHeight;
@@ -935,9 +985,7 @@ void CPDFViewerView::OnDraw(CDC *pDC) {
     ** problems with the appearance of a page.
     */
     if (leftIndent) {
-        RECT fillArea;
-        fillArea.left = 0;
-        fillArea.top = 0;
+        RECT fillArea = { 0,0,0,0 };
         fillArea.right = leftIndent;
         fillArea.bottom = vSize;
         FillRect(GetDC()->m_hDC, &fillArea, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
@@ -948,9 +996,7 @@ void CPDFViewerView::OnDraw(CDC *pDC) {
         FillRect(GetDC()->m_hDC, &fillArea, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
     }
     if (topIndent) {
-        RECT fillArea;
-        fillArea.left = 0;
-        fillArea.top = 0;
+        RECT fillArea = { 0,0,0,0 };
         fillArea.right = hSize;
         fillArea.bottom = topIndent;
         FillRect(GetDC()->m_hDC, &fillArea, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
@@ -1122,7 +1168,7 @@ void CPDFViewerView::SetScale(ASDouble scaleFactor) {
     /* Save old matrix, to allow for scroll position translate
      */
     ASDoubleMatrix oldPageToScreen;
-    memmove((char *)&oldPageToScreen, (char *)&PageToScreenMatrix, sizeof(ASDoubleMatrix));
+    memmove(&oldPageToScreen, &PageToScreenMatrix, sizeof(ASDoubleMatrix));
 
     /* Recalculate to the page to screen metrics
      */
@@ -1154,7 +1200,7 @@ void CPDFViewerView::SetRotate(ASDouble Angle) {
     /* Save old matrix, to allow for scroll position translate
      */
     ASDoubleMatrix oldPageToScreen;
-    memmove((char *)&oldPageToScreen, (char *)&PageToScreenMatrix, sizeof(ASDoubleMatrix));
+    memmove(&oldPageToScreen, &PageToScreenMatrix, sizeof(ASDoubleMatrix));
 
     /* Recalculate to the page to screen metrics
      */
@@ -1344,7 +1390,7 @@ void CPDFViewerView::OnMouseMove(UINT flag, CPoint position) {
         ** Left Button was pressed, and calculate a new scroll position for
         ** that displacement, based on the scroll position where the Left Button
         ** was pressed */
-        POINT NewScroll;
+        POINT NewScroll = { 0,0 };
         NewScroll.x = ScrollLBDownPosition.x + (MouseLBDownPosition.x - position.x);
         NewScroll.y = ScrollLBDownPosition.y + (MouseLBDownPosition.y - position.y);
 
@@ -1531,12 +1577,10 @@ void CPDFViewerView::PageToScreen() {
     **
     ** All of that will be taken into account in this matrix
     */
-    ASDoubleMatrix RotateMatrix;
-
-    /* Start with an identity matrix, with the vertical inverted
-     */
-    ASDoubleIdentity(&RotateMatrix);
-    RotateMatrix.d = -1.0;
+    double scaleFactor = Scale * ScreenResolution;
+    ASDoubleMatrix updateMatrix,
+        flipMatrix = { 1, 0, 0, -1, 0, PageSize.top - PageSize.bottom },
+        scaleMatrix = { scaleFactor, 0, 0, scaleFactor, 0, 0 };
 
     /* Get the pages description of how it believes it should be
     ** rendered to appear "upright"
@@ -1556,47 +1600,35 @@ void CPDFViewerView::PageToScreen() {
     /* Limit to 360 degrees */
     PageRotate %= 360;
 
-    /* Set the translation for the lower left corner of the page, to render
-    ** properly to align to the upper right
-    */
-    switch (PageRotate) {
-    case 0:
-        ASDoubleMatrixTranslate(&RotateMatrix, &RotateMatrix, -PageSize.left, -PageSize.top);
+    switch (PageRotate)
+    {
+    case pdRotate0:
+        updateMatrix = { 1, 0, 0, 1, -PageSize.left, -PageSize.bottom };
         break;
-
-    case 90:
-        ASDoubleMatrixTranslate(&RotateMatrix, &RotateMatrix, PageSize.top, -PageSize.top);
+    case pdRotate90:
+        updateMatrix = { 0, -1, 1, 0, -PageSize.bottom, PageSize.right };
+        flipMatrix.v = PageSize.right - PageSize.left;
         break;
-
-    case 180:
-        ASDoubleMatrixTranslate(&RotateMatrix, &RotateMatrix, PageSize.right, 0);
+    case pdRotate180:
+        updateMatrix = { -1, 0, 0, -1, PageSize.right, PageSize.top };
         break;
-
-    case 270:
-        ASDoubleMatrixTranslate(&RotateMatrix, &RotateMatrix, 0, 0);
+    case pdRotate270:
+        updateMatrix = { 0, 1, -1, 0, PageSize.top, -PageSize.left };
+        flipMatrix.v = PageSize.right - PageSize.left;
         break;
     }
-
-    /* Rotate the matrix by the specified angle
-     */
-    ASDoubleMatrixRotate(&RotateMatrix, &RotateMatrix, PageRotate * 1.0);
-
-    /* Scale the matrix by both the screen resolution (72 / Screen DPI)
-    ** and the user supplied scale factor
-    */
-    ASDoubleMatrixScale(&PageToScreenMatrix, &RotateMatrix, Scale);
-    ASDoubleMatrixScale(&PageToScreenMatrix, &PageToScreenMatrix, ScreenResolution);
+    ASDoubleMatrixConcat(&updateMatrix, &flipMatrix, &updateMatrix);
+    ASDoubleMatrixConcat(&PageToScreenMatrix, &scaleMatrix, &updateMatrix);
 
     /* Transform the page size to the needed window size
     ** The window will always be based at 0, 0.
     */
-    ASDoubleRect WindowSize;
-    WindowSize.left = WindowSize.bottom = 0;
+    ASDoubleRect WindowSize = { 0,0,0,0 };
     WindowSize.right = PageSize.right - PageSize.left;
     WindowSize.top = PageSize.top - PageSize.bottom;
 
-    WindowSize.right *= Scale * ScreenResolution;
-    WindowSize.top *= Scale * ScreenResolution;
+    WindowSize.right *= scaleFactor;
+    WindowSize.top *= scaleFactor;
 
     /* If the page rotation is 90 or 270, flip the page width and depth
      */
@@ -1647,7 +1679,7 @@ void CPDFViewerView::TranslateScroll(ASDoubleMatrix *oldMatrix) {
     ** the center of the current screen. The scroll handle will
     ** always be the size of the view display
     */
-    ASDoublePoint midPoint;
+    ASDoublePoint midPoint = { 0,0 };
     midPoint.h = ScrollBefore.x + ((viewSize.right * 1.0) / 2.0);
     midPoint.v = ScrollBefore.y + ((viewSize.bottom * 1.0) / 2.0);
 
@@ -1665,7 +1697,7 @@ void CPDFViewerView::TranslateScroll(ASDoubleMatrix *oldMatrix) {
     /* Move the midPoint back to the trailing edges of the
     ** view, to get scroll position
     */
-    POINT NewScroll;
+    POINT NewScroll = { 0,0 };
     NewScroll.x = (ASInt32)(floor)(midPoint.h) - (viewSize.right / 2);
     NewScroll.y = (ASInt32)(floor)(midPoint.v) - (viewSize.bottom / 2);
 
@@ -1698,7 +1730,7 @@ void CPDFViewerView::CenterOnMouse(CPoint *point) {
     /* Where we we want the view (and the mouse cursor)
     ** to end up
     */
-    POINT displacement;
+    POINT displacement = { 0,0 };
     displacement.x = ((viewPort.right - viewPort.left) / 2) - point->x;
     displacement.y = ((viewPort.bottom - viewPort.top) / 2) - point->y;
 
@@ -1710,9 +1742,7 @@ void CPDFViewerView::CenterOnMouse(CPoint *point) {
     ** center the point where the cursor is
     ** in the view
     */
-    POINT newScroll;
-    newScroll.x = scroll.x - displacement.x;
-    newScroll.y = scroll.y - displacement.y;
+    POINT newScroll = { scroll.x - displacement.x, scroll.y - displacement.y };
 
     /* Set the scroll there
     **
@@ -1776,11 +1806,11 @@ void CPDFViewerView::RotateDC(HDC dc, HBITMAP bitmap, ASDouble Rotation, ASUns32
 
     /* Get the source image Info */
     BITMAP bitmapInfo;
-    memset((char *)&bitmapInfo, 0, sizeof(BITMAP));
+    memset(&bitmapInfo, 0, sizeof(BITMAP));
     GetObject(bitmap, sizeof(BITMAP), &bitmapInfo);
 
     BITMAPINFO sourceInfo;
-    memset((char *)&sourceInfo, 0, sizeof(BITMAPINFO));
+    memset(&sourceInfo, 0, sizeof(BITMAPINFO));
     sourceInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     sourceInfo.bmiHeader.biWidth = bitmapInfo.bmWidth;
     sourceInfo.bmiHeader.biHeight = bitmapInfo.bmHeight;
@@ -1876,17 +1906,11 @@ void ASFixedToDoubleRect(ASDoubleRect *out, ASFixedRect *in) {
 }
 
 void ASDoubleMatrixScale(ASDoubleMatrix *out, ASDoubleMatrix *in, ASDouble scale) {
-    out->a = in->a * scale;
-    out->b = in->b * scale;
-    out->c = in->c * scale;
-    out->d = in->d * scale;
-    out->h = in->h * scale;
-    out->v = in->v * scale;
+    ASDoubleMatrix scale_m = { scale,0,0,scale,0,0 };
+    ASDoubleMatrixConcat(out, &scale_m, in);
 }
 
 void ASDoubleMatrixRotate(ASDoubleMatrix *out, ASDoubleMatrix *in, ASDouble angle) {
-    ASDoubleMatrix inCopy;
-    memmove((char *)&inCopy, (char *)in, sizeof(ASDoubleMatrix));
 
     while (angle < 0)
         angle += 360;
@@ -1900,20 +1924,11 @@ void ASDoubleMatrixRotate(ASDoubleMatrix *out, ASDoubleMatrix *in, ASDouble angl
     angle *= (M_PI / 180.0);
     double Sina = sin(angle);
     double Cosa = cos(angle);
-
-    out->a = (Cosa * inCopy.a) + (Sina * inCopy.c);
-    out->b = (Cosa * inCopy.b) + (Sina * inCopy.d);
-    out->c = (Cosa * inCopy.c) - (Sina * inCopy.a);
-    out->d = (Cosa * inCopy.d) - (Sina * inCopy.b);
-    out->h = in->h;
-    out->v = in->v;
+    ASDoubleMatrix rotate_m = { Cosa,Sina,-Sina,Cosa,0,0 };
+    ASDoubleMatrixConcat(out, &rotate_m, in);
 }
 
 void ASDoubleMatrixTranslate(ASDoubleMatrix *out, ASDoubleMatrix *in, ASDouble tX, ASDouble tY) {
-    out->a = in->a;
-    out->b = in->b;
-    out->c = in->c;
-    out->d = in->d;
-    out->h = (in->a * tX) + (in->c * tY) + in->h;
-    out->v = (in->b * tX) + (in->d * tY) + in->v;
+    ASDoubleMatrix t_m = { 1.0,0,0,1.0,tX,tY };
+    ASDoubleMatrixConcat(out, &t_m, in);
 }

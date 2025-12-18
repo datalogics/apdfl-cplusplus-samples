@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddBookmarks", "AddBookmarks.vcxproj", "{A2575B7E-CCA9-42E4-8449-330BB89437AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2575B7E-CCA9-42E4-8449-330BB89437AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2575B7E-CCA9-42E4-8449-330BB89437AA}.Debug|Win32.Build.0 = Debug|Win32
+		{A2575B7E-CCA9-42E4-8449-330BB89437AA}.Release|Win32.ActiveCfg = Release|Win32
+		{A2575B7E-CCA9-42E4-8449-330BB89437AA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {532C6C84-A2F7-4B48-9BCA-AD1DD798A127}
+	EndGlobalSection
+EndGlobal

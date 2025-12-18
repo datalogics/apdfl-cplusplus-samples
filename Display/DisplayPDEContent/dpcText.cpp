@@ -80,6 +80,7 @@ static void DisplayTextRun(PDEText Text, ASUns32 Run) {
     ASUns8 *UCSText = nullptr;
     char *FontName;
 
+    PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
     PDETextGetMatrixEx(Text, kPDETextRun, Run, &RunMatrix);
     PDETextGetQuad(Text, kPDETextRun, Run, &TextQuad);
     PDETextGetState(Text, kPDETextRun, Run, &TextState, sizeof(TextState));
@@ -120,7 +121,6 @@ static void DisplayTextRun(PDEText Text, ASUns32 Run) {
         PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
         DisplayGraphicState(&GState);
     }
-
 
     Outputter::Inst()->GetOfs() << "Content: \"" << displayTextUTF8 << "\"" << std::endl;
     Outputter::Inst()->Outdent();

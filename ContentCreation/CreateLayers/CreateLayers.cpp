@@ -1,5 +1,8 @@
 //
-// Copyright (c) 2017, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
+
+
 //
 // The CreateLayers sample program demonstrates how to programmatically add two layers to a PDF
 // document, one that displays text, and the other, annotations.

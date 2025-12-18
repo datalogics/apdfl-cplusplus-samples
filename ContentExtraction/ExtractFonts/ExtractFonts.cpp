@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample is similar to EmbedFonts. The sample looks for fonts embedded in a PDF document and then
 // extracts those fonts and saves them as font files, storing them in the same directory on the local
@@ -58,6 +58,8 @@ ASBool ExtractEmbeddedFonts(CosObj obj, CosObj value, void *clientData) {
         // to support a character set with a large number of glyphs, particularly Asian
         // languages like Korean, Japanese, and Mandarin.
         //
+        // Adobe Systems developed the Character Identifier Font (CID) to improve the
+        // performance the OCF format.
 
         CosObj descendants = CosDictGet(obj, ASAtomFromString("DescendantFonts"));
         for (int index = 0; index < CosArrayLength(descendants); index++) {

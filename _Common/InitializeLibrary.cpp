@@ -1,5 +1,6 @@
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
 //
+
 //
 //========================================================================
 // Sample - Initialize: This class defines an object used for the
@@ -21,7 +22,7 @@
 // Constructor:
 // initializes APDFL and does not default the DL180PDFL.dll directory. dlDir should be a relative path.
 //========================================================================================================
-APDFLib::APDFLib(wchar_t *dlDir)
+APDFLib::APDFLib(wchar_t *dlDir, int flags)
 #if AIX_GCC_COMPAT
     : gccHelp()
 #endif
@@ -52,6 +53,9 @@ APDFLib::APDFLib(wchar_t *dlDir)
 #ifdef WIN_PLATFORM
     pdflData.inst = dllInst;
 #endif
+
+    pdflData.flags = flags;
+
     initError = PDFLInitHFT(&pdflData); // Initialize the library.
     if (initError == 0)                 // If initError is 0, initialization succeeded.
         initValid = true;
@@ -193,9 +197,6 @@ void APDFLib::fillDirectories() {
     // Set the Unicode directory.
     pdflData.cMapDirectory = fontDirList[1];
     pdflData.unicodeDirectory = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\Unicode";
-
-    // Set the OfficeMetrics directory.
-    pdflData.officeMetricsDirectory = (ASUTF16Val *)L"..\\..\\..\\..\\Resources\\OfficeMetrics";
 
     // Set the plugin directory and its length.
     static TCHAR pluginPathBuffer[1024];

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample program demonstrates how to calculate the resolution for the images found in a PDF
 // document. The sample scans the PDF input file and processes the images on each page one by one,

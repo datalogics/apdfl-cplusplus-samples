@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2015-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2015-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample creates a list of all of the images found within a PDF document. It also describes where
 // these images are found and the resolution for each one. The program will rotate any images it finds,

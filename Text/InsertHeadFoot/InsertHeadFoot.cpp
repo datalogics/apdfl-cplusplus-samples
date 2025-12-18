@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2007-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2007-2025, Datalogics, Inc. All rights reserved.
 //
 // This sample reads an input PDF document and inserts text for a header and for a footer on each page. The program adjusts
 // the contents of each page if necessary to make sure that the header and footer will fit. It also provides default text
@@ -12,6 +12,7 @@
 //
 // The program is also designed to encrypt the output file so that the header and footer cannot be removed or edited without a password.
 //
+
 #ifdef WIN32
 // Avoid compiler warning. This is a sample program.
 #pragma warning(disable : 4267)

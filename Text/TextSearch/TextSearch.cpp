@@ -1,5 +1,6 @@
 //
-// Copyright (c) 2017-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2017-2025, Datalogics, Inc. All rights reserved.
+//
 //
 // This sample demonstrates using the PDWordFinder to find examples of a specific word in a PDF
 // document.  When the sample finds the text it highlights each example and saves the file as an
