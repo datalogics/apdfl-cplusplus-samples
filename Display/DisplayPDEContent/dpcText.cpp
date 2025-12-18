@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2008-2023, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2008-2025, Datalogics, Inc. All rights reserved.
 //
 
 #include <sstream>
@@ -65,30 +65,29 @@ static std::string DisplayTextState(PDETextState *State) {
     return oss.str();
 }
 
-void DisplayTextRun(PDEText Text, ASUns32 Run) {
-    ASFixedMatrix RunMatrix, TextMatrix;
-    ASFixedQuad TextQuad;
-    PDETextState TextState;
-    PDEGraphicState GState;
-    ASFixedPoint Advance;
+static void DisplayTextRun(PDEText Text, ASUns32 Run) {
+    ASDoubleMatrix RunMatrix = {}, TextMatrix = {};
+    ASFixedQuad TextQuad = {};
+    PDETextState TextState = {};
+    PDEGraphicState GState = {};
+    ASFixedPoint Advance = {};
     CosObj COSFont;
     PDFont TranslationFont;
     PDEFont Font = PDETextGetFont(Text, kPDETextRun, Run);
     ASUns32 NumBytes = PDETextGetNumBytes(Text, kPDETextRun, Run);
     ASUns32 UCSBytes;
-    ASUns8 *TextContent;
-    ASUns8 *UCSText;
+    ASUns8 *TextContent = nullptr;
+    ASUns8 *UCSText = nullptr;
     char *FontName;
 
-    PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
-    PDETextGetMatrix(Text, kPDETextRun, Run, &RunMatrix);
+    PDETextGetMatrixEx(Text, kPDETextRun, Run, &RunMatrix);
     PDETextGetQuad(Text, kPDETextRun, Run, &TextQuad);
     PDETextGetState(Text, kPDETextRun, Run, &TextState, sizeof(TextState));
-    PDETextGetTextMatrix(Text, kPDETextRun, Run, &TextMatrix);
+    PDETextGetTextMatrixEx(Text, kPDETextRun, Run, &TextMatrix);
     PDETextGetAdvance(Text, kPDETextRun | kPDETextPageSpace, Run, &Advance);
 
     // Obtain the text in whatever encoding the font used
-    TextContent = (ASUns8 *)ASmalloc(NumBytes + 2);
+    TextContent = static_cast<ASUns8 *>(ASmalloc(NumBytes + 2));
     PDETextGetText(Text, kPDETextRun, Run, TextContent);
     TextContent[NumBytes] = TextContent[NumBytes + 1] = '\0';
 
@@ -96,16 +95,16 @@ void DisplayTextRun(PDEText Text, ASUns32 Run) {
     PDEFontGetCosObj(Font, &COSFont);
     TranslationFont = PDFontFromCosObj(COSFont);
     UCSBytes = PDFontXlateToUCS(TranslationFont, TextContent, NumBytes, NULL, 0);
-    UCSText = (ASUns8 *)ASmalloc(UCSBytes + 2);
+    UCSText = static_cast<ASUns8 *>(ASmalloc(UCSBytes + 2));
     UCSBytes = PDFontXlateToUCS(TranslationFont, TextContent, NumBytes, UCSText, UCSBytes + 2);
 
-    ASText displayText = ASTextFromSizedUnicode((ASUTF16Val *)UCSText, kUTF16BigEndian, UCSBytes);
+    ASText displayText = ASTextFromSizedUnicode(reinterpret_cast<ASUTF16Val *>(UCSText), kUTF16BigEndian, UCSBytes);
     char *displayTextUTF8 = reinterpret_cast<char *>(ASTextGetUnicodeCopy(displayText, kUTF8));
     ASTextDestroy(displayText);
 
     ASText asFontName = ASTextNew();
     PDFontGetASTextName(TranslationFont, false, asFontName);
-    FontName = (char *)ASTextGetUnicodeCopy(asFontName, kUTF8);
+    FontName = reinterpret_cast<char *>(ASTextGetUnicodeCopy(asFontName, kUTF8));
     ASTextDestroy(asFontName);
 
     Outputter::Inst()->GetOfs() << "Text Run: At " << DisplayQuad(&TextQuad) << std::endl;
@@ -114,7 +113,14 @@ void DisplayTextRun(PDEText Text, ASUns32 Run) {
                                 << std::endl;
     Outputter::Inst()->GetOfs() << "Text State: " << DisplayTextState(&TextState) << std::endl;
 
-    DisplayGraphicState(&GState);
+    PDEGraphicStateEx GStateEx = {};
+
+    if (PDEElementHasGStateEx(reinterpret_cast<PDEElement>(Text), &GStateEx, sizeof(GState)))
+    {
+        PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
+        DisplayGraphicState(&GState);
+    }
+
 
     Outputter::Inst()->GetOfs() << "Content: \"" << displayTextUTF8 << "\"" << std::endl;
     Outputter::Inst()->Outdent();
@@ -125,7 +131,7 @@ void DisplayTextRun(PDEText Text, ASUns32 Run) {
     ASfree(FontName);
 }
 
-void DisplayText(PDEText Text, ASFixedMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
+void DisplayText(PDEText Text, ASDoubleMatrix *Matrix, PDEGraphicState *GState, ASBool HasGState) {
     ASUns32 Runs = PDETextGetNumRuns(Text);
 
     Outputter::Inst()->GetOfs() << "Text Object: At " << DisplayMatrix(Matrix) << ", contains "
