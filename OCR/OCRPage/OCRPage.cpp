@@ -50,17 +50,17 @@ int main(int argc, char **argv) {
             PDPage inputPage1 = PDDocAcquirePage(pdDoc, 0);
 
             // Set default OCR parameters.
-            OCRParamsRec ocrParams = PDOCRDefaultParams();
+            OCRParams ocrParams = PDOCRDefaultParams();
 
             // Set languages to configure OCREngine with.
             OCRLanguage newLanguages[] = {OCRLanguage_English, OCRLanguage_French, OCRLanguage_ChineseTraditional,
                                           OCRLanguage_ChineseSimplified, OCRLanguage_Japanese};
 
             ASInt32 numLanguages = sizeof(newLanguages) / sizeof(newLanguages[0]);
-            PDOCRParamsSetLanguagesConfigured(&ocrParams, newLanguages, numLanguages);
+            PDOCRParamsSetLanguagesConfigured(ocrParams, newLanguages, numLanguages);
 
             // Run OCR on the page.
-            PDOCRRecognizePage(inputPage1, &ocrParams, OCRMissingFontStrategy_Raise);
+            PDOCRRecognizePage(inputPage1, ocrParams, OCRMissingFontStrategy_Raise);
 
             // Save document with recognized text.
             ASPathName path = APDFLDoc::makePath(csOutputFileName.c_str());
@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
             PDPageRelease(inputPage1);
 
             // Release OCREngine resources and terminate the plugin.
-            PDOCRReleaseParams(&ocrParams);
+            PDOCRReleaseParams(ocrParams);
             OCREngineTerminate();
         } // if 0 == errCode
     HANDLER

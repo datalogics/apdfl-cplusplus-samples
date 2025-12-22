@@ -56,14 +56,14 @@ int main(int argc, char **argv) {
             PDEImage image = DLCreatePDEImageFromFile(sInput, nullptr);
 
             // Set default OCR parameters.
-            OCRParamsRec ocrParams = PDOCRDefaultParams();
+            OCRParams ocrParams = PDOCRDefaultParams();
 
             // Set languages to configure OCREngine with.
             OCRLanguage newLanguages[] = {OCRLanguage_English, OCRLanguage_French, OCRLanguage_ChineseTraditional,
                                           OCRLanguage_ChineseSimplified, OCRLanguage_Japanese};
 
             ASInt32 numLanguages = sizeof(newLanguages) / sizeof(newLanguages[0]);
-            PDOCRParamsSetLanguagesConfigured(&ocrParams, newLanguages, numLanguages);
+            PDOCRParamsSetLanguagesConfigured(ocrParams, newLanguages, numLanguages);
 
             // Create the destination document for the created form.
             PDDoc doc = PDDocCreate();
@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
             PDPage page = PDDocCreatePage(doc, kPDEBeforeFirst, mediaBox);
 
             // Run OCR on the image to get Form element containing the image with text underneath.
-            PDEForm form = PDOCRCreateForm(&ocrParams, doc, image, 300, OCRMissingFontStrategy_Raise);
+            PDEForm form = PDOCRCreateForm(ocrParams, doc, image, 300, OCRMissingFontStrategy_Raise);
 
             // Put that form into the page in the destination document.
             PDEContent content = PDPageAcquirePDEContent(page, 0);
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
             ASFileSysReleasePath(NULL, sOutput);
 
             // Release OCREngine resources and terminate the plugin.
-            PDOCRReleaseParams(&ocrParams);
+            PDOCRReleaseParams(ocrParams);
             OCREngineTerminate();
         } // if 0 == errCode
     HANDLER
