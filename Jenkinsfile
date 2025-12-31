@@ -53,7 +53,7 @@ pipeline {
                     }
                 }
                 environment {
-                    CONAN_HOME = "${WORKSPACE}"
+                    CONAN_HOME = "${WORKSPACE}/.conan2"
                     CONAN_NON_INTERACTIVE = '1'
                     CONAN_PRINT_RUN_COMMANDS = '1'
                     CONAN_LOGIN_USERNAME='devauto'
@@ -67,23 +67,14 @@ pipeline {
                 stages {
                     stage('Remove Conan local cache') {
                         when {
-                            anyOf {
-                                expression { "${SKIPPLATFORM}" == 'false' }
-                                not {
-                                    changeRequest()
-                                }
-
-                            }
+                            not { changeRequest() }
                         }
                         steps {
-                            echo "Remove Conan local cache ${NODE} ${BITS}"
-                            script {
-                                if (isUnix()) {
-                                    sh "rm -rf ${WORKSPACE}/.conan"
+                            if (isUnix()) {
+                                    sh "rm -rf ${WORKSPACE}/.conan2"
                                 } else {
-                                    bat "if exist ${WORKSPACE}\\.conan\\ rmdir/s/q ${WORKSPACE}\\.conan"
+                                    bat "if exist ${WORKSPACE}\\.conan2\\ rmdir/s/q ${WORKSPACE}\\.conan2"
                                 }
-                            }
                         }
                     }
                     stage('Set-Up Environment') {
