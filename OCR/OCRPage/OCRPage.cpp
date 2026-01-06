@@ -59,8 +59,14 @@ int main(int argc, char **argv) {
             ASInt32 numLanguages = sizeof(newLanguages) / sizeof(newLanguages[0]);
             PDOCRParamsSetLanguagesConfigured(ocrParams, newLanguages, numLanguages);
 
+            // Create an OCR engine from the parameters.
+            OCREngine ocrEngine = PDOCRCreateEngineFromParams(ocrParams);
+
+            // The parameters are no longer needed after creating the engine.
+            PDOCRReleaseParams(ocrParams);
+
             // Run OCR on the page.
-            PDOCRRecognizePage(inputPage1, ocrParams, OCRMissingFontStrategy_Raise);
+            PDOCRRecognizePage(inputPage1, ocrEngine, OCRMissingFontStrategy_Raise);
 
             // Save document with recognized text.
             ASPathName path = APDFLDoc::makePath(csOutputFileName.c_str());
@@ -71,7 +77,7 @@ int main(int argc, char **argv) {
             PDPageRelease(inputPage1);
 
             // Release OCREngine resources and terminate the plugin.
-            PDOCRReleaseParams(ocrParams);
+            PDOCRReleaseEngine(ocrEngine);
             OCREngineTerminate();
         } // if 0 == errCode
     HANDLER
