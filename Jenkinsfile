@@ -70,11 +70,13 @@ pipeline {
                             not { changeRequest() }
                         }
                         steps {
-                            if (isUnix()) {
+                            script {
+                                if (isUnix()) {
                                     sh "rm -rf ${WORKSPACE}/.conan2"
                                 } else {
                                     bat "if exist ${WORKSPACE}\\.conan2\\ rmdir/s/q ${WORKSPACE}\\.conan2"
                                 }
+                            }
                         }
                     }
                     stage('Set-Up Environment') {
