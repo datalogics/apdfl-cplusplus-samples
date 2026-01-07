@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
             PDOCRParamsSetLanguagesConfigured(ocrParams, newLanguages, numLanguages);
 
             // Create an OCR engine from the parameters.
-            OCREngine ocrEngine = PDOCRCreateEngineFromParams(ocrParams);
+            OCREngine ocrEngine = PDOCRCreateEngine(ocrParams);
 
             // The parameters are no longer needed after creating the engine.
             PDOCRReleaseParams(ocrParams);
