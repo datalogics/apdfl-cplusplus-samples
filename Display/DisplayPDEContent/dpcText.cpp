@@ -66,18 +66,18 @@ static std::string DisplayTextState(PDETextState *State) {
 }
 
 static void DisplayTextRun(PDEText Text, ASUns32 Run) {
-    ASDoubleMatrix RunMatrix, TextMatrix;
-    ASFixedQuad TextQuad;
-    PDETextState TextState;
-    PDEGraphicState GState;
-    ASFixedPoint Advance;
+    ASDoubleMatrix RunMatrix = {}, TextMatrix = {};
+    ASFixedQuad TextQuad = {};
+    PDETextState TextState = {};
+    PDEGraphicState GState = {};
+    ASFixedPoint Advance = {};
     CosObj COSFont;
     PDFont TranslationFont;
     PDEFont Font = PDETextGetFont(Text, kPDETextRun, Run);
     ASUns32 NumBytes = PDETextGetNumBytes(Text, kPDETextRun, Run);
     ASUns32 UCSBytes;
-    ASUns8 *TextContent;
-    ASUns8 *UCSText;
+    ASUns8 *TextContent = nullptr;
+    ASUns8 *UCSText = nullptr;
     char *FontName;
 
     PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
@@ -114,7 +114,13 @@ static void DisplayTextRun(PDEText Text, ASUns32 Run) {
                                 << std::endl;
     Outputter::Inst()->GetOfs() << "Text State: " << DisplayTextState(&TextState) << std::endl;
 
-    DisplayGraphicState(&GState);
+    PDEGraphicStateEx GStateEx = {};
+
+    if (PDEElementHasGStateEx(reinterpret_cast<PDEElement>(Text), &GStateEx, sizeof(GState)))
+    {
+        PDETextGetGState(Text, kPDETextRun, Run, &GState, sizeof(PDEGraphicState));
+        DisplayGraphicState(&GState);
+    }
 
     Outputter::Inst()->GetOfs() << "Content: \"" << displayTextUTF8 << "\"" << std::endl;
     Outputter::Inst()->Outdent();
