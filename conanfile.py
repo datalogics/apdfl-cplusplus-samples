@@ -23,7 +23,7 @@ class Pdfl18installerConan(ConanFile):
         self.options['adobe_pdf_library'].license_managed = self.options.license_managed
 
     def requirements(self):
-        self.requires("adobe_pdf_library/[>=18.0.5+]@datalogics/nightly")
+        self.requires("adobe_pdf_library/[>=18.0.5+ <21.0.0]@datalogics/nightly")
         self.requires("installer-resources/[>=0.7]@datalogics/stable")
 
     def layout(self):
