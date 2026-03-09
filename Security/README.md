@@ -1,5 +1,5 @@
 ## ***AddBasicPAdESElectronicSignature***
-Demonstrates how to add a PAdES baseline electronic signature to a PDF document using EC credentials.
+Demonstrates how to add a PAdES baseline electronic signature to a PDF document.
 
 ## ***AddDigitalSignatureCMS***
 Demonstrates how to add a digital signature with a logo to a PDF document.
