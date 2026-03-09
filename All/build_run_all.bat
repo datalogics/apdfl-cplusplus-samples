@@ -171,7 +171,7 @@ REM *** 3) Decide which samples to run.
 REM *************************************************
 
 REM *** The total number of samples. This must be accurate!
-SET /A "NUM_SAMPLES=56"
+SET /A "NUM_SAMPLES=58"
 
 REM *** Datalogics Samples.
 SET "DL_SAMPLE_LIST=("
@@ -235,8 +235,10 @@ SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% ContentCreation\CreateDocument"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% ContentCreation\CreateLayers"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% ContentCreation\CreateTransparency"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AESEncryption"
+SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddBasicPAdESElectronicSignature"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddDigitalSignatureCMS"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddDigitalSignatureRFC3161"
+SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddPAdESPolicySignature"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddPassword"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddRedaction"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Security\AddTriangularRedaction"
@@ -256,9 +258,9 @@ SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% FileSystem\AlternateFileSystem"
 
 REM *** The total number of DL samples. This must be accurate!
 IF NOT "%ARCH%"=="ARM64" (
-  SET /A "NUM_DL_SAMPLES=73"
+  SET /A "NUM_DL_SAMPLES=75"
 ) ELSE (
-  SET /A "NUM_DL_SAMPLES=76"
+  SET /A "NUM_DL_SAMPLES=78"
 )
 
 

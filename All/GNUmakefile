@@ -81,8 +81,10 @@ SAMPLES = Annotations/CreateAnnotations \
           OCR/OCRImage \
           OCR/OCRPage \
           Printing/PostScriptInjection \
+          Security/AddBasicPAdESElectronicSignature \
           Security/AddDigitalSignatureCMS \
           Security/AddDigitalSignatureRFC3161 \
+          Security/AddPAdESPolicySignature \
           Security/AddPassword \
           Security/AddRedaction \
           Security/AddRegexRedaction \

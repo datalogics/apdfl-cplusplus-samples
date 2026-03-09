@@ -165,6 +165,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureCMS", ".
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureRFC3161", "..\Security\AddDigitalSignatureRFC3161\AddDigitalSignatureRFC3161.vcxproj", "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddBasicPAdESElectronicSignature", "..\Security\AddBasicPAdESElectronicSignature\AddBasicPAdESElectronicSignature.vcxproj", "{7928DA23-DF4A-45D3-B7A4-AB31C08A13FA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddPAdESPolicySignature", "..\Security\AddPAdESPolicySignature\AddPAdESPolicySignature.vcxproj", "{9FD829F8-B22C-440F-940D-6599A8B9AD67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -491,6 +495,14 @@ Global
 		{1D787362-28C9-4460-9606-840F3B484350}.Debug|Win32.Build.0 = Debug|Win32
 		{1D787362-28C9-4460-9606-840F3B484350}.Release|Win32.ActiveCfg = Release|Win32
 		{1D787362-28C9-4460-9606-840F3B484350}.Release|Win32.Build.0 = Release|Win32
+		{7928DA23-DF4A-45D3-B7A4-AB31C08A13FA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7928DA23-DF4A-45D3-B7A4-AB31C08A13FA}.Debug|Win32.Build.0 = Debug|Win32
+		{7928DA23-DF4A-45D3-B7A4-AB31C08A13FA}.Release|Win32.ActiveCfg = Release|Win32
+		{7928DA23-DF4A-45D3-B7A4-AB31C08A13FA}.Release|Win32.Build.0 = Release|Win32
+		{9FD829F8-B22C-440F-940D-6599A8B9AD67}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FD829F8-B22C-440F-940D-6599A8B9AD67}.Debug|Win32.Build.0 = Debug|Win32
+		{9FD829F8-B22C-440F-940D-6599A8B9AD67}.Release|Win32.ActiveCfg = Release|Win32
+		{9FD829F8-B22C-440F-940D-6599A8B9AD67}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

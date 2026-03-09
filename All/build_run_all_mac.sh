@@ -113,8 +113,10 @@ declare -a DL_SAMPLE_LIST=( \
   "OCR/OCRPage" \
   "Printing/PostScriptInjection" \
   "Security/AESEncryption" \
+  "Security/AddBasicPAdESElectronicSignature" \
   "Security/AddDigitalSignatureCMS" \
   "Security/AddDigitalSignatureRFC3161" \
+  "Security/AddPAdESPolicySignature" \
   "Security/AddPassword" \
   "Security/AddRedaction" \
   "Security/EncryptDocument" \
