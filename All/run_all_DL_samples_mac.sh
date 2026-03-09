@@ -310,6 +310,16 @@ cd ../../Security/AddDigitalSignatureRFC3161
 ./AddDigitalSignatureRFC3161-${stage}.app/Contents/MacOS/AddDigitalSignatureRFC3161-${stage}
 echo ""
 
+echo Running sample AddBasicPAdESElectronicSignature
+cd ../../Security/AddBasicPAdESElectronicSignature
+./AddBasicPAdESElectronicSignature-${stage}.app/Contents/MacOS/AddBasicPAdESElectronicSignature-${stage}
+echo ""
+
+echo Running sample AddPAdESPolicySignature
+cd ../../Security/AddPAdESPolicySignature
+./AddPAdESPolicySignature-${stage}.app/Contents/MacOS/AddPAdESPolicySignature-${stage}
+echo ""
+
 echo Running sample AddPassword
 cd ../../Security/AddPassword
 ./AddPassword-${stage}.app/Contents/MacOS/AddPassword-${stage}
