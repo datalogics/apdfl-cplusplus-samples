@@ -94,7 +94,6 @@ int main(int argc, char **argv) {
         PDSignDocSetDocSignType(signParams, PADES);
 
         // Define a signature policy (SigPolicyId) using an OID.
-        // This example uses the Spanish Government (AGE) signature policy OID.
         ASText oid = ASTextFromEncoded("2.16.724.1.3.1.1.2.1.9", PDGetHostEncoding());
         PDSignDocSetSigPolicy(signParams, oid);
 
