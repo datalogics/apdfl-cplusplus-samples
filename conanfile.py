@@ -25,6 +25,7 @@ class Pdfl18installerConan(ConanFile):
     def requirements(self):
         self.requires("adobe_pdf_library/[>=18.0.5+ <21.0.0]@datalogics/nightly")
         self.requires("installer-resources/[>=0.7]@datalogics/stable")
+        self.requires(self.conan_data['tessdata'])
 
     def layout(self):
         self.folders.build = "build"
@@ -61,6 +62,12 @@ class Pdfl18installerConan(ConanFile):
         if os.path.isdir(tessdata_path):
             copy(self, "*", src=tessdata_path, dst=os.path.join(destination, "tessdata4"), keep_path=True)
 
+    def copy_ocr(self, destination):
+        tessdata_pkg = self.dependencies['tessdata']
+        copy(self, "*", src=os.path.join(tessdata_pkg.package_folder, 'share', 'tessdata'),
+             dst=os.path.join(destination, "tessdata4"),
+             keep_path=True)
+
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')
@@ -70,6 +77,7 @@ class Pdfl18installerConan(ConanFile):
         copy(self, 'PDFLInit*', src=pdfl_pkg_src, dst='CPlusPlus/Include/Source')
         copy(self, "*", src=pdfl_pkg_rsc, dst='Resources')
         self.copy_apdfl(destination='CPlusPlus/Binaries')
+        self.copy_ocr(destination='CPlusPlus/Binaries')
 
 
     def generate(self):
