@@ -94,13 +94,12 @@ int main(int argc, char **argv) {
         PDSignDocSetDocSignType(signParams, PADES);
 
         // Define a signature policy (SigPolicyId) using an OID.
-        // This example uses the U.S. Federal PKI Common Policy Framework OID.
-        ASText oid = ASTextFromEncoded("2.16.840.1.101.3.2.1.48.1", PDGetHostEncoding());
+        ASText oid = ASTextFromEncoded("2.16.724.1.3.1.1.2.1.9", PDGetHostEncoding());
         PDSignDocSetSigPolicy(signParams, oid);
 
         // Add a policy qualifier (SPuri) pointing to the policy specification document.
         ASText uri = ASTextFromEncoded(
-            "https://www.idmanagement.gov/wp-content/uploads/sites/1171/uploads/fpki-x509-cert-policy-common.pdf",
+            "https://sede.administracion.gob.es/politica_de_firma_anexo_1.pdf",
             PDGetHostEncoding());
         PDSignDocSetSigPolicyQualifierURI(signParams, uri);
 
