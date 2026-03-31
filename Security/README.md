@@ -1,8 +1,14 @@
+## ***AddBasicPAdESElectronicSignature***
+Demonstrates how to add a PAdES B-T baseline electronic signature to a PDF document.
+
 ## ***AddDigitalSignatureCMS***
 Demonstrates how to add a digital signature with a logo to a PDF document.
 
 ## ***AddDigitalSignatureRFC3161***
 Demonstrates how to add an RFC3161 timestamp signature to a PDF document.
+
+## ***AddPAdESPolicySignature***
+Demonstrates how to add a PAdES B-T policy-based signature to a PDF document.
 
 ## ***AddPassword***
 Demonstrates protecting a PDF with a password. To open or edit the saved PDF, you must supply the password.
