@@ -65,6 +65,7 @@ SAMPLES = Annotations/CreateAnnotations \
           DocumentConversion/ConvertPDFtoPostscript \
           DocumentConversion/ConvertToPDFA \
           DocumentConversion/ConvertToPDFX \
+          DocumentConversion/ConvertWebToPDF \
           DocumentOptimization/PDFOptimizer \
           FileSystem/AlternateFileSystem \
           Images/AddThumbnailsToPDF \
