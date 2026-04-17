@@ -1,0 +1,17 @@
+// Copyright (c) 2024-2025, Datalogics, Inc. All rights reserved.
+//
+// Xcode build settings for the ConvertWebToPDF sample (Debug configuration).
+//
+// Inherits common Mac build settings from the shared Project_debug.xcconfig
+// in the dlutils/MacSDKConfigurations directory.
+//
+
+#include "../../dlutils/MacSDKConfigurations/Project_debug.xcconfig"
+
+// Product name for the Debug build of this sample.
+PRODUCT_NAME = ConvertWebToPDF
+
+// Make sure the sample can find the WebToPDFCalls.h header. It is installed
+// into the APDFL Include/Headers directory alongside the other plugin
+// accessor headers (for example XPS2PDFCalls.h).
+HEADER_SEARCH_PATHS = $(HEADER_SEARCH_PATHS) ../../../Include/Headers
