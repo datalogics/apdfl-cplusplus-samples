@@ -97,6 +97,7 @@ declare -a DL_SAMPLE_LIST=( \
   "DocumentConversion/ConvertToPDFX" \
   "DocumentConversion/ConvertPDFtoEPS" \
   "DocumentConversion/ConvertPDFtoPostscript" \
+  "DocumentConversion/ConvertWebToPDF" \
   "FileSystem/AlternateFileSystem" \
   "Images/AddThumbnailsToPDF" \
   "Images/RenderPage" \
