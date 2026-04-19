@@ -88,7 +88,15 @@ REM *************************************************
 REM *** Initialize environment variables, enable delayed expansion.
 SETLOCAL EnableDelayedExpansion  
 REM *** Filename of All project.
-FOR /f %%a IN ('wmic OS get OSArchitecture ^| findstr /r /v "^$"') DO SET "WIN_ARCH=%%a"
+REM *** Determine the OS architecture using built-in environment variables.
+REM *** PROCESSOR_ARCHITEW6432 is set when a 32-bit process runs on 64-bit Windows;
+REM *** in that case it reflects the true OS architecture. Otherwise PROCESSOR_ARCHITECTURE
+REM *** is the OS architecture. This replaces the deprecated `wmic` command.
+IF DEFINED PROCESSOR_ARCHITEW6432 (
+  SET "WIN_ARCH=%PROCESSOR_ARCHITEW6432%"
+) ELSE (
+  SET "WIN_ARCH=%PROCESSOR_ARCHITECTURE%"
+)
 IF NOT "x%WIN_ARCH:ARM=%"=="x%WIN_ARCH%" (
   REM Do an arm64 build
   SET ALL_DL_SLN=All_Datalogics_ARM64.sln
