@@ -24,6 +24,7 @@ class Pdfl18installerConan(ConanFile):
 
     def requirements(self):
         self.requires("adobe_pdf_library/[>=18.0.5+ <21.0.0]@datalogics/nightly")
+        self.requires("webtopdf/[>=1.0.0]@datalogics/nightly")
         self.requires("installer-resources/[>=0.7]@datalogics/stable")
         self.requires(self.conan_data['tessdata'])
 
@@ -68,6 +69,26 @@ class Pdfl18installerConan(ConanFile):
              dst=os.path.join(destination, "tessdata4"),
              keep_path=True)
 
+    def copy_webtopdf(self, destination):
+        # The webtopdf conan package installs its public headers under
+        # include/WebToPDF/ (namespaced by plugin name). The ConvertWebToPDF
+        # sample includes them flat (e.g. "WebToPDFCalls.h") to match the
+        # XPS2PDFCalls.h convention, so strip the WebToPDF/ subdir when
+        # copying into the samples' include tree.
+        webtopdf_pkg = self.dependencies["webtopdf"]
+        webtopdf_inc = os.path.join(webtopdf_pkg.package_folder, "include", "WebToPDF")
+        copy(self, "*.h", src=webtopdf_inc,
+             dst="CPlusPlus/Include/Headers", keep_path=False)
+
+        # Runtime: the plugin .ppi (Windows) lives in bin/, the shared
+        # library (libWebToPDF.dylib / libWebToPDF.so / WebToPDF.dll) lives
+        # in lib/ on Unix and bin/ on Windows. Copy both so ASExtensionMgrGetHFT
+        # can locate the plugin at runtime.
+        copy(self, "*.ppi", src=webtopdf_pkg.cpp_info.bindir, dst=destination)
+        copy(self, "WebToPDF.dll", src=webtopdf_pkg.cpp_info.bindir, dst=destination)
+        copy(self, "libWebToPDF.*", src=webtopdf_pkg.cpp_info.libdirs[0],
+             dst=destination, keep_path=False)
+
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')
@@ -78,6 +99,7 @@ class Pdfl18installerConan(ConanFile):
         copy(self, "*", src=pdfl_pkg_rsc, dst='Resources')
         self.copy_apdfl(destination='CPlusPlus/Binaries')
         self.copy_ocr(destination='CPlusPlus/Binaries')
+        self.copy_webtopdf(destination='CPlusPlus/Binaries')
 
 
     def generate(self):
