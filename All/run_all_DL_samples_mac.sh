@@ -203,11 +203,6 @@ cd ../../DocumentConversion/ConvertPDFtoPostscript
 ./ConvertPDFtoPostscript-${stage}.app/Contents/MacOS/ConvertPDFtoPostscript-${stage}
 echo ""
 
-echo Running sample ConvertWebToPDF
-cd ../../DocumentConversion/ConvertWebToPDF
-./ConvertWebToPDF-${stage}.app/Contents/MacOS/ConvertWebToPDF-${stage}
-echo ""
-
 # FileSystem
 
 echo Running sample AlternateFileSystem

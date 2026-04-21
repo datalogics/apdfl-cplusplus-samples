@@ -22,9 +22,20 @@ class Pdfl18installerConan(ConanFile):
     def config_options(self):
         self.options['adobe_pdf_library'].license_managed = self.options.license_managed
 
+    def _webtopdf_supported(self):
+        # WebToPDF is published only for Windows x86_64, Linux x86_64, and
+        # Linux ARM. Gating the dependency (and the sample that uses it)
+        # keeps bootstrap from failing with "no compatible configuration"
+        # on platforms where no binary exists.
+        os_ = str(self.settings.os)
+        arch = str(self.settings.arch)
+        return (os_ == "Windows" and arch == "x86_64") or \
+               (os_ == "Linux"   and arch in ("x86_64", "armv8"))
+
     def requirements(self):
         self.requires("adobe_pdf_library/[>=18.0.5+ <21.0.0]@datalogics/nightly")
-        self.requires("webtopdf/[>=1.0.0]@datalogics/nightly")
+        if self._webtopdf_supported():
+            self.requires("webtopdf/[>=1.0.0]@datalogics/nightly")
         self.requires("installer-resources/[>=0.7]@datalogics/stable")
         self.requires(self.conan_data['tessdata'])
 
@@ -99,7 +110,8 @@ class Pdfl18installerConan(ConanFile):
         copy(self, "*", src=pdfl_pkg_rsc, dst='Resources')
         self.copy_apdfl(destination='CPlusPlus/Binaries')
         self.copy_ocr(destination='CPlusPlus/Binaries')
-        self.copy_webtopdf(destination='CPlusPlus/Binaries')
+        if self._webtopdf_supported():
+            self.copy_webtopdf(destination='CPlusPlus/Binaries')
 
 
     def generate(self):
