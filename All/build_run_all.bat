@@ -201,7 +201,10 @@ IF NOT "%ARCH%"=="ARM64" (
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertToPDFA"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertToPDFX"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertPDFtoPostscript"
-SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertWebToPDF"
+REM *** WebToPDF plugin ships only for Windows x86_64 (and Linux). Skip on Win32/ARM64.
+IF "%ARCH%"=="x64" (
+  SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertWebToPDF"
+)
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\XPStoPDF"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Images\AddThumbnailsToPDF"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Images\RenderPage"
@@ -258,10 +261,14 @@ SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% OCR\OCRPage"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% FileSystem\AlternateFileSystem"
 
 REM *** The total number of DL samples. This must be accurate!
-IF NOT "%ARCH%"=="ARM64" (
+REM *** Only x64 gets ConvertWebToPDF (Windows x86_64); Win32 and ARM64 keep the
+REM *** original counts.
+IF "%ARCH%"=="x64" (
   SET /A "NUM_DL_SAMPLES=76"
+) ELSE IF "%ARCH%"=="ARM64" (
+  SET /A "NUM_DL_SAMPLES=78"
 ) ELSE (
-  SET /A "NUM_DL_SAMPLES=79"
+  SET /A "NUM_DL_SAMPLES=75"
 )
 
 
