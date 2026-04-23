@@ -19,5 +19,8 @@ Converts a PDF document to a PDF/X compliant document.
 ## ***ConvertToZUGFeRD***
 Converts a PDF document and a Invoice XML document to a ZUGFeRD compliant PDF document.
 
+## ***ConvertWebToPDF***
+Uses the WebToPDF plugin to render a web page (by default https://www.datalogics.com) into a PDF document.
+
 ## ***XPSToPDF***
 Opens a XPS document and converts it to a PDF document.

@@ -119,6 +119,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InsertHeadFoot", "..\Text\I
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToPDFA", "..\DocumentConversion\ConvertToPDFA\ConvertToPDFA.vcxproj", "{99CD8B64-8362-4089-A610-D878CD422581}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertWebToPDF", "..\DocumentConversion\ConvertWebToPDF\ConvertWebToPDF.vcxproj", "{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToPDFX", "..\DocumentConversion\ConvertToPDFX\ConvertToPDFX.vcxproj", "{A51E0247-F7EF-4C7E-96B7-F50752C73D81}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddTriangularRedaction", "..\Security\AddTriangularRedaction\AddTriangularRedaction.vcxproj", "{7DCC48B1-285D-4653-99AD-B707BEBBCB1C}"
@@ -407,6 +409,10 @@ Global
 		{99CD8B64-8362-4089-A610-D878CD422581}.Debug|x64.Build.0 = Debug|x64
 		{99CD8B64-8362-4089-A610-D878CD422581}.Release|x64.ActiveCfg = Release|x64
 		{99CD8B64-8362-4089-A610-D878CD422581}.Release|x64.Build.0 = Release|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Debug|x64.ActiveCfg = Debug|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Debug|x64.Build.0 = Debug|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Release|x64.ActiveCfg = Release|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Release|x64.Build.0 = Release|x64
 		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Debug|x64.ActiveCfg = Debug|x64
 		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Debug|x64.Build.0 = Debug|x64
 		{A51E0247-F7EF-4C7E-96B7-F50752C73D81}.Release|x64.ActiveCfg = Release|x64

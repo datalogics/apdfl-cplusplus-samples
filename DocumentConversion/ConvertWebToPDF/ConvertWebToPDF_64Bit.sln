@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertWebToPDF", "ConvertWebToPDF.vcxproj", "{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Debug|x64.ActiveCfg = Debug|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Debug|x64.Build.0 = Debug|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Release|x64.ActiveCfg = Release|x64
+		{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C4E7B32-9D83-4F15-A82C-6E3B9D8E7F22}
+	EndGlobalSection
+EndGlobal
