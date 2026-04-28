@@ -29,6 +29,6 @@ CXXFLAGS = -std=c++11  $(CCFLAGS)
 
 LD = $(CXX)
 
-LIBS = -lDL180pdfl -lDL180CoolType -lDL180AGM -lDL180BIB -lDL180ACE -lDL180ARE \
-	   -lDL180BIBUtils -lDL180JP2K -lDL180AdobeXMP -lDL180AXE8SharedExpat \
+LIBS = -lDL210pdfl -lDL210CoolType -lDL210AGM -lDL210BIB -lDL210ACE -lDL210ARE \
+	   -lDL210BIBUtils -lDL210JP2K -lDL210AdobeXMP -lDL210AXE8SharedExpat \
 	   -licuuc -licudata -lpthread -lsocket -lnsl -lc -lm

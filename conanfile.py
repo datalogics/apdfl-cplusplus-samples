@@ -49,7 +49,7 @@ class Pdfl18installerConan(ConanFile):
 
         copy(self, "*.dll", src=apdfl_pkg.cpp_info.bindir, dst=destination, excludes="*DLI_PDFL*")
         if self.settings.os == "Windows":
-            copy(self, "DL180PDFL.lib", src=apdfl_pkg.cpp_info.libdirs[0], dst=destination)
+            copy(self, "DL210PDFL.lib", src=apdfl_pkg.cpp_info.libdirs[0], dst=destination)
         copy(self, "*.ppi", src=apdfl_pkg.cpp_info.bindir, dst=destination)
         copy(self, "*", src=apdfl_pkg.cpp_info.frameworkdirs[0], dst=destination, excludes="*DLI_PDFL*")
         copy(self, "*.dylib*", src=apdfl_pkg.cpp_info.libdirs[0], dst=destination, keep_path=False)
