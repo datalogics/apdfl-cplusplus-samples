@@ -20,7 +20,7 @@
 #endif
 //========================================================================================================
 // Constructor:
-// initializes APDFL and does not default the DL180PDFL.dll directory. dlDir should be a relative path.
+// initializes APDFL and does not default the DL210PDFL.dll directory. dlDir should be a relative path.
 //========================================================================================================
 APDFLib::APDFLib(wchar_t *dlDir, int flags)
 #if AIX_GCC_COMPAT
@@ -31,9 +31,9 @@ APDFLib::APDFLib(wchar_t *dlDir, int flags)
 
 #ifdef WIN_PLATFORM
     if (dlDir == NULL)
-        dlDir = L"..\\..\\..\\Binaries"; // The default DL180PDFL.lib directory.
+        dlDir = L"..\\..\\..\\Binaries"; // The default DL210PDFL.lib directory.
 
-    HINSTANCE dllInst = loadDFL180PDFL(dlDir);
+    HINSTANCE dllInst = loadDFL210PDFL(dlDir);
     if (dllInst == 0) {
         initValid = false;
         return;
@@ -78,10 +78,10 @@ ASInt32 APDFLib::getInitError() {
 
 //========================================================================================================
 // ASInt32 function:
-// Loads the DL180PDFL library dynamically.
+// Loads the DL210PDFL library dynamically.
 //========================================================================================================
 #ifdef WIN_PLATFORM
-HINSTANCE APDFLib::loadDFL180PDFL(wchar_t *relativeDir) {
+HINSTANCE APDFLib::loadDFL210PDFL(wchar_t *relativeDir) {
     // Prepare to find the full path name.
     const int bufsize = 4096;             // The size of the buffer we'll write the path to.
     TCHAR pathBuffer[bufsize] = TEXT(""); // The buffer we'll write the path to.
@@ -97,21 +97,21 @@ HINSTANCE APDFLib::loadDFL180PDFL(wchar_t *relativeDir) {
       int errNumber = errno;
 
       if (EACCES == errNumber) {
-        std::wcout << L"DL180PDFL.dll : ACCESS DENIED" << std::endl;
+        std::wcout << L"DL210PDFL.dll : ACCESS DENIED" << std::endl;
         return 0;
       }
       if (ENOENT == errNumber) {
-        std::wcout << L"DL180PDFL.dll : COULD NOT LOCATE FILE" << std::endl;
+        std::wcout << L"DL210PDFL.dll : COULD NOT LOCATE FILE" << std::endl;
         return 0;
       }
 
       if (EINVAL == errNumber) {
-        std::wcout << L"DL180PDFL.dll : INVALID PARAMETER" << std::endl;
+        std::wcout << L"DL210PDFL.dll : INVALID PARAMETER" << std::endl;
         return 0;
       }
     }
 
-    return (LoadLibrary(L"DL180PDFL.dll"));
+    return (LoadLibrary(L"DL210PDFL.dll"));
 }
 #endif
 #ifndef WIN_PLATFORM

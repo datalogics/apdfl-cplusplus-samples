@@ -156,7 +156,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -196,7 +196,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -235,7 +235,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -270,7 +270,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -308,7 +308,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -345,7 +345,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210pdfl.lib;AdvAPI32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\AddThumbnailsToPDF.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

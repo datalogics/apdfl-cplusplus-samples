@@ -12,6 +12,6 @@ CCFLAGS  = -g $(PDF_FDIR_DEF) -DNO_PRAGMA_ONCE -DMAC_PLATFORM=1 -DMAC_ENV=1 -DPR
 CXXFLAGS = -std=c++11 $(CCFLAGS) -x objective-c++
 
 LDFLAGS = -Wl,-rpath,$(PDFL_PATH) -L$(PDFL_PATH)
-LIBS = -F $(FRAMEWORK_PATH) -framework DL180pdfl -framework DL180CoolType -framework DL180AGM -framework DL180BIB -framework DL180ACE -framework DL180ARE -framework Cocoa\
-	   -framework DL180BIBUtils -framework DL180JP2K -framework DL180AdobeXMP -framework DL180AXE8SharedExpat \
+LIBS = -F $(FRAMEWORK_PATH) -framework DL210pdfl -framework DL210CoolType -framework DL210AGM -framework DL210BIB -framework DL210ACE -framework DL210ARE -framework Cocoa\
+	   -framework DL210BIBUtils -framework DL210JP2K -framework DL210AdobeXMP -framework DL210AXE8SharedExpat \
 	   -licuuc -licudata -lpthread

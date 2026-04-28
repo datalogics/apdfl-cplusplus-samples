@@ -117,6 +117,14 @@ ifeq ($(findstring mac,$(OS)), )
 endif
 endif
 
+# WebToPDF plugin ships only for Windows x86_64, Linux x86_64, and Linux
+# ARM. This Makefile is invoked on Linux and Mac; exclude mac/aix/solaris
+# and everything else drops through to one of the two supported Linux
+# variants.
+ifeq ($(findstring mac,$(OS))$(findstring aix,$(OS))$(findstring solaris,$(OS)),)
+    SAMPLES += DocumentConversion/ConvertWebToPDF
+endif
+
 PATH_TO_FORMS = ../Forms
 ifneq ("$(wildcard $(PATH_TO_FORMS))","")
 SAMPLES += Forms/ConvertXFAToAcroForms

@@ -65,24 +65,41 @@ config:
           - gcc-10-aix72-64
         build: missing
 
-  sunos-sparc:
+  rocky-9-x86_64:
+    # Use the clang 18 compiler on Rocky 8 Linux
     config:
       Release:
-        profile_build:
-          - gcc-9-sparc-solaris
-        options_host:
-          - include_dli=False
         profile_host:
-          - gcc-9-sparc-solaris
+          - clang-20-linux-x86_64-cppstd-17
+        profile_build:
+          - clang-20-linux-x86_64-cppstd-20
         build: missing
+      LicenseManaged:
+        include: Release
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
       Release32:
-        profile_build:
-          - gcc-9-sparc-solaris
         profile_host:
-          - gcc-9-sparc32-solaris
-        options_host:
-          - include_dli=False
+          - clang-20-linux-x86
+        profile_build:
+          - clang-20-linux-x86_64
         build: missing
+
+  rocky-9-aarch64:
+    # Use the clang 20 compiler on Rocky 8 Linux
+    config:
+      Release:
+        profile_host:
+          - clang-20-linux-armv8-cppstd-17
+        profile_build:
+          - clang-20-linux-armv8-cppstd-20
+        build: missing
+      LicenseManaged:
+        include: Release
+        options_host:
+          - adobe_pdf_library/*:license_managed=True
+          - '*:license_managed=True'
 
   rocky-8-x86_64:
     # Use the clang 18 compiler on Rocky 8 Linux

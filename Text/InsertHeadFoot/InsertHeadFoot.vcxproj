@@ -161,7 +161,7 @@
       <ProgramDatabaseFile>.\Debug/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -198,7 +198,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -235,7 +235,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -271,7 +271,7 @@
       <ProgramDatabaseFile>.\Release/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -308,7 +308,7 @@
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\Release/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -345,7 +345,7 @@
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\Release/InsertHeadFoot.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

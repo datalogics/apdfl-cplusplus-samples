@@ -88,7 +88,15 @@ REM *************************************************
 REM *** Initialize environment variables, enable delayed expansion.
 SETLOCAL EnableDelayedExpansion  
 REM *** Filename of All project.
-FOR /f %%a IN ('wmic OS get OSArchitecture ^| findstr /r /v "^$"') DO SET "WIN_ARCH=%%a"
+REM *** Determine the OS architecture using built-in environment variables.
+REM *** PROCESSOR_ARCHITEW6432 is set when a 32-bit process runs on 64-bit Windows;
+REM *** in that case it reflects the true OS architecture. Otherwise PROCESSOR_ARCHITECTURE
+REM *** is the OS architecture. This replaces the deprecated `wmic` command.
+IF DEFINED PROCESSOR_ARCHITEW6432 (
+  SET "WIN_ARCH=%PROCESSOR_ARCHITEW6432%"
+) ELSE (
+  SET "WIN_ARCH=%PROCESSOR_ARCHITECTURE%"
+)
 IF NOT "x%WIN_ARCH:ARM=%"=="x%WIN_ARCH%" (
   REM Do an arm64 build
   SET ALL_DL_SLN=All_Datalogics_ARM64.sln
@@ -201,6 +209,10 @@ IF NOT "%ARCH%"=="ARM64" (
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertToPDFA"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertToPDFX"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertPDFtoPostscript"
+REM *** WebToPDF plugin ships only for Windows x86_64 (and Linux). Skip on Win32/ARM64.
+IF "%ARCH%"=="x64" (
+  SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\ConvertWebToPDF"
+)
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% DocumentConversion\XPStoPDF"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Images\AddThumbnailsToPDF"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% Images\RenderPage"
@@ -257,10 +269,14 @@ SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% OCR\OCRPage"
 SET "DL_SAMPLE_LIST=%DL_SAMPLE_LIST% FileSystem\AlternateFileSystem"
 
 REM *** The total number of DL samples. This must be accurate!
-IF NOT "%ARCH%"=="ARM64" (
-  SET /A "NUM_DL_SAMPLES=75"
-) ELSE (
+REM *** Only x64 gets ConvertWebToPDF (Windows x86_64); Win32 and ARM64 keep the
+REM *** original counts.
+IF "%ARCH%"=="x64" (
+  SET /A "NUM_DL_SAMPLES=76"
+) ELSE IF "%ARCH%"=="ARM64" (
   SET /A "NUM_DL_SAMPLES=78"
+) ELSE (
+  SET /A "NUM_DL_SAMPLES=75"
 )
 
 

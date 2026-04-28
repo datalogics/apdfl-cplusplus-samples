@@ -155,7 +155,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -194,7 +194,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -232,7 +232,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)\PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -266,7 +266,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)/PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -304,7 +304,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)/PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -341,7 +341,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)/PostscriptInjection.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\..\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

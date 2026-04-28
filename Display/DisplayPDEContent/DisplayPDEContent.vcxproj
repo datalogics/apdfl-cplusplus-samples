@@ -149,7 +149,7 @@
       <ProgramDatabaseFile>$(OutDir)DisplayPDEContent.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -174,7 +174,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)DisplayPDEContent.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -199,7 +199,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)DisplayPDEContent.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -222,7 +222,7 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -246,7 +246,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
@@ -270,7 +270,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>DL180PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
