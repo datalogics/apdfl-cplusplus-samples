@@ -160,9 +160,9 @@ config:
     config:
       Release:
         profile_host:
-          - msvc-arm64-193-cppstd-17
+          - msvc-arm64-194-cppstd-17
         profile_build:
-          - msvc-arm64-193-cppstd-17
+          - msvc-arm64-194-cppstd-17
         settings_build:
           - msys2/*:arch=x86_64
           - strawberryperl/*:arch=x86_64
