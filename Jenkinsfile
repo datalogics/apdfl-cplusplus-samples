@@ -1,8 +1,8 @@
 @Library('jenkins-shared-libraries') _
 def ENV_LOC=[:]
 def EXTRA_ARGS = [
-    'linux-apdfl-rocky-x64-samples': ' ',
-    'linux-armv8-apdfl-samples': ' ',
+    'apdfl-rocky9-x64-samples': ' ',
+    'apdfl-rocky9-armv8-samples': ' ',
     'mac-apdfl-samples': ' ',
     'mac-arm-apdfl-samples': ' ',
     'sparcsolaris-apdfl-samples': ' ',
@@ -11,7 +11,7 @@ def EXTRA_ARGS = [
 ]
 pipeline {
     parameters {
-        choice(name: 'PLATFORM_FILTER', choices: ['all', 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'linux-armv8-apdfl-samples', 'linux-apdfl-rocky-x64-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples'], description: 'Run on specific platform')
+        choice(name: 'PLATFORM_FILTER', choices: ['all', 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'apdfl-rocky9-armv8-samples', 'apdfl-rocky9-x64-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples'], description: 'Run on specific platform')
     }
     options{
         timeout(time: 1, unit: "HOURS")
@@ -33,7 +33,7 @@ pipeline {
                 axes {
                     axis {
                         name 'NODE'
-                        values 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'linux-armv8-apdfl-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples', 'linux-apdfl-rocky-x64-samples'
+                        values 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'apdfl-rocky9-armv8-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples', 'apdfl-rocky9-x64-samples'
                     }
                     axis {
                         name 'BITS'
@@ -44,7 +44,7 @@ pipeline {
                     exclude {
                         axis {
                             name 'NODE'
-                            values 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'linux-armv8-apdfl-samples', 'windows-ARM-apdfl-samples', 'linux-apdfl-rocky-x64-samples'
+                            values 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'apdfl-rocky9-armv8-samples', 'windows-ARM-apdfl-samples', 'apdfl-rocky9-x64-samples'
                         }
                         axis {
                             name 'BITS'

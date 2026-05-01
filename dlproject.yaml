@@ -66,7 +66,7 @@ config:
         build: missing
 
   rocky-9-x86_64:
-    # Use the clang 18 compiler on Rocky 8 Linux
+    # Use the clang 20 compiler on Rocky 9 Linux
     config:
       Release:
         profile_host:
@@ -87,49 +87,13 @@ config:
         build: missing
 
   rocky-9-aarch64:
-    # Use the clang 20 compiler on Rocky 8 Linux
+    # Use the clang 20 compiler on Rocky 9 Linux
     config:
       Release:
         profile_host:
           - clang-20-linux-armv8-cppstd-17
         profile_build:
           - clang-20-linux-armv8-cppstd-20
-        build: missing
-      LicenseManaged:
-        include: Release
-        options_host:
-          - adobe_pdf_library/*:license_managed=True
-          - '*:license_managed=True'
-
-  rocky-8-x86_64:
-    # Use the clang 18 compiler on Rocky 8 Linux
-    config:
-      Release:
-        profile_host:
-          - clang-18-linux-x86_64-cppstd-17
-        profile_build:
-          - clang-18-linux-x86_64-cppstd-17
-        build: missing
-      LicenseManaged:
-        include: Release
-        options_host:
-          - adobe_pdf_library/*:license_managed=True
-          - '*:license_managed=True'
-      Release32:
-        profile_host:
-          - clang-18-linux-x86
-        profile_build:
-          - clang-18-linux-x86_64
-        build: missing
-
-  rocky-8-aarch64:
-    # Use the clang 18 compiler on Rocky 8 Linux
-    config:
-      Release:
-        profile_host:
-          - clang-18-linux-armv8-cppstd-17
-        profile_build:
-          - clang-18-linux-armv8-cppstd-17
         build: missing
       LicenseManaged:
         include: Release
@@ -177,10 +141,11 @@ config:
     config:
       Release:
         profile_host:
-          - msvc-arm64-193-cppstd-17
+          - msvc-arm64-194-cppstd-17
         profile_build:
-          - msvc-arm64-193-cppstd-17
+          - msvc-arm64-194-cppstd-17
         settings_build:
+          - innoextract/*:arch=x86_64
           - msys2/*:arch=x86_64
           - strawberryperl/*:arch=x86_64
           - xapian-core/*:arch=x86_64
