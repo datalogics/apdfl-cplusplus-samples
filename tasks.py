@@ -76,9 +76,10 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
         igpat = '*_64Bit.sln'
 
     # WebToPDF plugin is only published for Windows x86_64, Linux x86_64,
-    # and Linux ARM. On other platforms, keep the sample out of the staging
-    # tree so build_run_all orchestration never tries to compile it.
-    webtopdf_supported = profset.os in ('windows', 'i80386linux', 'armv8linux')
+    # and Linux ARM (all 64-bit). On 32-bit Windows / 32-bit Linux and any
+    # other platform, keep the sample out of the staging tree so
+    # build_run_all orchestration never tries to compile it.
+    webtopdf_supported = build_64_bit and profset.os in ('windows', 'i80386linux', 'armv8linux')
     ignore_webtopdf = () if webtopdf_supported else ('ConvertWebToPDF',)
 
     spat = shutil.ignore_patterns(
