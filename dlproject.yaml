@@ -36,7 +36,6 @@ config:
           - apple-clang-16.4-intel-cppstd-17
         profile_build:
           - apple-clang-16.4-intel-cppstd-17
-        build: missing
 
   macos-arm64:
     config:
@@ -45,7 +44,7 @@ config:
           - apple-clang-16.4-arm-cppstd-17
         profile_build:
           - apple-clang-16.4-arm-cppstd-17
-        build: missing
+
       LicenseManaged:
         include: Release
         options:
@@ -63,7 +62,6 @@ config:
           - include_dli=False
         profile_build:
           - gcc-10-aix72-64
-        build: missing
 
   rocky-9-x86_64:
     # Use the clang 20 compiler on Rocky 9 Linux
@@ -73,7 +71,6 @@ config:
           - clang-20-linux-x86_64-cppstd-17
         profile_build:
           - clang-20-linux-x86_64-cppstd-20
-        build: missing
       LicenseManaged:
         include: Release
         options_host:
@@ -84,7 +81,6 @@ config:
           - clang-20-linux-x86
         profile_build:
           - clang-20-linux-x86_64
-        build: missing
 
   rocky-9-aarch64:
     # Use the clang 20 compiler on Rocky 9 Linux
@@ -94,7 +90,6 @@ config:
           - clang-20-linux-armv8-cppstd-17
         profile_build:
           - clang-20-linux-armv8-cppstd-20
-        build: missing
       LicenseManaged:
         include: Release
         options_host:
@@ -112,8 +107,6 @@ config:
           - adobe_pdf_library/*:compiler.runtime=static
         settings_build:
           - innoextract/*:compiler.cppstd=14
-        build:
-        - missing
       LicenseManaged:
         include: Release
         options_host:
@@ -124,8 +117,6 @@ config:
           - msvc-x86-194-cppstd-17
         profile_build:
           - msvc-x86-194-cppstd-17
-        build:
-        - missing
         settings_host:
           - adobe_pdf_library/*:compiler.runtime=static
         settings_build:
@@ -155,4 +146,3 @@ config:
           - adobe_pdf_library/*:compiler.runtime=static
           - adobe_pdf_library/*:compiler.runtime_type=Release
           - adobe_pdf_library/*:compiler.update=8
-        build: missing

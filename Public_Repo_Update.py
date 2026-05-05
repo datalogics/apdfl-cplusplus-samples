@@ -5,9 +5,9 @@ from git import Repo
 
 PATHSEP = os.path.sep
 print('Cloning apdfl-samples....')
-Repo.clone_from('git@github.com:datalogics/apdfl-samples.git', 'apdfl-samples', branch='develop-18')
+Repo.clone_from('git@github.com:datalogics/apdfl-samples.git', 'apdfl-samples', branch='develop-21')
 print('Cloning DLE....')
-Repo.clone_from('git@github.com:datalogics/dle.git', 'dle', branch='develop-18')
+Repo.clone_from('git@github.com:datalogics/dle.git', 'dle', branch='develop-21')
 
 print('Copying APDFL samples....')
 source = os.path.join('apdfl-samples')
