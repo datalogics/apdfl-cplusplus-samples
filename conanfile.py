@@ -24,14 +24,15 @@ class Pdfl18installerConan(ConanFile):
         self.options['adobe_pdf_library'].license_managed = self.options.license_managed
 
     def _webtopdf_supported(self):
-        # WebToPDF is published only for Windows x86_64, Linux x86_64, and
-        # Linux ARM. Gating the dependency (and the sample that uses it)
-        # keeps bootstrap from failing with "no compatible configuration"
-        # on platforms where no binary exists.
+        # WebToPDF is published for Windows x86_64, Linux x86_64, Linux
+        # ARM, macOS x86_64, and macOS ARM. Gating the dependency (and the
+        # sample that uses it) keeps bootstrap from failing with "no
+        # compatible configuration" on platforms where no binary exists.
         os_ = str(self.settings.os)
         arch = str(self.settings.arch)
         return (os_ == "Windows" and arch == "x86_64") or \
-               (os_ == "Linux"   and arch in ("x86_64", "armv8"))
+               (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
+               (os_ == "Macos"   and arch in ("x86_64", "armv8"))
 
     @property
     def _requirements(self):
