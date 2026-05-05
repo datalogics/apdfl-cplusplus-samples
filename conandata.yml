@@ -1,3 +1,7 @@
-adobe_pdf_library: adobe_pdf_library/[>=21.0 <22.0]@datalogics/nightly
-installer-resources: installer-resources/[>=0.7]@datalogics/stable
-tessdata: tessdata/[>=4.1.0+dl.4]@datalogics/stable
+requirements:
+  adobe_pdf_library: adobe_pdf_library/[>=21.0 <22.0]@datalogics/nightly
+  apdfl-resources: apdfl-resources/[>=21.0 <22.0]@datalogics/stable
+  apdfl-sample-input: apdfl-sample-input/[>=21.0 <22.0]@datalogics/stable
+  webtopdf: webtopdf/[>=1.0.0]@datalogics/nightly
+  installer-resources: installer-resources/[>=0.7]@datalogics/stable
+  tessdata: tessdata/[>=4.1.0+dl.4]@datalogics/stable

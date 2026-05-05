@@ -1,5 +1,6 @@
 import os
 from conan import ConanFile
+from conan.errors import ConanException
 from conan.tools.files import copy
 import yaml
 import shutil
@@ -32,12 +33,18 @@ class Pdfl18installerConan(ConanFile):
         return (os_ == "Windows" and arch == "x86_64") or \
                (os_ == "Linux"   and arch in ("x86_64", "armv8"))
 
+    @property
+    def _requirements(self):
+        return self.conan_data['requirements']
+
     def requirements(self):
-        self.requires("adobe_pdf_library/[>=21.0 <22.0]@datalogics/nightly")
+        self.requires(self._requirements['adobe_pdf_library'])
+        self.requires(self._requirements['apdfl-resources'])
+        self.requires(self._requirements['apdfl-sample-input'])
         if self._webtopdf_supported():
-            self.requires("webtopdf/[>=1.0.0]@datalogics/nightly")
-        self.requires("installer-resources/[>=0.7]@datalogics/stable")
-        self.requires(self.conan_data['tessdata'])
+            self.requires(self._requirements['webtopdf'])
+        self.requires(self._requirements['installer-resources'])
+        self.requires(self._requirements['tessdata'])
 
     def layout(self):
         self.folders.build = "build"
@@ -103,11 +110,33 @@ class Pdfl18installerConan(ConanFile):
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')
-        pdfl_pkg_rsc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'Resources')
         copy(self, '*', src=pdfl_pkg_inc, dst='CPlusPlus/Include/Headers',
              excludes=['CAXE*.h', 'axe*.h', 'OBIB.h'])
         copy(self, 'PDFLInit*', src=pdfl_pkg_src, dst='CPlusPlus/Include/Source')
-        copy(self, "*", src=pdfl_pkg_rsc, dst='Resources')
+
+        # APDFL 21+ ships the runtime Resources directory as a separate
+        # apdfl-resources package; content lives under Resources/ inside
+        # the package folder.
+        apdfl_rsc = os.path.join(
+            self.dependencies['apdfl-resources'].package_folder, 'Resources')
+        if not os.path.isdir(apdfl_rsc):
+            raise ConanException(
+                f'apdfl-resources package does not contain a Resources/ '
+                f'directory at {apdfl_rsc}'
+            )
+        copy(self, '*', src=apdfl_rsc, dst='Resources')
+
+        # APDFL 21+ also ships the sample-input data as its own
+        # apdfl-sample-input package; content lives under Sample_Input/.
+        sample_input_src = os.path.join(
+            self.dependencies['apdfl-sample-input'].package_folder, 'Sample_Input')
+        if not os.path.isdir(sample_input_src):
+            raise ConanException(
+                f'apdfl-sample-input package does not contain a Sample_Input/ '
+                f'directory at {sample_input_src}'
+            )
+        copy(self, '*', src=sample_input_src, dst='Resources/Sample_Input')
+
         self.copy_apdfl(destination='CPlusPlus/Binaries')
         self.copy_ocr(destination='CPlusPlus/Binaries')
         if self._webtopdf_supported():
