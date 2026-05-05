@@ -33,7 +33,7 @@ class Pdfl18installerConan(ConanFile):
                (os_ == "Linux"   and arch in ("x86_64", "armv8"))
 
     def requirements(self):
-        self.requires("adobe_pdf_library/[>=18.0.5+ <21.0.0]@datalogics/nightly")
+        self.requires("adobe_pdf_library/[>=21.0 <22.0]@datalogics/nightly")
         if self._webtopdf_supported():
             self.requires("webtopdf/[>=1.0.0]@datalogics/nightly")
         self.requires("installer-resources/[>=0.7]@datalogics/stable")
