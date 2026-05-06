@@ -118,10 +118,10 @@ endif
 endif
 
 # WebToPDF plugin ships for Windows x86_64, Linux x86_64, Linux ARM,
-# macOS x86_64, and macOS ARM. This Makefile is invoked on Linux and
-# Mac; exclude aix/solaris and everything else drops through to a
-# supported variant.
-ifeq ($(findstring aix,$(OS))$(findstring solaris,$(OS)),)
+# and macOS ARM. This Makefile is invoked on Linux and Mac; exclude
+# mac-x86-64/aix/solaris and everything else drops through to a
+# supported variant (the two Linux archs or armv8mac).
+ifeq ($(findstring mac-x86-64,$(OS))$(findstring aix,$(OS))$(findstring solaris,$(OS)),)
     SAMPLES += DocumentConversion/ConvertWebToPDF
 endif
 

@@ -25,15 +25,15 @@ class Pdfl18installerConan(ConanFile):
 
     def _webtopdf_supported(self):
         # WebToPDF is published for Windows (x86_64 + ARM64), Linux
-        # (x86_64 + ARM), and macOS (x86_64 + ARM).  Gating the
-        # dependency (and the sample that uses it) keeps bootstrap from
-        # failing with "no compatible configuration" on platforms where
-        # no binary exists.
+        # (x86_64 + ARM), and macOS ARM.  Gating the dependency (and
+        # the sample that uses it) keeps bootstrap from failing with
+        # "no compatible configuration" on platforms where no binary
+        # exists.
         os_ = str(self.settings.os)
         arch = str(self.settings.arch)
         return (os_ == "Windows" and arch in ("x86_64", "armv8")) or \
                (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
-               (os_ == "Macos"   and arch in ("x86_64", "armv8"))
+               (os_ == "Macos"   and arch == "armv8")
 
     @property
     def _requirements(self):

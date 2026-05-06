@@ -77,12 +77,12 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
     else:   # Only copy the 32-bit solution to the  32-bit staging area
         igpat = '*_64Bit.sln'
 
-    # WebToPDF plugin ships for 64-bit Windows (x64 + ARM64), 64-bit Linux
-    # (x86_64 + ARM), and both macOS architectures.  Anywhere else the
-    # sample is kept out of the staging tree so the build phase never
-    # tries to compile it.
+    # WebToPDF plugin ships for 64-bit Windows (x64 + ARM64), 64-bit
+    # Linux (x86_64 + ARM), and macOS ARM.  Anywhere else the sample
+    # is kept out of the staging tree so the build phase never tries
+    # to compile it.
     webtopdf_supported = build_64_bit and profset.os in (
-        'windows', 'winARM', 'i80386linux', 'armv8linux', 'mac-x86-64', 'armv8mac',
+        'windows', 'winARM', 'i80386linux', 'armv8linux', 'armv8mac',
     )
     ignore_webtopdf = () if webtopdf_supported else ('ConvertWebToPDF',)
 
