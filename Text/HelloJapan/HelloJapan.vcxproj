@@ -34,13 +34,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -52,13 +52,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -163,6 +163,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -200,6 +201,7 @@
       <ProgramDatabaseFile>.\Debug/helloJapan.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -237,6 +239,7 @@
       <ProgramDatabaseFile>.\Debug/helloJapan.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -273,6 +276,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -310,6 +314,7 @@
       <ProgramDatabaseFile>.\Release/helloJapan.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -347,6 +352,7 @@
       <ProgramDatabaseFile>.\Release/helloJapan.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>DL210PDFL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>DL210pdfl.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
