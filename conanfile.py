@@ -24,13 +24,14 @@ class Pdfl18installerConan(ConanFile):
         self.options['adobe_pdf_library'].license_managed = self.options.license_managed
 
     def _webtopdf_supported(self):
-        # WebToPDF is published for Windows x86_64, Linux x86_64, Linux
-        # ARM, macOS x86_64, and macOS ARM. Gating the dependency (and the
-        # sample that uses it) keeps bootstrap from failing with "no
-        # compatible configuration" on platforms where no binary exists.
+        # WebToPDF is published for Windows (x86_64 + ARM64), Linux
+        # (x86_64 + ARM), and macOS (x86_64 + ARM).  Gating the
+        # dependency (and the sample that uses it) keeps bootstrap from
+        # failing with "no compatible configuration" on platforms where
+        # no binary exists.
         os_ = str(self.settings.os)
         arch = str(self.settings.arch)
-        return (os_ == "Windows" and arch == "x86_64") or \
+        return (os_ == "Windows" and arch in ("x86_64", "armv8")) or \
                (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
                (os_ == "Macos"   and arch in ("x86_64", "armv8"))
 
@@ -99,13 +100,14 @@ class Pdfl18installerConan(ConanFile):
         copy(self, "*.h", src=webtopdf_inc,
              dst="CPlusPlus/Include/Headers", keep_path=False)
 
-        # Runtime: the plugin .ppi (Windows) lives in bin/, the shared
-        # library (libWebToPDF.dylib / libWebToPDF.so / WebToPDF.dll) lives
-        # in lib/ on Unix and bin/ on Windows. Copy both so ASExtensionMgrGetHFT
-        # can locate the plugin at runtime.
-        copy(self, "*.ppi", src=webtopdf_pkg.cpp_info.bindir, dst=destination)
-        copy(self, "WebToPDF.dll", src=webtopdf_pkg.cpp_info.bindir, dst=destination)
-        copy(self, "libWebToPDF.*", src=webtopdf_pkg.cpp_info.libdirs[0],
+        # WebToPDF's CMake target sets PREFIX "" / SUFFIX ".ppi", so the
+        # plugin is named WebToPDF.ppi on every platform.  CMake routes
+        # the file via RUNTIME on Windows (lands in bin/) and LIBRARY on
+        # Unix (lands in lib/), so copy from both candidate directories
+        # to cover the platform layout difference.
+        copy(self, "WebToPDF.ppi", src=webtopdf_pkg.cpp_info.bindir,
+             dst=destination, keep_path=False)
+        copy(self, "WebToPDF.ppi", src=webtopdf_pkg.cpp_info.libdirs[0],
              dst=destination, keep_path=False)
 
     def _imports(self):
