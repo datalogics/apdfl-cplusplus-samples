@@ -1,5 +1,7 @@
+import glob
 import os
 import shutil
+import subprocess
 import platform
 import re
 import fnmatch
@@ -75,10 +77,13 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
     else:   # Only copy the 32-bit solution to the  32-bit staging area
         igpat = '*_64Bit.sln'
 
-    # WebToPDF plugin is only published for Windows x86_64, Linux x86_64,
-    # and Linux ARM. On other platforms, keep the sample out of the staging
-    # tree so build_run_all orchestration never tries to compile it.
-    webtopdf_supported = profset.os in ('windows', 'i80386linux', 'armv8linux')
+    # WebToPDF plugin ships for 64-bit Windows (x64 + ARM64), 64-bit
+    # Linux (x86_64 + ARM), and macOS ARM.  Anywhere else the sample
+    # is kept out of the staging tree so the build phase never tries
+    # to compile it.
+    webtopdf_supported = build_64_bit and profset.os in (
+        'windows', 'winARM', 'i80386linux', 'armv8linux', 'armv8mac',
+    )
     ignore_webtopdf = () if webtopdf_supported else ('ConvertWebToPDF',)
 
     spat = shutil.ignore_patterns(
@@ -93,6 +98,125 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
         rcdir, 'Sample_Input'), dirs_exist_ok=True)
 
 
+_WIN_SLN_BY_ARCH = {
+    'ARM64': 'All_Datalogics_ARM64.sln',
+    'Win32': 'All_Datalogics_32Bit.sln',
+    'x64': 'All_Datalogics_64Bit.sln',
+}
+_WIN_FE_SLN = 'All_DatalogicsFE_64Bit.sln'
+
+# Samples that build fine but cannot run unattended on CI: GUI apps, ones
+# that block on stdin, and ones that bail out with usage when no
+# command-line argument is supplied.
+_WIN_SKIP_RUN = {
+    'Display/PDFViewer',                    # MFC GUI viewer
+    'DocumentConversion/ConvertToFactur-X',  # requires input PDF arg
+    'DocumentConversion/ConvertToZUGFeRD',   # requires input PDF + XML args
+    'Printing/PDFPrintDefault',             # drives the OS default printer
+    'Printing/PDFPrintGUI',                 # opens the OS print dialog
+    'Text/InsertHeadFoot',                  # reads a password from stdin
+}
+
+def _find_msbuild():
+    vswhere = os.path.join(
+        os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)'),
+        'Microsoft Visual Studio', 'Installer', 'vswhere.exe',
+    )
+    if not os.path.isfile(vswhere):
+        raise RuntimeError(f'vswhere.exe not found at {vswhere!r}')
+    out = subprocess.check_output(
+        [vswhere, '-latest', '-products', '*',
+         '-requires', 'Microsoft.Component.MSBuild',
+         '-find', r'MSBuild\**\Bin\MSBuild.exe'],
+        text=True,
+    )
+    paths = [p for p in out.splitlines() if p.strip()]
+    if not paths:
+        raise RuntimeError(f'vswhere returned no MSBuild path:\n{out}')
+    return paths[0]
+
+
+def _windows_build_and_run(ctx, build_type, is_64_bit):
+    """Build every staged Windows sample solution and run every executable
+    that gets produced.  Raises on any build/run failure so CI surfaces
+    real problems instead of staying green on a no-op."""
+    sample_root = os.path.join('build', 'CPlusPlus', 'Sample_Source')
+    all_dir = os.path.join(sample_root, 'All')
+
+    real = (os.environ.get('PROCESSOR_ARCHITEW6432')
+            or os.environ.get('PROCESSOR_ARCHITECTURE', ''))
+    if 'ARM' in real.upper():
+        arch = 'ARM64'
+    elif not is_64_bit:
+        arch = 'Win32'
+    else:
+        arch = 'x64'
+    msbuild = _find_msbuild()
+    print(f'arch={arch} configuration={build_type} msbuild={msbuild}',
+          flush=True)
+
+    main_sln = _WIN_SLN_BY_ARCH[arch]
+    main_sln_path = os.path.join(all_dir, main_sln)
+    if not os.path.isfile(main_sln_path):
+        raise RuntimeError(
+            f'{main_sln} is missing from {all_dir}; bootstrap did not '
+            f'stage the {arch} solution.'
+        )
+
+    fe_sln_path = os.path.join(all_dir, _WIN_FE_SLN)
+    solutions = [main_sln_path]
+    if os.path.isfile(fe_sln_path):
+        solutions.append(fe_sln_path)
+
+    failed_builds = []
+    for sln_path in solutions:
+        result = ctx.run(
+            f'"{msbuild}" "{sln_path}" /p:Configuration={build_type} '
+            f'/p:Platform={arch} /t:Rebuild /m /nologo /v:minimal',
+            warn=True,
+        )
+        if result.exited != 0:
+            failed_builds.append(os.path.basename(sln_path))
+
+    pattern = os.path.join(sample_root, '*', '*', arch, build_type, '*.exe')
+    exes = sorted(glob.glob(pattern))
+    print(f'\nDiscovered {len(exes)} executable(s) to run', flush=True)
+    if not exes:
+        raise RuntimeError(
+            f'No sample executables found under {sample_root} matching '
+            f'{arch}/{build_type}; the build produced nothing to run.'
+        )
+
+    failed_runs = []
+    skipped = []
+    for exe in exes:
+        sample_dir = os.path.dirname(os.path.dirname(os.path.dirname(exe)))
+        rel = os.path.relpath(sample_dir, sample_root).replace(os.sep, '/')
+        if rel in _WIN_SKIP_RUN:
+            print(f'\n==== SKIP {rel} (not runnable on CI) ====', flush=True)
+            skipped.append(rel)
+            continue
+        print(f'\n==== RUN {rel} ====', flush=True)
+        rc = subprocess.call([exe], cwd=sample_dir)
+        if rc != 0:
+            failed_runs.append(f'{rel} (exit {rc})')
+
+    print('\n==== SUMMARY ====')
+    print(f'arch={arch} configuration={build_type}')
+    print(f'samples ran:     {len(exes) - len(skipped)}')
+    print(f'samples skipped: {len(skipped)}')
+    print(f'samples failed:  {len(failed_runs)}')
+    for sln in failed_builds:
+        print(f'  build failed: {sln}')
+    for r in failed_runs:
+        print(f'  run failed:   {r}')
+    if failed_builds or failed_runs:
+        raise RuntimeError(
+            f'{len(failed_builds)} solution build failure(s), '
+            f'{len(failed_runs)} run failure(s)'
+        )
+
+
 @task(help={'config': 'Configuration name to use for building (default=Release)'})
 def build(ctx, config='Release'):
     """Build the project. By default, builds 64-bit Release."""
@@ -100,6 +224,10 @@ def build(ctx, config='Release'):
     config_info = get_config_info([config])
     is_64_bit = '64' in config_info[1]
     build_type = config_info[0]
+
+    if profset.os in ('windows', 'winARM'):
+        _windows_build_and_run(ctx, build_type, is_64_bit)
+        return
 
     with ctx.cd(os.path.join('build', 'CPlusPlus', 'Sample_Source', 'All')):
         shell_env = {'PATH': '/opt/freeware/bin:%s' % os.getenv('PATH')}
@@ -111,11 +239,6 @@ def build(ctx, config='Release'):
             shell_env.update({'STAGE': build_type.lower()})
             print(shell_env)
             ctx.run('gnumake', env=shell_env, echo=True)
-        elif profset.os == 'windows' or profset.os == 'winARM':
-            cmd = ".\\build_run_all.bat"
-            if build_type == 'Release':
-                cmd += " -release"
-            ctx.run(cmd, env=shell_env)
         else:
             shell_env.update({'STAGE': build_type.lower()})
             print(shell_env)
