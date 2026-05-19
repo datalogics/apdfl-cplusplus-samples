@@ -5,27 +5,25 @@
 
 set(DL_SAMPLES Sample_Source)
 
-if(DEFINED ENV{DL_MAKING_CONAN_PACKAGE})
-  set(RES_INSTALL_DIR ${INSTALL_RESOURCEDIR})
-else()
+if(NOT DEFINED ENV{DL_MAKING_CONAN_PACKAGE})
   set(RES_INSTALL_DIR dist/${CMAKE_BUILD_TYPE_CAMEL}/Resources)
-endif()
 
-if (NOT (UTIL_PLAT MATCHES "x64") AND NOT (UTIL_PLAT MATCHES "ARM64") AND NOT (UTIL_PLAT MATCHES "Win32") AND NOT (UTIL_PLAT MATCHES "i80386linux_64") AND NOT (UTIL_PLAT MATCHES "armv8linux_64"))
-install(DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/_Input/
-        DESTINATION  "${RES_INSTALL_DIR}/Sample_Input"
-        USE_SOURCE_PERMISSIONS
-        PATTERN "CMakeLists.txt" EXCLUDE
-        PATTERN "Word.pdf" EXCLUDE
-        PATTERN "Excel.pdf" EXCLUDE
-        PATTERN "PowerPoint.pdf" EXCLUDE
-        )
-else()
-install(DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/_Input/
-        DESTINATION  "${RES_INSTALL_DIR}/Sample_Input"
-        USE_SOURCE_PERMISSIONS
-        PATTERN "CMakeLists.txt" EXCLUDE
-        )
+  if (NOT (UTIL_PLAT MATCHES "x64") AND NOT (UTIL_PLAT MATCHES "ARM64") AND NOT (UTIL_PLAT MATCHES "Win32") AND NOT (UTIL_PLAT MATCHES "i80386linux_64") AND NOT (UTIL_PLAT MATCHES "armv8linux_64"))
+  install(DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/_Input/
+          DESTINATION  "${RES_INSTALL_DIR}/Sample_Input"
+          USE_SOURCE_PERMISSIONS
+          PATTERN "CMakeLists.txt" EXCLUDE
+          PATTERN "Word.pdf" EXCLUDE
+          PATTERN "Excel.pdf" EXCLUDE
+          PATTERN "PowerPoint.pdf" EXCLUDE
+          )
+  else()
+  install(DIRECTORY    ${CMAKE_CURRENT_SOURCE_DIR}/_Input/
+          DESTINATION  "${RES_INSTALL_DIR}/Sample_Input"
+          USE_SOURCE_PERMISSIONS
+          PATTERN "CMakeLists.txt" EXCLUDE
+          )
+  endif()
 endif()
 
 if(UTIL_PLAT MATCHES "x64")
