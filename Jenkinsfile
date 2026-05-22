@@ -12,6 +12,7 @@ def EXTRA_ARGS = [
 pipeline {
     parameters {
         choice(name: 'PLATFORM_FILTER', choices: ['all', 'mac-apdfl-samples', 'mac-arm-apdfl-samples', 'apdfl-rocky9-armv8-samples', 'apdfl-rocky9-x64-samples', 'windows-apdfl-samples', 'windows-ARM-apdfl-samples'], description: 'Run on specific platform')
+        booleanParam(name: 'CLEAN_WORKSPACE', defaultValue: false, description: 'Completely clean the workspace before building, including the Conan cache')
     }
     options{
         timeout(time: 1, unit: "HOURS")
@@ -91,24 +92,15 @@ pipeline {
                             }
                         }
                     }
-                    stage('Clean') {
+                    stage('Git Clean') {
                         when {
-                            expression { "${SKIPPLATFORM}" == 'false' }
+                            expression { params.CLEAN_WORKSPACE }
+                            anyOf {
+                                expression { !skipPlatform() }
                             }
+                        }
                         steps {
-                            echo "Bootstrap ${NODE} ${BITS}"
-                            script {
-                                if (isUnix()) {
-                                    sh """. ${ENV_LOC["${NODE}_${BITS}"]}/bin/activate
-                                       unset LIBPATH
-                                          invoke distclean
-                                    """
-                                } else {
-                                    bat """CALL ${ENV_LOC["${NODE}_${BITS}"]}\\Scripts\\activate
-                                          invoke distclean
-                                    """
-                                }
-                            }
+                            cleanWorkspaceConfigs()
                         }
                     }
                     stage('Bootstrap') {
