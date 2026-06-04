@@ -1,12 +1,12 @@
 ![Datalogics Adobe PDF Library](https://raw.github.com/datalogics/dl-icons/develop/DLBanner_Nuget.png)
 
-[Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Documentation](https://dev.datalogics.com/adobe-pdf-library/c-plus-plus/getting-started) &nbsp; | &nbsp; [API Reference](https://docs.datalogics.com/apdfl18/CPlusPlus/index.html) &nbsp; | &nbsp; [Release Notes](https://dev.datalogics.com/adobe-pdf-library/release-notes) &nbsp; | &nbsp;[Discord](https://discord.gg/jNSHcSdRre)
+[Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Documentation](https://dev.datalogics.com/adobe-pdf-library-21/c-plus-plus/getting-started) &nbsp; | &nbsp; [API Reference](https://docs.datalogics.com/apdfl18/CPlusPlus/index.html) &nbsp; | &nbsp; [Release Notes](https://dev.datalogics.com/adobe-pdf-library-21/release-notes) &nbsp; | &nbsp;[Discord](https://discord.gg/jNSHcSdRre)
 
-[![Download a Free Trial via Installer (C++)](https://img.shields.io/badge/APDFL%20Free%20Trial%20(C++)-via%20Datalogics%20Installer-blue?color=blue&style=plastic)](https://www.datalogics.com/adobe-pdf-library/)
+[![Download a Free Trial via Installer (C++)](https://img.shields.io/badge/APDFL%20Free%20Trial%20(C++)-via%20Datalogics%20Installer-blue?color=blue&style=plastic)](https://www.datalogics.com/adobe-pdf-library-21/)
 
 # C++ Samples
 ## ***Introduction***
-Built upon Adobe source code used for Acrobat, Datalogics Adobe PDF Library SDK provides stable, reliable code and the flexibility to develop with C++ (interfaces are also available for C#, VB (VB.NET), and Java). APDFL is the most complete SDK for PDF creation, manipulation and management. Best for enterprise/larger organizations of developers and independent software vendors (ISVs) who need to incorporate Adobe's PDF functionality into their own internal or external applications.
+Built upon Adobe source code used for Acrobat, Datalogics Adobe PDF Library SDK provides stable, reliable code and the flexibility to develop with C++ (interfaces are also available for Modern C++, C#, VB (VB.NET), Kotlin and Java). APDFL is the most complete SDK for PDF creation, manipulation and management. Best for enterprise/larger organizations of developers and independent software vendors (ISVs) who need to incorporate Adobe's PDF functionality into their own internal or external applications.
 
 ## ***Preliminaries***
 Most of the code samples in APDFL are designed to demonstrate how an API works by completing a simple programming task.
@@ -18,6 +18,6 @@ Many of these sample programs automatically generate an output file or set of fi
 *(Note: that the Forms Extension product is available by talking to Datalogics Sales.)*
 
 ## ***Building and Running Samples***
-**On Windows,** samples can be built and run easily in an IDE such as Visual Studio 2017, 2019, or 2022.
+**On Windows,** samples can be built and run easily in an IDE such as Visual Studio 2026, 2022, or 2019.
 
 **On macOS and Linux,** samples can be built using makefiles (provided by Installer) and then run from the terminal.
