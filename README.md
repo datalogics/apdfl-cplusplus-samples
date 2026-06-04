@@ -6,7 +6,7 @@
 
 # C++ Samples
 ## ***Introduction***
-Built upon Adobe source code used for Acrobat, Datalogics Adobe PDF Library SDK provides stable, reliable code and the flexibility to develop with C++ (interfaces are also available for Modern C++, C#, VB (VB.NET), Kotlin and Java). APDFL is the most complete SDK for PDF creation, manipulation and management. Best for enterprise/larger organizations of developers and independent software vendors (ISVs) who need to incorporate Adobe's PDF functionality into their own internal or external applications.
+Built upon Adobe source code used for Acrobat, Datalogics Adobe PDF Library SDK provides stable, reliable code and the flexibility to develop with C++ (interfaces are also available for Modern C++, C#, VB (VB.NET), Kotlin and Java). APDFL is the most complete SDK for PDF creation, manipulation, and management. Best for enterprise/larger organizations of developers and independent software vendors (ISVs) who need to incorporate Adobe's PDF functionality into their own internal or external applications.
 
 ## ***Preliminaries***
 Most of the code samples in APDFL are designed to demonstrate how an API works by completing a simple programming task.
