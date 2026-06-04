@@ -2,7 +2,7 @@
 
 [Support](https://www.datalogics.com/tech-support-pdfs/) &nbsp; | &nbsp; [Documentation](https://dev.datalogics.com/adobe-pdf-library-21/adobe-c-plus-plus/getting-started) &nbsp; | &nbsp; [API Reference](https://docs.datalogics.com/apdfl21/CPlusPlus/) &nbsp; | &nbsp; [Release Notes](https://dev.datalogics.com/adobe-pdf-library-21/release-notes) &nbsp; | &nbsp;[Discord](https://discord.gg/jNSHcSdRre)
 
-[![Download a Free Trial via Installer (C++)](https://img.shields.io/badge/APDFL%20Free%20Trial%20(C++)-via%20Datalogics%20Installer-blue?color=blue&style=plastic)](https://www.datalogics.com/adobe-pdf-library-21/)
+[![Download a Free Trial via Installer (C++)](https://img.shields.io/badge/APDFL%20Free%20Trial%20(C++)-via%20Datalogics%20Installer-blue?color=blue&style=plastic)](https://www.datalogics.com/pdf-sdk-free-trial)
 
 # C++ Samples
 ## ***Introduction***
