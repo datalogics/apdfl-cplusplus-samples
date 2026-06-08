@@ -80,6 +80,17 @@ pipeline {
                             }
                         }
                     }
+                    stage('Git Clean') {
+                        when {
+                            expression { params.CLEAN_WORKSPACE }
+                            anyOf {
+                                expression { !skipPlatform() }
+                            }
+                        }
+                        steps {
+                            cleanWorkspaceConfigs()
+                        }
+                    }
                     stage('Set-Up Environment') {
                         when {
                             expression { "${SKIPPLATFORM}" == 'false' }
@@ -90,17 +101,6 @@ pipeline {
                             script {
                                 ENV_LOC["${NODE}_${BITS}"] = mkenv()
                             }
-                        }
-                    }
-                    stage('Git Clean') {
-                        when {
-                            expression { params.CLEAN_WORKSPACE }
-                            anyOf {
-                                expression { !skipPlatform() }
-                            }
-                        }
-                        steps {
-                            cleanWorkspaceConfigs()
                         }
                     }
                     stage('Bootstrap') {
