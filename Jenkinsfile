@@ -19,7 +19,7 @@ pipeline {
     }
     agent none
     triggers {
-        parameterizedCron(env.BRANCH_NAME == "develop" ? "0 8 * * *" : "")
+        parameterizedCron(env.BRANCH_NAME == "develop-21" ? "0 8 * * *" : "")
     }
     stages {
         stage('Matrix stage') {
