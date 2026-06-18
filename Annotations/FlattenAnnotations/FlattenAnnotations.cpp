@@ -7,6 +7,8 @@
 // Command-line:  <input-file>  <output-file>       (Both optional)
 //
 
+#include <algorithm>
+
 #include "InitializeLibrary.h"
 #include "APDFLDoc.h"
 
@@ -62,9 +64,12 @@ int main(int argc, char **argv) {
                 // Place the annotation's resources in the page's content
                 ASFixedRect rect;
                 PDAnnotGetRect(next, &rect);
-                ASDoubleMatrix unity;
-                unity.a = unity.d = 1.0;
-                unity.b = unity.c = 0.0;
+
+                // The placement matrix maps the appearance to the annotation's rectangle.
+                ASDoubleMatrix placement;
+                placement.a = placement.d = 1.0;
+                placement.b = placement.c = 0.0;
+                placement.h = placement.v = 0.0;
 
                 double leftValue = 0;
                 double bottomValue = 0;
@@ -85,14 +90,59 @@ int main(int argc, char **argv) {
                     }
                 }
 
-                unity.a = ASFixedToFloat(rect.right - rect.left) / (rightValue - leftValue);
-                unity.d = ASFixedToFloat(rect.top - rect.bottom) / (topValue - bottomValue);
+                // The appearance stream is a form XObject and may carry its own Matrix entry, which is
+                // applied to the appearance before it is positioned (PDF 32000-1 8.10.1 / 12.5.5). The
+                // form's Matrix is still applied when the XObject is painted, so the placement matrix we
+                // pass here must map the *transformed* bounding box (the BBox after the form Matrix is
+                // applied) onto the annotation rectangle. Computing the placement from the raw BBox while
+                // ignoring the form Matrix mis-positions appearances whose Matrix is not the identity --
+                // for example masking rectangles drawn in page coordinates with a translating Matrix,
+                // which would otherwise be relocated and expose the content they were hiding.
+                ASDoubleMatrix apMatrix = {1.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+                if (CosDictKnown(appearanceStrm, ASAtomFromString("Matrix"))) {
+                    CosObj matrixObj = CosDictGet(appearanceStrm, ASAtomFromString("Matrix"));
+                    if (CosObjGetType(matrixObj) == CosArray && CosArrayLength(matrixObj) == 6) {
+                        apMatrix.a = CosDoubleValue(CosArrayGet(matrixObj, 0));
+                        apMatrix.b = CosDoubleValue(CosArrayGet(matrixObj, 1));
+                        apMatrix.c = CosDoubleValue(CosArrayGet(matrixObj, 2));
+                        apMatrix.d = CosDoubleValue(CosArrayGet(matrixObj, 3));
+                        apMatrix.h = CosDoubleValue(CosArrayGet(matrixObj, 4));
+                        apMatrix.v = CosDoubleValue(CosArrayGet(matrixObj, 5));
+                    }
+                }
 
-                unity.h = ASFixedToFloat(rect.left) - leftValue * unity.a;
-                unity.v = ASFixedToFloat(rect.bottom) - bottomValue * unity.d;
+                // Transform the four BBox corners by the form Matrix and take the axis-aligned bounds,
+                // giving the appearance box in the space the placement matrix must map from.
+                double corners[4][2] = {{leftValue, bottomValue},
+                                        {rightValue, bottomValue},
+                                        {rightValue, topValue},
+                                        {leftValue, topValue}};
+                double transformedLeft = 0, transformedBottom = 0, transformedRight = 0, transformedTop = 0;
+                for (int c = 0; c < 4; ++c) {
+                    double tx = apMatrix.a * corners[c][0] + apMatrix.c * corners[c][1] + apMatrix.h;
+                    double ty = apMatrix.b * corners[c][0] + apMatrix.d * corners[c][1] + apMatrix.v;
+                    if (c == 0) {
+                        transformedLeft = transformedRight = tx;
+                        transformedBottom = transformedTop = ty;
+                    } else {
+                        transformedLeft = (std::min)(transformedLeft, tx);
+                        transformedRight = (std::max)(transformedRight, tx);
+                        transformedBottom = (std::min)(transformedBottom, ty);
+                        transformedTop = (std::max)(transformedTop, ty);
+                    }
+                }
+
+                double transformedWidth = transformedRight - transformedLeft;
+                double transformedHeight = transformedTop - transformedBottom;
+                if (transformedWidth != 0.0 && transformedHeight != 0.0) {
+                    placement.a = ASFixedToFloat(rect.right - rect.left) / transformedWidth;
+                    placement.d = ASFixedToFloat(rect.top - rect.bottom) / transformedHeight;
+                    placement.h = ASFixedToFloat(rect.left) - transformedLeft * placement.a;
+                    placement.v = ASFixedToFloat(rect.bottom) - transformedBottom * placement.d;
+                }
 
                 // Create and add the form xobject.
-                PDEForm formXObject = PDEFormCreateFromCosObjEx(&appearanceStrm, &resource, &unity);
+                PDEForm formXObject = PDEFormCreateFromCosObjEx(&appearanceStrm, &resource, &placement);
                 PDEContentAddElem(pageContent, kPDEAfterLast, (PDEElement)formXObject);
 
                 PDERelease((PDEObject)formXObject);
