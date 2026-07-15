@@ -41,9 +41,9 @@ config:
     config:
       Release:
         profile_host:
-          - apple-clang-16.4-arm-cppstd-17
+          - apple-clang-26.2-arm-cppstd-17
         profile_build:
-          - apple-clang-16.4-arm-cppstd-17
+          - apple-clang-26.2-arm-cppstd-17
 
       LicenseManaged:
         include: Release
@@ -78,9 +78,9 @@ config:
           - '*:license_managed=True'
       Release32:
         profile_host:
-          - clang-20-linux-x86
+          - clang-20-linux-x86-cppstd-17
         profile_build:
-          - clang-20-linux-x86_64
+          - clang-20-linux-x86_64-cppstd-20
 
   rocky-9-aarch64:
     # Use the clang 20 compiler on Rocky 9 Linux
