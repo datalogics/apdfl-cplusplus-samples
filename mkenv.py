@@ -13,9 +13,8 @@ if sys.version_info[:2] < (3, 7):
 MKENV_IMPL = 'mkenv_impl'
 HERE = os.path.dirname(os.path.abspath(__file__))
 MKENV_SUBDIR = '.mkenv'
-MKENV_REPO = os.environ.get('DL_MKENV_REPO', 'git@github.com:datalogics/mkenv.git')
-MKENV_BRANCH = os.environ.get('DL_MKENV_BRANCH', 'main')
-DL_MKENV_ENVIRONMENT_OVERRIDE = 'DL_MKENV_REPO' in os.environ or 'DL_MKENV_BRANCH' in os.environ
+MKENV_REPO = 'git@github.com:datalogics/mkenv.git'
+MKENV_BRANCH = 'main'
 # The oldest Git v2 we have on our machines is 2.3, and it seems to work for mkenv.
 GIT_REQUIRED = (2, 3)
 
@@ -74,16 +73,15 @@ def get_mkenv_impl_from_git():
 def main():
     mkenv_impl = None
 
-    if not DL_MKENV_ENVIRONMENT_OVERRIDE:
-        # Use local module only if exists and not overridden by environment
-        old_sys_path = sys.path.copy()
-        sys.path.insert(0, HERE)
-        try:
-            mkenv_impl = importlib.import_module(MKENV_IMPL)
-        except ModuleNotFoundError:
-            pass
-        finally:
-            sys.path[:] = old_sys_path
+    # Use the local module if it exists, as it does in the mkenv repo itself
+    old_sys_path = sys.path.copy()
+    sys.path.insert(0, HERE)
+    try:
+        mkenv_impl = importlib.import_module(MKENV_IMPL)
+    except ModuleNotFoundError:
+        pass
+    finally:
+        sys.path[:] = old_sys_path
 
     if mkenv_impl is None:
         mkenv_impl = get_mkenv_impl_from_git()
