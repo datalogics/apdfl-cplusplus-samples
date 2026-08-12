@@ -35,12 +35,26 @@ class Pdfl18installerConan(ConanFile):
                (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
                (os_ == "Macos"   and arch == "armv8")
 
+    def _ocr_supported(self):
+        # Mirrors ocr_unsupported_platforms in the APDFL tree: the
+        # apdfl-ocrengine package is published for every platform except
+        # these, and the OCR samples only appear in the solutions/makefile
+        # targets that build on the supported ones.
+        unsupported = ('AIX/ppc64', 'SunOS/sparcv9', 'Linux/x86',
+                       'Windows/x86', 'Android/*', 'iOS/*')
+        os_ = str(self.settings.os)
+        arch = str(self.settings.arch)
+        return not any(candidate in unsupported
+                       for candidate in (f'{os_}/{arch}', f'{os_}/*'))
+
     @property
     def _requirements(self):
         return self.conan_data['requirements']
 
     def requirements(self):
         self.requires(self._requirements['adobe_pdf_library'])
+        if self._ocr_supported():
+            self.requires(self._requirements['apdfl-ocrengine'])
         self.requires(self._requirements['apdfl-resources'])
         self.requires(self._requirements['apdfl-sample-input'])
         if self._webtopdf_supported():
@@ -82,6 +96,23 @@ class Pdfl18installerConan(ConanFile):
         tessdata_path = os.path.join(apdfl_pkg.cpp_info.bindir, "tessdata4")
         if os.path.isdir(tessdata_path):
             copy(self, "*", src=tessdata_path, dst=os.path.join(destination, "tessdata4"), keep_path=True)
+
+    def copy_ocrengine(self, destination):
+        # APDFL 21.0.0+p1d moved the OCREngine plug-in, the dltesseract5
+        # runtime, and the OCR public headers out of adobe_pdf_library into
+        # the companion apdfl-ocrengine package. Windows keeps the plug-in
+        # and runtime in bin/, other platforms in lib/, and on macOS the
+        # plug-in is a framework bundle under Frameworks/.
+        ocr_pkg = self.dependencies['apdfl-ocrengine']
+
+        copy(self, "*.h", src=os.path.join(ocr_pkg.package_folder, 'include'),
+             dst='CPlusPlus/Include/Headers', keep_path=False)
+
+        copy(self, "*", src=ocr_pkg.cpp_info.bindir, dst=destination,
+             keep_path=False)
+        copy(self, "*", src=ocr_pkg.cpp_info.libdirs[0], dst=destination,
+             keep_path=False)
+        copy(self, "*", src=ocr_pkg.cpp_info.frameworkdirs[0], dst=destination)
 
     def copy_ocr(self, destination):
         tessdata_pkg = self.dependencies['tessdata']
@@ -142,6 +173,8 @@ class Pdfl18installerConan(ConanFile):
 
         self.copy_apdfl(destination='CPlusPlus/Binaries')
         self.copy_ocr(destination='CPlusPlus/Binaries')
+        if self._ocr_supported():
+            self.copy_ocrengine(destination='CPlusPlus/Binaries')
         if self._webtopdf_supported():
             self.copy_webtopdf(destination='CPlusPlus/Binaries')
 

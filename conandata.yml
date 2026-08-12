@@ -1,5 +1,6 @@
 requirements:
   adobe_pdf_library: adobe_pdf_library/[>=21.0 <22.0]@datalogics/nightly
+  apdfl-ocrengine: apdfl-ocrengine/[>=21.0 <22.0]@datalogics/nightly
   apdfl-resources: apdfl-resources/[>=21.0 <22.0]@datalogics/stable
   apdfl-sample-input: apdfl-sample-input/[>=21.0 <22.0]@datalogics/stable
   webtopdf: webtopdf/[>=1.0.0]@datalogics/nightly
