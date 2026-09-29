@@ -33,9 +33,9 @@ config:
     config:
       Release:
         profile_host:
-          - apple-clang-16.4-intel-cppstd-17
+          - apple-clang-26.2-intel-cppstd-17
         profile_build:
-          - apple-clang-16.4-intel-cppstd-17
+          - apple-clang-26.2-intel-cppstd-17
 
   macos-arm64:
     config:
