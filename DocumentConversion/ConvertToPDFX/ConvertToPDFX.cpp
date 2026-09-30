@@ -34,11 +34,10 @@ int main(int argc, char **argv) {
 
     // Step 1) Select Conversion option
     if (argc > 2 && (!strcmp(argv[2], "PDFX4") || !strcmp(argv[2], "PDF/X-4"))) {
+        convertOption = kPDFProcessorConvertToPDFX42010;
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFX1a2001") || !strcmp(argv[2], "PDF/X-1A:2001"))) {
         convertOption = kPDFProcessorConvertToPDFX1a2001;
-    }
-    else if (argc > 2 && (!strcmp(argv[2], "PDFX1a2001") || !strcmp(argv[2], "PDF/X-1A:2001"))) {
-        convertOption = kPDFProcessorConvertToPDFX1a2001;
-    } else if (argc > 2 && (!strcmp(argv[2], "PDF/X-3:2003"))) {
+    } else if (argc > 2 && (!strcmp(argv[2], "PDFX32003") || !strcmp(argv[2], "PDF/X-3:2003"))) {
         convertOption = kPDFProcessorConvertToPDFX32003;
     } else {
         std::cout << "PDF Conversion Standard not specified or unknown, defaulting to PDF/X-4." << std::endl;
