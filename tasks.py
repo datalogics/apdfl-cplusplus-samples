@@ -86,9 +86,17 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
     )
     ignore_webtopdf = () if webtopdf_supported else ('ConvertWebToPDF',)
 
+    # The OfficeToPDF plugin ships for 64-bit Windows (x64 only), 64-bit
+    # Linux (x86_64 + ARM), and macOS ARM, and its sample is kept out of
+    # the staging tree everywhere else.
+    office_to_pdf_supported = build_64_bit and profset.os in (
+        'windows', 'i80386linux', 'armv8linux', 'armv8mac',
+    )
+    ignore_office_to_pdf = () if office_to_pdf_supported else ('ConvertOfficeToPDF',)
+
     spat = shutil.ignore_patterns(
         'build', '.*', 'conan*', 'tasks', 'utils', 'python-env-*',
-        igpat, igwinARM, igforms, *ignore_webtopdf)
+        igpat, igwinARM, igforms, *ignore_webtopdf, *ignore_office_to_pdf)
     sdir = os.path.join('build', 'CPlusPlus', 'Sample_Source')
     noerr_mkdir(sdir)
     shutil.copytree('.', sdir, ignore=spat, dirs_exist_ok=True)

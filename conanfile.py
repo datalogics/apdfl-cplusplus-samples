@@ -35,6 +35,16 @@ class Pdfl18installerConan(ConanFile):
                (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
                (os_ == "Macos"   and arch == "armv8")
 
+    def _office_to_pdf_supported(self):
+        # The OfficeToPDF plugin is published for Windows x86_64, Linux
+        # (x86_64 + ARM), and macOS ARM.  Gated like WebToPDF, so bootstrap
+        # does not fail where no binary exists.
+        os_ = str(self.settings.os)
+        arch = str(self.settings.arch)
+        return (os_ == "Windows" and arch == "x86_64") or \
+               (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
+               (os_ == "Macos"   and arch == "armv8")
+
     def _ocr_supported(self):
         # Mirrors ocr_unsupported_platforms in the APDFL tree: the
         # apdfl-ocrengine package is published for every platform except
@@ -59,6 +69,8 @@ class Pdfl18installerConan(ConanFile):
         self.requires(self._requirements['apdfl-sample-input'])
         if self._webtopdf_supported():
             self.requires(self._requirements['webtopdf'])
+        if self._office_to_pdf_supported():
+            self.requires(self._requirements['office-to-pdf-sdk'])
         self.requires(self._requirements['installer-resources'])
         self.requires(self._requirements['tessdata'])
 
@@ -141,6 +153,26 @@ class Pdfl18installerConan(ConanFile):
         copy(self, "WebToPDF.ppi", src=webtopdf_pkg.cpp_info.libdirs[0],
              dst=destination, keep_path=False)
 
+    def copy_office_to_pdf(self, destination):
+        # The office-to-pdf-sdk package installs the plugin's public headers
+        # under include/OfficeToPDF/.  ConvertOfficeToPDF includes them flat
+        # (e.g. "OfficeToPDFCalls.h"), as ConvertWebToPDF does its own.
+        office_pkg = self.dependencies["office-to-pdf-sdk"]
+        office_inc = os.path.join(office_pkg.package_folder, "include", "OfficeToPDF")
+        copy(self, "*.h", src=office_inc,
+             dst="CPlusPlus/Include/Headers", keep_path=False)
+
+        # The plugin, DL<major><minor>OfficeToPDF.ppi, is a file in bin/ on
+        # Windows and in lib/ on Linux, and a bundle directory in lib/ on
+        # macOS.  copy() matches files, not directories, so the bundle is
+        # copied by the files under it, keeping its layout and its symlinks.
+        copy(self, "*OfficeToPDF.ppi", src=office_pkg.cpp_info.bindir,
+             dst=destination, keep_path=False)
+        copy(self, "*OfficeToPDF.ppi", src=office_pkg.cpp_info.libdirs[0],
+             dst=destination, keep_path=False)
+        copy(self, "*OfficeToPDF.ppi/*", src=office_pkg.cpp_info.libdirs[0],
+             dst=destination)
+
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')
@@ -177,6 +209,8 @@ class Pdfl18installerConan(ConanFile):
             self.copy_ocrengine(destination='CPlusPlus/Binaries')
         if self._webtopdf_supported():
             self.copy_webtopdf(destination='CPlusPlus/Binaries')
+        if self._office_to_pdf_supported():
+            self.copy_office_to_pdf(destination='CPlusPlus/Binaries')
 
 
     def generate(self):

@@ -1,3 +1,6 @@
+## ***ConvertOfficeToPDF***
+Uses the OfficeToPDF plugin to convert a Microsoft Word (.docx) document into a PDF document.
+
 ## ***ConvertPDFToEPS***
 Converts a PDF document to a set of Encapsulated PostScript (EPS) files, one EPS file per page.
 
