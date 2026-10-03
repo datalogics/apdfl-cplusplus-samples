@@ -115,7 +115,7 @@ int main(int argc, char **argv) {
         params.comments = kOfficeToPDFCommentsMargin;
 
         // A fixed instant is stamped as /CreationDate and /ModDate and used for
-        // DATE and TIME fields, so the same document converts to the same bytes.
+        // DATE and TIME fields, so every conversion carries the same dates.
         // Leave useConversionTime false to stamp the system clock instead.
         params.useConversionTime = true;
         params.conversionTime.year = 2026;

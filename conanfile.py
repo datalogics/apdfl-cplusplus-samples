@@ -163,13 +163,17 @@ class Pdfl18installerConan(ConanFile):
              dst="CPlusPlus/Include/Headers", keep_path=False)
 
         # The plugin, DL<major><minor>OfficeToPDF.ppi, is a file in bin/ on
-        # Windows and in lib/ on Linux, and a bundle directory in lib/ on
-        # macOS.  copy() matches files, not directories, so the bundle is
-        # copied by the files under it, keeping its layout and its symlinks.
+        # Windows, a symlink chain in lib/ on Linux (.ppi -> .ppi.<version>
+        # -> .ppi.<version>.<rel>), and a bundle directory in lib/ on macOS.
+        # copy() recreates a symlink without following it, so the Linux chain
+        # is copied whole.  copy() matches files, not directories, so the
+        # bundle is copied by the files under it, keeping its layout and its
+        # symlinks.
         copy(self, "*OfficeToPDF.ppi", src=office_pkg.cpp_info.bindir,
              dst=destination, keep_path=False)
-        copy(self, "*OfficeToPDF.ppi", src=office_pkg.cpp_info.libdirs[0],
-             dst=destination, keep_path=False)
+        if self.settings.os == "Linux":
+            copy(self, "*OfficeToPDF.ppi*", src=office_pkg.cpp_info.libdirs[0],
+                 dst=destination, keep_path=False)
         copy(self, "*OfficeToPDF.ppi/*", src=office_pkg.cpp_info.libdirs[0],
              dst=destination)
 
