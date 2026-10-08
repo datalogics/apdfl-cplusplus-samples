@@ -1,4 +1,4 @@
-SAMPNAME=ConvertOfficeToPDF
+SAMPNAME=ConvertWordToPDF
 OTHER_OBJS = $(SAMPNAME).o
 
 include ../../dlutils/common.mak

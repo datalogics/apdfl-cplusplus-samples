@@ -121,7 +121,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToPDFA", "..\Documen
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertWebToPDF", "..\DocumentConversion\ConvertWebToPDF\ConvertWebToPDF.vcxproj", "{A7B3E2F1-5C4D-4E8A-9F1B-6D2C3E4F5A0B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertOfficeToPDF", "..\DocumentConversion\ConvertOfficeToPDF\ConvertOfficeToPDF.vcxproj", "{0D10365E-68AE-4891-80DC-0E8EAC1154E9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertWordToPDF", "..\DocumentConversion\ConvertWordToPDF\ConvertWordToPDF.vcxproj", "{0D10365E-68AE-4891-80DC-0E8EAC1154E9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToPDFX", "..\DocumentConversion\ConvertToPDFX\ConvertToPDFX.vcxproj", "{A51E0247-F7EF-4C7E-96B7-F50752C73D81}"
 EndProject

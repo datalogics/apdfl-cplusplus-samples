@@ -5,7 +5,7 @@
 // Word (.docx) document into a PDF.
 //
 // By default the sample converts DOCXLink.docx from the samples' input
-// directory and writes the result to ConvertOfficeToPDF-out.pdf in the current
+// directory and writes the result to ConvertWordToPDF-out.pdf in the current
 // working directory.
 //
 // OfficeToPDFConvertToFile takes an input path and an output path and returns
@@ -26,7 +26,7 @@ void *gOfficeToPDFHFT = NULL;
 
 #define DIR_LOC "../../../../Resources/Sample_Input/"
 #define DEF_INPUT "DOCXLink.docx"
-#define DEF_OUTPUT "ConvertOfficeToPDF-out.pdf"
+#define DEF_OUTPUT "ConvertWordToPDF-out.pdf"
 
 static const char *DiagnosticKindName(OfficeToPDFDiagnosticKind kind) {
     switch (kind) {
