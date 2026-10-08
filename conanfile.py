@@ -155,7 +155,7 @@ class Pdfl18installerConan(ConanFile):
 
     def copy_office_to_pdf(self, destination):
         # The office-to-pdf-sdk package installs the plugin's public headers
-        # under include/OfficeToPDF/.  ConvertOfficeToPDF includes them flat
+        # under include/OfficeToPDF/.  ConvertWordToPDF includes them flat
         # (e.g. "OfficeToPDFCalls.h"), as ConvertWebToPDF does its own.
         office_pkg = self.dependencies["office-to-pdf-sdk"]
         office_inc = os.path.join(office_pkg.package_folder, "include", "OfficeToPDF")

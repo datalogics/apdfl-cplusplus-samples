@@ -1,6 +1,3 @@
-## ***ConvertOfficeToPDF***
-Uses the OfficeToPDF plugin to convert a Microsoft Word (.docx) document into a PDF document.
-
 ## ***ConvertPDFToEPS***
 Converts a PDF document to a set of Encapsulated PostScript (EPS) files, one EPS file per page.
 
@@ -24,6 +21,9 @@ Converts a PDF document and a Invoice XML document to a ZUGFeRD compliant PDF do
 
 ## ***ConvertWebToPDF***
 Uses the WebToPDF plugin to render a web page (by default https://www.datalogics.com) into a PDF document.
+
+## ***ConvertWordToPDF***
+Uses the OfficeToPDF plugin to convert a Microsoft Word (.docx) document into a PDF document.
 
 ## ***XPSToPDF***
 Opens a XPS document and converts it to a PDF document.

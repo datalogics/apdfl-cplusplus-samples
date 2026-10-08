@@ -128,7 +128,7 @@ endif
 # The OfficeToPDF plugin ships for Windows x86_64, Linux x86_64, Linux ARM,
 # and macOS ARM: on the Unix side, the same variants as WebToPDF.
 ifeq ($(findstring mac-x86-64,$(OS))$(findstring aix,$(OS))$(findstring solaris,$(OS)),)
-    SAMPLES += DocumentConversion/ConvertOfficeToPDF
+    SAMPLES += DocumentConversion/ConvertWordToPDF
 endif
 
 PATH_TO_FORMS = ../Forms

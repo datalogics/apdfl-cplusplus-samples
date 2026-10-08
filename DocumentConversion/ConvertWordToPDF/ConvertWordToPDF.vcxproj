@@ -30,7 +30,7 @@
     <ProjectGuid>{0D10365E-68AE-4891-80DC-0E8EAC1154E9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BlankSample</RootNamespace>
-    <ProjectName>ConvertOfficeToPDF</ProjectName>
+    <ProjectName>ConvertWordToPDF</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -231,7 +231,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConvertOfficeToPDF.cpp" />
+    <ClCompile Include="ConvertWordToPDF.cpp" />
     <ClCompile Include="..\..\_Common\APDFLDoc.cpp" />
     <ClCompile Include="..\..\_Common\InitializeLibrary.cpp" />
     <ClCompile Include="..\..\..\Include\Source\PDFLInitCommon.c" />

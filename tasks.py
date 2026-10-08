@@ -92,7 +92,7 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
     office_to_pdf_supported = build_64_bit and profset.os in (
         'windows', 'i80386linux', 'armv8linux', 'armv8mac',
     )
-    ignore_office_to_pdf = () if office_to_pdf_supported else ('ConvertOfficeToPDF',)
+    ignore_office_to_pdf = () if office_to_pdf_supported else ('ConvertWordToPDF',)
 
     spat = shutil.ignore_patterns(
         'build', '.*', 'conan*', 'tasks', 'utils', 'python-env-*',
