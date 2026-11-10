@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2019-2025, Datalogics, Inc. All rights reserved.
+// Copyright (c) 2019-2026, Datalogics, Inc. All rights reserved.
 //
 //
 // ConvertToZUGFeRD converts the input PDF with the input Invoice ZUGFeRD XML to a ZUGFeRD compliant PDF.
@@ -42,8 +42,6 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    char *outputPathName = DEF_OUTPUT;
-
     APDFLib lib;
     ASErrorCode errCode = 0;
     if (lib.isValid() == false)
@@ -81,7 +79,7 @@ DURING
         destFilePath = ASFileSysCreatePathName(NULL, ASAtomFromString("Cstring"), csOutputFileName.c_str(), NULL);
         xmlInvoiceFilePath = ASFileSysCreatePathName(NULL, ASAtomFromString("Cstring"), csInputInvoiceXMLFileName.c_str(), NULL);
 #else
-        destFilePath = APDFLDoc::makePath (csOutputFileName.c_str() ;
+        destFilePath = APDFLDoc::makePath(csOutputFileName.c_str());
         xmlInvoiceFilePath = APDFLDoc::makePath(csInputInvoiceXMLFileName.c_str());
 #endif
 
