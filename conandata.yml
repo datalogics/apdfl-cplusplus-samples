@@ -5,5 +5,6 @@ requirements:
   apdfl-sample-input: apdfl-sample-input/[>=21.0 <22.0]@datalogics/stable
   webtopdf: webtopdf/[>=1.0.0]@datalogics/nightly
   office-to-pdf-sdk: office-to-pdf-sdk/[>=21.0 <22.0]@datalogics/nightly
+  pdf-to-office-support: pdf-to-office-support/[>=4.0 <4.1]@datalogics/stable
   installer-resources: installer-resources/[>=0.7]@datalogics/stable
   tessdata: tessdata/[>=4.1.0+dl.4]@datalogics/stable
