@@ -45,6 +45,16 @@ class Pdfl18installerConan(ConanFile):
                (os_ == "Linux"   and arch in ("x86_64", "armv8")) or \
                (os_ == "Macos"   and arch == "armv8")
 
+    def _pdf_to_office_supported(self):
+        # The PDF-to-Office runtime, which APDFL loads by name for
+        # ConvertToOffice, is published for Windows (x86_64 + x86) and Linux
+        # (x86_64 + ARM).  It matches the platforms where APDFL enables
+        # PDF-to-Office conversion.
+        os_ = str(self.settings.os)
+        arch = str(self.settings.arch)
+        return (os_ == "Windows" and arch in ("x86_64", "x86")) or \
+               (os_ == "Linux"   and arch in ("x86_64", "armv8"))
+
     def _ocr_supported(self):
         # Mirrors ocr_unsupported_platforms in the APDFL tree: the
         # apdfl-ocrengine package is published for every platform except
@@ -71,6 +81,8 @@ class Pdfl18installerConan(ConanFile):
             self.requires(self._requirements['webtopdf'])
         if self._office_to_pdf_supported():
             self.requires(self._requirements['office-to-pdf-sdk'])
+        if self._pdf_to_office_supported():
+            self.requires(self._requirements['pdf-to-office-support'])
         self.requires(self._requirements['installer-resources'])
         self.requires(self._requirements['tessdata'])
 
@@ -177,6 +189,16 @@ class Pdfl18installerConan(ConanFile):
         copy(self, "*OfficeToPDF.ppi/*", src=office_pkg.cpp_info.libdirs[0],
              dst=destination)
 
+    def copy_pdf_to_office(self, destination):
+        # APDFL loads the PDF-to-Office library by file name at run time, so
+        # it must sit next to the APDFL binaries: on Windows beside the
+        # executable's DLLs, on Linux in the first plug-in directory.  The
+        # package keeps the .dll (with its import .lib) and the .so in lib/.
+        pdf2office_pkg = self.dependencies["pdf-to-office-support"]
+        pattern = "*.dll" if self.settings.os == "Windows" else "*.so"
+        copy(self, pattern, src=pdf2office_pkg.cpp_info.libdirs[0],
+             dst=destination, keep_path=False)
+
     def _imports(self):
         pdfl_pkg_inc = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'include')
         pdfl_pkg_src = os.path.join(self.dependencies["adobe_pdf_library"].package_folder, 'src')
@@ -215,6 +237,8 @@ class Pdfl18installerConan(ConanFile):
             self.copy_webtopdf(destination='CPlusPlus/Binaries')
         if self._office_to_pdf_supported():
             self.copy_office_to_pdf(destination='CPlusPlus/Binaries')
+        if self._pdf_to_office_supported():
+            self.copy_pdf_to_office(destination='CPlusPlus/Binaries')
 
 
     def generate(self):
