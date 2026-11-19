@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddDigitalSignatureExternal", "AddDigitalSignatureExternal.vcxproj", "{B921DD36-ADBF-45F0-B5E7-56D39DD62884}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B921DD36-ADBF-45F0-B5E7-56D39DD62884}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{B921DD36-ADBF-45F0-B5E7-56D39DD62884}.Debug|ARM64.Build.0 = Debug|ARM64
+		{B921DD36-ADBF-45F0-B5E7-56D39DD62884}.Release|ARM64.ActiveCfg = Release|ARM64
+		{B921DD36-ADBF-45F0-B5E7-56D39DD62884}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7595F2E-D0B7-4994-857E-15BDB593D69C}
+	EndGlobalSection
+EndGlobal
