@@ -4,6 +4,9 @@ Demonstrates how to add a PAdES B-T baseline electronic signature to a PDF docum
 ## ***AddDigitalSignatureCMS***
 Demonstrates how to add a digital signature with a logo to a PDF document.
 
+## ***AddDigitalSignatureExternal***
+Demonstrates how to add a digital signature whose private key stays in a key service, such as Azure Key Vault, AWS KMS or a PKCS#11 token. APDFL builds the signature and calls the application's signing operation to sign it. The sample's signing operation is a stand-in that signs with a local test key using OpenSSL, so building it needs OpenSSL 3 or later: set OPENSSL_DIR to the OpenSSL installation, the directory that holds include and lib, and on Windows put its libcrypto DLL on the PATH. For that reason the sample isn't part of the All builds. The timestamp server URL can be given as the third command-line argument.
+
 ## ***AddDigitalSignatureRFC3161***
 Demonstrates how to add an RFC3161 timestamp signature to a PDF document.
 
