@@ -38,7 +38,8 @@ def get_config_info(config=None):
     else:
         raise RuntimeError(f'Configuration name "{config[0]}" is not valid')
 
-    bits = '32' if '32' in config else '64'
+    # config is a list (invoke iterable); test the configuration name itself.
+    bits = '32' if '32' in config[0] else '64'
     return (bt, bits)
 
 
