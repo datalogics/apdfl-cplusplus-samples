@@ -38,7 +38,8 @@ def get_config_info(config=None):
     else:
         raise RuntimeError(f'Configuration name "{config[0]}" is not valid')
 
-    bits = '32' if '32' in config else '64'
+    # config is a list (invoke iterable); test the configuration name itself.
+    bits = '32' if '32' in config[0] else '64'
     return (bt, bits)
 
 
@@ -76,6 +77,9 @@ def bootstrap(ctx, dlproject=None, config=None, update=False, options=None, conf
             igforms = ''
     else:   # Only copy the 32-bit solution to the  32-bit staging area
         igpat = '*_64Bit.sln'
+        # Forms Extension also ships for 32-bit Windows (not 32-bit Linux).
+        if profset.os == 'windows':
+            igforms = ''
 
     # WebToPDF plugin ships for 64-bit Windows (x64 + ARM64), 64-bit
     # Linux (x86_64 + ARM), and macOS ARM.  Anywhere else the sample
@@ -111,7 +115,11 @@ _WIN_SLN_BY_ARCH = {
     'Win32': 'All_Datalogics_32Bit.sln',
     'x64': 'All_Datalogics_64Bit.sln',
 }
-_WIN_FE_SLN = 'All_DatalogicsFE_64Bit.sln'
+# Forms Extension solutions; there is no Windows ARM64 Forms Extension.
+_WIN_FE_SLN_BY_ARCH = {
+    'Win32': 'All_DatalogicsFE_32Bit.sln',
+    'x64': 'All_DatalogicsFE_64Bit.sln',
+}
 
 # Samples that build fine but cannot run unattended on CI: GUI apps, ones
 # that block on stdin, and ones that bail out with usage when no
@@ -171,10 +179,10 @@ def _windows_build_and_run(ctx, build_type, is_64_bit):
             f'stage the {arch} solution.'
         )
 
-    fe_sln_path = os.path.join(all_dir, _WIN_FE_SLN)
     solutions = [main_sln_path]
-    if os.path.isfile(fe_sln_path):
-        solutions.append(fe_sln_path)
+    fe_sln = _WIN_FE_SLN_BY_ARCH.get(arch)
+    if fe_sln and os.path.isfile(os.path.join(all_dir, fe_sln)):
+        solutions.append(os.path.join(all_dir, fe_sln))
 
     failed_builds = []
     for sln_path in solutions:
